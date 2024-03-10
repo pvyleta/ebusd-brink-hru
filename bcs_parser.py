@@ -4,29 +4,9 @@ import copy
 
 import converters
 import out
+import sensor_data
 
-# This script expects decompiled BCSServiceTool in its child folder via JetBrains DotPeak
-
-class CommandEBus:
-    def __init__(self, cmd, pbsb, len, id, write_len, read_len):
-        self.cmd = cmd
-        self.pbsb = pbsb
-        self.len = len
-        self.id = id
-        self.write_len = write_len
-        self.read_len = read_len
-
-flair_cmd_dict = {}
-
-# Get flair commands
-with open("./BCSServiceTool/BusinessLogic/Commands/FlairEBusCommands.cs") as f:
-    datafile = f.readlines()
-    for line in datafile:
-        #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);
-        match = re.search('public static CommandEBus (?P<cmd>.*) = new CommandEBus."(?P<pbsb>....)(?P<len>..)(?P<id>.*)", .* (?P<write_len>.*), (?P<read_len>.*)U.;', line)
-        if match:
-            cmd = CommandEBus(match.group('cmd'),match.group('pbsb'),match.group('len'),match.group('id'),match.group('write_len'),match.group('read_len'))
-            flair_cmd_dict[cmd.cmd] = cmd
+# This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
 # First we parse the params data
 
@@ -44,30 +24,17 @@ search_list_params = [
     ("controller_code", "public (new )?const (uint|byte) CONTROLLER_CODE = (?P<match>.*);"),
 ]
 
-
-value_type_dict = {'WTWParameterDefinition.UnitType.NoUnit': "", 
-                   'WTWParameterDefinition.UnitType.DegrCelcius': "°C", 
-                   'WTWParameterDefinition.UnitType.Minutes': "Minutes", 
-                   'WTWParameterDefinition.UnitType.Voltage': "V", 
-                   'WTWParameterDefinition.UnitType.Degrees': "°", 
-                   'WTWParameterDefinition.UnitType.M3PerHour': "m³/h", 
-                   'WTWParameterDefinition.UnitType.Day': "Day", 
-                   'WTWParameterDefinition.UnitType.PPM': "ppm", 
-                   'WTWParameterDefinition.UnitType.Percentage': "%",
-                   
-                   '': "",
-                   'rpm': "rpm",
-                   'm3/h': "m³/h",
-                   'm3': "m³",
-                   'Pa': "Pa",
-                   'Â°C': "°C",
-                   'PPM': "ppm",
-                   'Hour': "Hour",
-                   'Steps': "Steps",
-                   'PWM': "PWM",
-                   'V': "V",
-                   '%': "%"
-                   }
+value_type_dict_config = {
+    'WTWParameterDefinition.UnitType.NoUnit': "", 
+    'WTWParameterDefinition.UnitType.DegrCelcius': "°C", 
+    'WTWParameterDefinition.UnitType.Minutes': "Minutes", 
+    'WTWParameterDefinition.UnitType.Voltage': "V", 
+    'WTWParameterDefinition.UnitType.Degrees': "°", 
+    'WTWParameterDefinition.UnitType.M3PerHour': "m³/h", 
+    'WTWParameterDefinition.UnitType.Day': "Day", 
+    'WTWParameterDefinition.UnitType.PPM': "ppm", 
+    'WTWParameterDefinition.UnitType.Percentage': "%",
+}
 
 class Parameter:
     def __init__(self, id, name, unit, multiplier, is_signed, is_read_only):
@@ -113,7 +80,7 @@ for file in files_params:
             # Then there is a line with parameter definition...
             match = re.search('new WTWParameterDefinition.* (?P<id>[0-9]*), "parameter(SetDescription)?(?P<name>.*)", (?P<is_read_only>.*), (?P<unit>.*), (?P<multiplier>.*), (?P<is_signed>.*).;', line)
             if match:
-                params.append(Parameter(match.group('id'),match.group('name'),value_type_dict[match.group('unit')],match.group('multiplier'),match.group('is_signed'),match.group('is_read_only')))
+                params.append(Parameter(match.group('id'),match.group('name'),value_type_dict_config[match.group('unit')],match.group('multiplier'),match.group('is_signed'),match.group('is_read_only')))
    
             # And then it follows with line defining the values of the last added parameter
             match = re.search('SetApplianceData.* (-?[0-9]*), .* (-?[0-9]*), .* (-?[0-9]*), .* (-?[0-9]*), .* (-?[0-9]*).;', line)
@@ -136,80 +103,12 @@ for file in files_params:
         device = Device(**device_dict)
         devices_param.append(device)
 
-# Now let's parse the sensor data
 
-files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
-
-class Sensor:
-    def __init__(self, id, name, name_current, unit, update_rate):
-        self.id = id
-        self.name = name
-        self.name_current = name_current
-        self.unit = unit
-        self.update_rate = update_rate
-        self.converter = ""
-
-class DeviceSensor:
-    def __init__(self, name, first_version, last_version, sensors):
-        self.name = name
-        self.first_version = first_version
-        self.last_version = last_version
-        self.sensors = sensors
-
-search_list_sensor = [
-    ("name", "(private|public) static (?P<match>.*)ParameterDataModel_.. (I|i)nstance;"),
-    ("first_version", "public (new )?const uint VALID_FIRST_VERSION = (?P<match>.*);"),
-    ("last_version", "public (new )?const uint VALID_LAST_VERSION = (?P<match>.*);"),
-]
-
-dict_devices_sensor = {}
-for file in files_sensor:
-    with open(file) as f:
-        device_dict = {}
-        sensors = []
-        datafile = f.readlines()
-
-        # The files first contain some constants that are useful
-        for line in datafile:
-            for property, regex in search_list_sensor:
-                match = re.search(regex, line)
-                if match:
-                    device_dict[property] = match.group('match')
-                    break
-            
-            # Then there is a line with sensor definition
-
-            # strip pottential "actual" from the front to improve matching
-            # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
-                # TODO dome flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
-            match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), "(?P<pbsb>....)..(?P<id>..)".;', line)
-            if match:
-                assert match.group('pbsb') == "4022"
-                sensors.append(Sensor(match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
-                continue
-
-            # We need to check separately for flair units that have different definition
-
-            # strip pottential "actual" from the front to improve matching
-            # this._currentSoftwareVersion = new ParameterData("parameterDescriptionSoftwareVersion", "", (ushort) 60, FlairEBusCommands.CmdReadActualSoftwareVersion.Cmd);
-            match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), FlairEBusCommands\\.(?P<cmd>.*)\\.Cmd.;', line)
-            if match:
-                sensors.append(Sensor(flair_cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
-                continue
-
-        # This skips the Flair base class
-        if "name" not in device_dict:
-            print("sensor: skipping file " + file)
-            continue
-
-        device_dict["sensors"] = sensors
-        device = DeviceSensor(**device_dict)
-        dict_devices_sensor[device.name.lower()] = device
 
 # Get converters
-device_to_name_param_to_converter = converters.find_converters2()
+device_to_name_param_to_converter = converters.find_converters()
 device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
-device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param2()
+device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
 
 # TODO status and value is switched - figure out reason, fix it:
     #   this.paramCO2Sensor1Status.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentCO2Sensor1Value.Description).ToString();
@@ -266,6 +165,7 @@ manual_current_to_converter = {
 }
     
 # assign converters to each sensor in each device
+dict_devices_sensor = sensor_data.get_dict_devices_sensor()
 for device_name_lower, device in dict_devices_sensor.items():
 
     # flair units have a shared converter under the name 'flair'
