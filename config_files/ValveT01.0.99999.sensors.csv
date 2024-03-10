@@ -1,0 +1,12 @@
+# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+r,ValveT01,SoftwareVersion,SoftwareVersion,,,4022,00,,,SIR,,,
+r,ValveT01,DeviceID,DeviceID,,,4022,80,,,SIR,,,
+r,ValveT01,EBusAddressing,EBusAddressing,,,4022,50,,,SIR,,,
+r,ValveT01,SerialNumber,SerialNumber,,,4022,51,,,SIR,,,
+r,ValveT01,OperatingTime,OperatingTime,,,4022,83,,,SIR,,Hour,
+r,ValveT01,ValveStatus,ValveStatus,,,4022,82,,,SIR,,,
+r,ValveT01,ValvePosition,ValvePosition,,,4022,81,,,SIR,,,
+r,ValveT01,EndPositionStepCount,EndPositionStepCount,,,4022,89,,,SIR,,Steps,
+r,ValveT01,PositionStepCount,PositionStepCount,,,4022,8A,,,SIR,,Steps,
+r,ValveT01,RunDirection,RunDirection,,,4022,8B,,,SIR,,,
+r,ValveT01,ConfigurationValid,ConfigurationValid,,,4022,8C,,,SIR,,,
