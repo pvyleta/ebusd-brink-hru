@@ -22,7 +22,8 @@ value_type_dict = {
 }
 
 class Sensor:
-    def __init__(self, id, name, name_current, unit, update_rate):
+    def __init__(self, device_lowercase, id, name, name_current, unit, update_rate):
+        self.device_lowercase = device_lowercase
         self.id = id
         self.name = name
         self.name_current = name_current
@@ -67,39 +68,39 @@ with open("./BCSServiceTool/BusinessLogic/Commands/FlairEBusCommands.cs") as f:
 def get_dict_devices_sensor():
     dict_devices_sensor = {}
     for file in files_sensor:
+        # This skips the Flair base class, which contains no sensor definitions
+        if "FlairBase" in file:
+            print("sensor: skipping file " + file)
+            continue
+        
         with open(file) as f:
             device_dict = {}
             sensors = []
             datafile = f.readlines()
 
-            # The files first contain some constants that are useful
             for line in datafile:
+                
+                # The files first contain some constants that are useful
                 for property, regex in search_list_sensor:
                     match = re.search(regex, line)
                     if match:
                         device_dict[property] = match.group('match')
-                        break
                 
                 # Then there is a line with sensor definition
                 # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
-                # TODO dome flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
+                # TODO some flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
                 match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), "(?P<pbsb>....)..(?P<id>..)".;', line)
                 if match:
                     assert match.group('pbsb') == "4022"
-                    sensors.append(Sensor(match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
+                    sensors.append(Sensor(device_dict['name'].lower(), match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
                     continue
 
                 # We need to check separately for flair units that have different definition
                 # this._currentSoftwareVersion = new ParameterData("parameterDescriptionSoftwareVersion", "", (ushort) 60, FlairEBusCommands.CmdReadActualSoftwareVersion.Cmd);
                 match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), FlairEBusCommands\\.(?P<cmd>.*)\\.Cmd.;', line)
                 if match:
-                    sensors.append(Sensor(flair_cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
+                    sensors.append(Sensor(device_dict['name'].lower(), flair_cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate')))
                     continue
-
-            # This skips the Flair base class
-            if "name" not in device_dict:
-                print("sensor: skipping file " + file)
-                continue
 
             device_dict["sensors"] = sensors
             device = DeviceSensor(**device_dict)

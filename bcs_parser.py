@@ -113,12 +113,21 @@ for device_name_lower, device in dict_devices_sensor.items():
         print(f"Error: Sensor not found: device: {device.name} lower: {device_name_lower} name: {sensor.name} name_current: {sensor.name_current} name_param: {name_param}")
             
 # Now we have added all known converters to all known fields - but there are potential missed matches -> we calculate their count for debugging purposses
-sensors_without_converters_set = set()        
+sensors_without_converters_set = set()   
+used_converters_set = set()        
 for device_name_lower,  device in dict_devices_sensor.items():
     for sensor in device.sensors:
         if sensor.converter == "":
             sensors_without_converters_set.add(sensor.name + "_" + device_name_lower)
-            
+        else:
+            used_converters_set.add(sensor.converter)
+
+if True:
+    print("converters_map = {") 
+    for converter in sorted(list(used_converters_set)):
+        print(f'    "{converter}": "",')
+    print("}")
+      
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)) )
 
 converter_sensor_unused_set = set()  
@@ -127,5 +136,7 @@ for device_name_lower, device in device_to_name_param_to_converter_unused.items(
         converter_sensor_unused_set.add(sensor_name + "_" + device_name_lower)
 
 print("converter_fields_without_sensor_set: "+ str(len(converter_sensor_unused_set)) )
+
+
 
 out.write_files(dict_devices_sensor, config_data.get_devices_param())

@@ -1,6 +1,8 @@
 import os
 import shutil
 
+import sensor_data
+
 output_dir = "config_files"
 
 # Manually retrieved values from various sources other than decompiling
@@ -41,6 +43,46 @@ known_values_sensors = {
     0x21: "0=Error;1=Not Initialized;2=Sensor Not Active;3=PowerUp Delay;4=Normal RH;5=Boost Rising;6=Boost Stable;7=Boost Decending", # HumidityBoostState
 }
 
+class Converter:
+    def __init__(self, type, multiplier, length, values):
+        self.type = type
+        self.multiplier = multiplier
+        self.length = length
+        self.values = values
+
+# Based on the converters from BCServiceTool/Converters; formated for ebusd
+        # TODO the convertion between '[]Converter' and 'Converter[]' is not 1:1 and should be done per-file - especially for the elan and flair units e.g. frost is different.
+        #     "UInt16ToMRCDeviceStatusConverter": Converter("UIR", 1, "0=NotInConfig;1=NotFound;2=Error;3=OK"),
+converters_map = {
+    "Int16ToPercentageFact10Converter": Converter("SIR", 10, 2, ""),
+    "Int16ToTemperatureConverterFact10": Converter("SIR", 10, 2, ""),
+    "Int16ToVoltageConverterFact10": Converter("SIR", 10, 2, ""),
+    "UInt16ToBypassStatusConverter": Converter("UIR", 1, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"),
+    "UInt16ToCO2SensorStatusConverter": Converter("UIR", 1, 2, "0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest"),
+    "UInt16ToContactConverter": Converter("UIR", 1, 2, "0=Open;1=Closed"),
+    "UInt16ToEBusPowerStateConverter": Converter("UIR", 1, 2, "0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error"),
+    "UInt16ToEWTStatusConverter": Converter("UIR", 1, 2, "0=OpenLow;1=Closed;2=OpenHigh"),
+    "UInt16ToFanModeConverter": Converter("UIR", 1, 2, "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"),
+    "UInt16ToFanStatusConverter": Converter("UIR", 1, 2, "0=Initializing;1=ConstantFlow;2=ConstantPWM;3=Off;4=Error;5=MassBalance;6=Standby;7=ConstantRPM"),
+    "UInt16ToFanSwitchConverter": Converter("UIR", 1, 2, "0=Position_0;1=Position_1;2=Position_2;3=Position_3;"),
+    "UInt16ToFrostStatusConverter": Converter("UIR", 1, 2, "0=Initializing;1=NoFrost;17=NoFrost;2=DefrostWait;3=Preheater;18=Preheater;255=Error;5=VeluHeater;6=VeluFanCtrl;7=TableFanCtrl;19=TableFanCtrl;8=Sky150Heater;9=FanCtrlFanOff;10=FanCtrlFanRestart;11=FanCtrlCurve1;12=FanCtrlCurve2;13=FanCtrlCurve3;14=FanCtrlCurve4;15=HeaterCoolDown;16=Blocked"),
+    "UInt16ToHeaterStatusConverter": Converter("UIR", 1, 2, "0=Initializing;1=Off;2=On"),
+    "UInt16ToHumidityBoostStateConverter": Converter("UIR", 1, 2, "0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable"),
+    "UInt16ToMRCStatusConverter": Converter("UIR", 1, 2, "0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running"),
+    "UInt16ToModbusFanStatusConverter": Converter("UIR", 1, 2, "0=NotInitialized;2=NoCommunication;3=Idle;4=Running;5=Blocked;6=Error"),
+    "UInt16ToOnOffConverter": Converter("UIR", 1, 2, "0=Off;1=On"),
+    "UInt16ToPercentageConverter": Converter("UIR", 1, 2, ""),
+    "UInt16ToPressureConverter": Converter("UIR", 1, 2, ""),
+    "UInt16ToRotateDirectionConverter": Converter("UIR", 1, 2, "0=CW;1=CCW"),
+    "UInt16ToUNumberConverter": Converter("UIR", 1, 2, ""),
+    "UInt16ToValveStatusConverter": Converter("UIR", 1, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
+    "UInt16ToWTWFunctionConverter": Converter("UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
+    "UInt32ToUNumberConverter": Converter("ULR", 1, 4, ""),
+    
+    "default": Converter("HEX:*", 1, 0, ""),
+    "unknown": Converter("SIR", 1, 2, ""),
+}
+
 def multiplier_to_divider(multiplier):
     if multiplier < 1:
         return 1 / multiplier
@@ -49,15 +91,22 @@ def multiplier_to_divider(multiplier):
     else:
         return 1
 
-def csv_line_sensor(circuit, name, id, unit, datatype="SIR"):
+def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    if int(id, 16) in known_values_sensors:
+    converter = converters_map[sensor.converter]
+    if len(converter.values) > 0:
+        values = converter.values
+        type = converter.type
+    elif int(sensor.id, 16) in known_values_sensors:
+        print(f'Warning: using manual sensor values for {sensor.name}')
         values = known_values_sensors[int(id, 16)]
+        type = 'UIR'
     else:
         values = ""
-    return f'r,{circuit},{name},{name},,,4022,{id},,,{datatype},{values},{unit},\n'
+        type = "SIR"
+    return f'r,{sensor.device_lowercase},{sensor.name},{sensor.name},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
-def csv_line_param_read(circuit, name, id, unit, datatype="SIR"):
+def csv_line_param_read(circuit, name, id, unit, datatype):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     if int(id, 16) in known_values_params:
         values = known_values_params[int(id, 16)]
@@ -67,7 +116,7 @@ def csv_line_param_read(circuit, name, id, unit, datatype="SIR"):
         values = ""
         return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,Max,,{datatype},,{unit},,Min,,{datatype},,{unit},,Step,,{datatype},,{unit},,Default,,{datatype},,{unit},\n'
  
-def csv_line_param_write(circuit, name, id, unit, datatype="SIR"):
+def csv_line_param_write(circuit, name, id, unit, datatype):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     if int(id, 16) in known_values_params:
         values = known_values_params[int(id, 16)]
@@ -88,7 +137,7 @@ def datatype_from_sign(is_signed):
 def csv_from_device_sensor(device_sensor):
     file_str = csv_header
     for sensor in device_sensor.sensors:
-        file_str += csv_line_sensor(device_sensor.name, sensor.name, sensor.id, sensor.unit)
+        file_str += csv_line_sensor(sensor)
     return file_str
 
 def csv_from_device_param(device_param, is_basic):
