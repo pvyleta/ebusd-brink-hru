@@ -6,14 +6,13 @@ import glob
 files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
 
 value_type_dict = {
-    
-    
     '': "",
     'rpm': "rpm",
     'm3/h': "m³/h",
     'm3': "m³",
     'Pa': "Pa",
     'Â°C': "°C",
+    '°C': "°C",
     'PPM': "ppm",
     'Hour': "Hour",
     'Steps': "Steps",
