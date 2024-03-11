@@ -67,7 +67,8 @@ manual_current_to_converter = {
 }
     
 # assign converters to each sensor in each device
-dict_devices_sensor = sensor_data.get_dict_devices_sensor()
+cmd_dict, cmd_bytes_dict = sensor_data.get_commands_dict()
+dict_devices_sensor = sensor_data.get_dict_devices_sensor(cmd_dict, cmd_bytes_dict)
 for device_name_lower, device in dict_devices_sensor.items():
 
     # flair units have a shared converter under the name 'flair'
@@ -102,7 +103,7 @@ for device_name_lower, device in dict_devices_sensor.items():
             device_converters_unused.pop(name_param_manual, None)
             continue
 
-        # If everything else fails, we have manually searched for the most suitable converter from otehr units
+        # If everything else fails, we manually search for the most suitable converter from otehr units
         # TODO Mark these sensors somehow, since there may have been a reason the parameter was hidden for certain units
         # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
@@ -122,7 +123,7 @@ for device_name_lower,  device in dict_devices_sensor.items():
         else:
             used_converters_set.add(sensor.converter)
 
-if True:
+if False:
     print("converters_map = {") 
     for converter in sorted(list(used_converters_set)):
         print(f'    "{converter}": "",')

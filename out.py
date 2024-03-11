@@ -29,18 +29,22 @@ known_values_params = {
 }
 
 # Manually retrieved values from various sources other than decompiling
-known_values_sensors = {
+# Note: The naming is a bit off, they do not apply to Elan and Flair in all cases, and sometimes are incomplete.
+manual_values_sensors = {
     0x01: "0=Min;1=Low;2=Medium;3=High", # FanMode
     0x0e: "0=Initialize;1=Opening;2=Closing;3=Open;4=Closed;5=Error;255=Unknown", # BypassStatus
     0x0f: "0=Initialize;1=Disabled;2=Enabled;3=Testmode;255=Unknown", # PreheaterStatus
-    #TODO incomplete and not applicable to all units (elan, flair)
-    # 0x11: "0=Initialize;1=Const. Flow;2=Const. RPM;3=Off;4=Error", # FanStatus
-    #TODO incomplete and not applicable to all units (elan, flair)
-    # 0x16: "0=Initialize;1=No Frost;2=Defrost Wait;3=Heater;4=Error;5=Velu Heater;6=Velu Unbalance;7=Unbalanace", # FrostStatus
+    0x11: "0=Initialize;1=Const. Flow;2=Const. RPM;3=Off;4=Error", # FanStatus
+    0x16: "0=Initialize;1=No Frost;2=Defrost Wait;3=Heater;4=Error;5=Velu Heater;6=Velu Unbalance;7=Unbalanace", # FrostStatus
     0x18: "0=Clean;1=Dirty", # FilterStatus
     0x1d: "0=Initialize;1=Disabled;2=Enabled", # PostheaterStatus
     0x1f: "2=Precool;1=Disabled;0=Preheat", # EWTStatus
     0x21: "0=Error;1=Not Initialized;2=Sensor Not Active;3=PowerUp Delay;4=Normal RH;5=Boost Rising;6=Boost Stable;7=Boost Decending", # HumidityBoostState
+}
+
+# Sometimes we know the enum even if the UI retrieved converter would give only conversion to a number
+manual_values_sensors_subset = {
+    0x18: "0=Clean;1=Dirty", # FilterStatus
 }
 
 class Converter:
@@ -53,6 +57,9 @@ class Converter:
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
         # TODO the convertion between '[]Converter' and 'Converter[]' is not 1:1 and should be done per-file - especially for the elan and flair units e.g. frost is different.
         #     "UInt16ToMRCDeviceStatusConverter": Converter("UIR", 1, "0=NotInConfig;1=NotFound;2=Error;3=OK"),
+
+        # TODO filter state converter is largely unused which is a shame
+        #     "UInt16ToFilterStateConverter": Converter("UIR", 1, "0=Clean;1=Dirty"),
 converters_map = {
     "Int16ToPercentageFact10Converter": Converter("SIR", 10, 2, ""),
     "Int16ToTemperatureConverterFact10": Converter("SIR", 10, 2, ""),
@@ -83,6 +90,11 @@ converters_map = {
     "unknown": Converter("SIR", 1, 2, ""),
 }
 
+# TODO figure out length for default and unknown converters
+# TODO add special instructions and special handling
+# TODO define handling of scan response
+# TODO add default slave address for the known devices
+
 def multiplier_to_divider(multiplier):
     if multiplier < 1:
         return 1 / multiplier
@@ -97,13 +109,14 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
     if len(converter.values) > 0:
         values = converter.values
         type = converter.type
-    elif int(sensor.id, 16) in known_values_sensors:
+    elif int(sensor.id, 16) in manual_values_sensors:
         print(f'Warning: using manual sensor values for {sensor.name}')
-        values = known_values_sensors[int(id, 16)]
+        values = manual_values_sensors[int(id, 16)]
         type = 'UIR'
     else:
         values = ""
         type = "SIR"
+
     return f'r,{sensor.device_lowercase},{sensor.name},{sensor.name},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
 def csv_line_param_read(circuit, name, id, unit, datatype):
@@ -111,6 +124,7 @@ def csv_line_param_read(circuit, name, id, unit, datatype):
     if int(id, 16) in known_values_params:
         values = known_values_params[int(id, 16)]
         # for known enum we ignore the min/max/step parameters; we only care about the default
+        # TODO add the above comment into comment in CSV
         return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,,,IGN:3,,,,Default,,{datatype},{values},{unit},\n'
     else:
         values = ""
@@ -153,9 +167,9 @@ def csv_from_device_param(device_param, is_basic):
             file_str += csv_line_param_write(device_param.name, param.name, param.id, param.unit, datatype_from_sign(param.is_signed))
     return file_str
 
-
+# Contents of output_dir are always cleaned before writing
+# File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_files(dict_devices_sensor, devices_param):
-    # Output is placed in 'out' dir; contents are always cleaned in advance
     shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
