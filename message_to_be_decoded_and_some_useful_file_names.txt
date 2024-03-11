@@ -1,0 +1,84 @@
+
+AllureActualStateDataBlock3 = 203
+2024-03-03 21:10:01.288 [update notice] received unknown MS cmd: 1f3c40cb0401010003 / 020003
+
+Batch command   a
+1f	3c	40cb	04		01		01		00		03
+src	dst	code	len								fan speed
+
+
+AllureActualStateDataBlock2 = 202 - this is the command. use this to find out how to parse it
+2024-03-03 21:10:01.414 [update notice] received unknown MS cmd: 1f3c40ca0101 / 060003005f2000
+
+1f 	3c 	40ca 	01 		01
+
+2024-03-03 21:10:01.571 [update notice] received unknown MS cmd: 1f3c40a3040103a5a5 / 0b 15 20 00 00 00 03 00 00 04 00 00
+
+1f	3c	40a3	04		01		03		a5		a5
+
+----------------- 
+	  
+2024-03-05 00:59:29.328 [update info] received MS cmd: 1f3c070400 / [0a] [40] [08 12 00 21 03] [ff ff] [ff ff]
+
+ApplianceCommon.cs - has the parsing of scan messages, ConvertByteToApplianceCustomer, ConvertApplianceTypeToApplianceByte
+
+ebusd --checkconfig -c /config/ebusd-configuration/latest/en
+
+HandleIdentificationRequestResponse - checks 0704 scan request responses
+
+HandleResponse_ReadActualDeviceID -> might be needed to get the real sw version - CmdReadActualDeviceID, CmdReadActualSerialNumber, CmdReadActualSoftwareVersion
+HandleResponse_ReadActualSoftwareVersion
+HandleResponse_ReadActualDeviceID
+
+
+Changing Slave ID: 
+
+    private void btnOk_Click(object sender, RoutedEventArgs e)
+    {
+      bool flag = true;
+      if (this._slaveNumber != (short) 0)
+        flag = BCSDialog.ShowQuestion("ChangeSlaveNumberDialogTitle", "ChangeSlaveNumberDialogWarningQuestion");
+      if (flag)
+      {
+        this._wtwDataItemMng.SendRequestCommand(WTWDataItem.DataItemType.WriteParameter, new byte[3]
+        {
+          this._eBusSlaveNumberIndex,
+          (byte) ((uint) this._slaveNumber >> 8),
+          (byte) ((uint) this._slaveNumber & (uint) byte.MaxValue)
+        });
+        this.DialogResult = new bool?(true);
+      }
+      else
+        this.DialogResult = new bool?(false);
+    }
+	
+	
+This is some sort of adjustment for some params?
+
+    private void UpdateInfo(int argParameterIndex, byte[] argParameterData)
+    {
+      switch (this._parameterIndexList[argParameterIndex])
+      {
+        case 28:
+          this._dirtyFilterM3Setpoint = this.BytesToShort(argParameterData[1], argParameterData[2]);
+          break;
+        case 34:
+          this.FilterDaysLeft = this.BytesToShort(argParameterData[1], argParameterData[2]);
+          break;
+        case 35:
+          this.FilterM3Left = ((int) this._dirtyFilterM3Setpoint - (int) this.BytesToShort(argParameterData[1], argParameterData[2])) * 1000;
+          break;
+        case 36:
+          this.TotalOperatingHours = (int) this.BytesToShort(argParameterData[1], argParameterData[2]) * 5;
+          break;
+        case 37:
+          this.TotalOperatingM3 = (int) this.BytesToShort(argParameterData[1], argParameterData[2]) * 1000;
+          break;
+      }
+    }
+	
+figure out datatype through WTWdataIdtemLogger
+
+appliancecommon file has sw version parsing
+
+Vitovent are Viessmann manufacturer types

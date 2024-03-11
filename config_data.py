@@ -79,7 +79,7 @@ def get_devices_param():
                 if match:
                     params[-1].values(match.group(1),match.group(2),match.group(3),match.group(4),match.group(5))
 
-            # Flair units have a two different base classes, we manually overwrite the relevant base class values
+            # Flair units have two different base classes, we manually overwrite the relevant base class values
             if "name_flair_1" in device_dict:
                 device_dict["name"] = device_dict["name_flair_1"]
                 device_dict["params_basic"] = "57"

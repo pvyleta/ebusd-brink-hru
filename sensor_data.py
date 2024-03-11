@@ -1,9 +1,26 @@
 import re
 import glob
 
-# Now let's parse the sensor data
+def get_device_to_actual_param_to_datatype():
+    device_to_actual_param_to_datatype = {}
+    files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
+    for file in files_view_model:
+        
+        match = re.search(f'BCSServiceTool/ViewModel/Devices.*\\\\(?P<name>\\w+)ActualState.*ViewModel_...cs$', file)
+        if match:
+            device_name_lower = match.group('name').lower()
+            device_to_actual_param_to_datatype.setdefault(device_name_lower, {})
 
-files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
+        with open(file) as f:
+            datafile = f.readlines()
+            for line in datafile:
+                #     this.ActualFanState = itemResponseType.WordValue;
+                match = re.search('this.(?P<actual_name>\\w*) = itemResponseType.(?P<datatype>\\w*);', line)
+                if match:
+                    device_to_actual_param_to_datatype[device_name_lower][match.group('actual_name')] = match.group('datatype')
+
+    return device_to_actual_param_to_datatype
+
 
 value_type_dict = {
     '': "",
@@ -22,7 +39,7 @@ value_type_dict = {
 }
 
 class Sensor:
-    def __init__(self, device_lowercase, id, name, name_current, unit, update_rate, cmd=None):
+    def __init__(self, device_lowercase, id, name, name_current, unit, update_rate, cmd=None, datatype=None):
         self.device_lowercase = device_lowercase
         self.id = id
         self.name = name
@@ -31,6 +48,7 @@ class Sensor:
         self.update_rate = update_rate
         self.converter = ""
         self.cmd = cmd
+        self.datatype = datatype
 
 class DeviceSensor:
     def __init__(self, name, first_version, last_version, sensors):
@@ -57,12 +75,13 @@ class CommandEBus:
     def __eq__(self, other):
         return vars(self) == vars(other)
 
+# TODO must be done per-device
 def get_commands_dict():
     cmd_dict = {}
     cmd_bytes_dict = {}
     files_commands = glob.glob('./BCSServiceTool/BusinessLogic/Commands/*Commands.cs', recursive=True)
     for file in files_commands:
-        with open("./BCSServiceTool/BusinessLogic/Commands/FlairEBusCommands.cs") as f:
+        with open(file) as f:
             datafile = f.readlines()
             for line in datafile:
                 #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);
@@ -73,9 +92,13 @@ def get_commands_dict():
                     
                     # Sanity checks - if command is present more than once, it must the an identical command, otherwise throw an error
                     if cmd.cmd in cmd_dict:
-                        assert cmd == cmd_dict[cmd.cmd]
+                        if cmd != cmd_dict[cmd.cmd]:
+                            print("cmd_dict: " + str(vars(cmd)))
+                            print("cmd_dict: " + str(vars(cmd_dict[cmd.cmd])))
                     if command_bytes in cmd_bytes_dict:
-                        assert cmd == cmd_bytes_dict[command_bytes]
+                        if cmd != cmd_bytes_dict[command_bytes]:
+                            print("cmd_bytes_dict: " + str(vars(cmd)))
+                            print("cmd_bytes_dict: " + str(vars(cmd_bytes_dict[command_bytes])))
                     
                     cmd_dict[cmd.cmd] = cmd
                     cmd_bytes_dict[command_bytes] = cmd
@@ -85,11 +108,15 @@ def get_commands_dict():
 def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
     dict_devices_sensor = {}
     missing_commands_set = set()
+    
+    files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
     for file in files_sensor:
         # This skips the Flair base class, which contains no sensor definitions
         if "FlairBase" in file:
             print("sensor: skipping file " + file)
             continue
+
+        # TODO get device name from filename
         
         with open(file) as f:
             device_dict = {}

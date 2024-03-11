@@ -5,6 +5,13 @@ import out
 import sensor_data
 import config_data
 
+
+# TODO figure out length for default and unknown converters
+# TODO add special instructions and special handling
+# TODO figure out signdness for config parameters
+# TODO define handling of scan response
+# TODO add default slave address for the known devices
+
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
 # Get converters
@@ -26,6 +33,7 @@ manual_current_to_param_conversion = {
     "CurrentHardwareVersionUIFModule" : "paramBaseHardwareVersion", # Vitovent300WH32SC325 speciality
 }
 
+# TODO add ActualNAmes for these converters
 # Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
 manual_current_to_converter = {
     "CurrentDipswitchValue" : "UInt16ToUNumberConverter", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
@@ -69,6 +77,7 @@ manual_current_to_converter = {
 # assign converters to each sensor in each device
 cmd_dict, cmd_bytes_dict = sensor_data.get_commands_dict()
 dict_devices_sensor = sensor_data.get_dict_devices_sensor(cmd_dict, cmd_bytes_dict)
+device_to_actual_param_to_datatype = sensor_data.get_device_to_actual_param_to_datatype()
 for device_name_lower, device in dict_devices_sensor.items():
 
     # flair units have a shared converter under the name 'flair'
@@ -107,8 +116,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         # TODO Mark these sensors somehow, since there may have been a reason the parameter was hidden for certain units
         # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
-            sensor.converter = converter
-            device_converters_unused.pop(name_param_manual, None)
+            sensor.converter = converters.converters_map[converter]
             continue
         
         print(f"Error: Sensor not found: device: {device.name} lower: {device_name_lower} name: {sensor.name} name_current: {sensor.name_current} name_param: {name_param}")
@@ -118,10 +126,10 @@ sensors_without_converters_set = set()
 used_converters_set = set()        
 for device_name_lower,  device in dict_devices_sensor.items():
     for sensor in device.sensors:
-        if sensor.converter == "":
-            sensors_without_converters_set.add(sensor.name + "_" + device_name_lower)
-        else:
+        if sensor.converter:
             used_converters_set.add(sensor.converter)
+        else:
+            sensors_without_converters_set.add(sensor.name + "_" + device_name_lower)
 
 if False:
     print("converters_map = {") 
@@ -138,6 +146,4 @@ for device_name_lower, device in device_to_name_param_to_converter_unused.items(
 
 print("converter_fields_without_sensor_set: "+ str(len(converter_sensor_unused_set)) )
 
-
-
-out.write_files(dict_devices_sensor, config_data.get_devices_param())
+out.write_csv_files(dict_devices_sensor, config_data.get_devices_param())

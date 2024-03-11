@@ -1,0 +1,14 @@
+### BRINK CO2 sensor
+##
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series and some other systems that are identical
+## You may need to modify the 7c address in the next 2 lines for your brand/model. Or just uncomment the necessary lines.
+
+## Brink CO2 sensor
+*r,co2,,,,0a,4050,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+*w,co2,,,,0a,4050,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+#### SENSOR DATA ####
+r,,CO2SensorAValue,40a100,,,40a1,,,,UIR,,,Address,,,UIR,,,,,,UIR,,ppm,Value
+w,,GrensHoog,4080039103e8,,,4080,91,,,UIR,,ppm
+w,,GransLaag,4080039002bc,,,4080,90,,,UIR,,ppm
+Almere, 10230 Wp, ZZW, 36°
