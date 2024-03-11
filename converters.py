@@ -65,12 +65,13 @@ list_converters = [
 
 
 class Converter:
-    def __init__(self, type, multiplier, length, values, name=None):
-        self.name = name
+    def __init__(self, type, multiplier, length, values, name_actual=None):
+        self.name = None
         self.type = type
         self.multiplier = multiplier
         self.length = length
         self.values = values
+        self.name_actual = None
     
     def set_name_actual(self, name_actual):
         self.name_actual = name_actual
@@ -160,7 +161,7 @@ def find_converters():
                 if m:
                     name_param = m.group('name_param')
                     converter = copy.deepcopy(converters_map[m.group('converter')])
-                    converter.set_name_actual = m.group('name_actual')
+                    converter.set_name_actual(m.group('name_actual'))
 
                     device_to_name_param_to_converter[device_name_lower][name_param] = converter
 
@@ -169,7 +170,7 @@ def find_converters():
                 if m:
                     name_param = m.group('name_param')
                     converter = copy.deepcopy(converters_map["default"])
-                    converter.set_name_actual = m.group('name_actual')
+                    converter.set_name_actual(m.group('name_actual'))
                     
                     device_to_name_param_to_converter[device_name_lower][name_param] = converter
     

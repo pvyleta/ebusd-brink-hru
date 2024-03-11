@@ -4,11 +4,11 @@ import converters
 import out
 import sensor_data
 import config_data
+import params
 
 
 # TODO figure out length for default and unknown converters
 # TODO add special instructions and special handling
-# TODO figure out signdness for config parameters
 # TODO define handling of scan response
 # TODO add default slave address for the known devices
 
@@ -77,7 +77,6 @@ manual_current_to_converter = {
 # assign converters to each sensor in each device
 cmd_dict, cmd_bytes_dict = sensor_data.get_commands_dict()
 dict_devices_sensor = sensor_data.get_dict_devices_sensor(cmd_dict, cmd_bytes_dict)
-device_to_actual_param_to_datatype = sensor_data.get_device_to_actual_param_to_datatype()
 for device_name_lower, device in dict_devices_sensor.items():
 
     # flair units have a shared converter under the name 'flair'
@@ -124,26 +123,49 @@ for device_name_lower, device in dict_devices_sensor.items():
 # Now we have added all known converters to all known fields - but there are potential missed matches -> we calculate their count for debugging purposses
 sensors_without_converters_set = set()   
 used_converters_set = set()        
-for device_name_lower,  device in dict_devices_sensor.items():
+for device_name_lower, device in dict_devices_sensor.items():
     for sensor in device.sensors:
         if sensor.converter:
             used_converters_set.add(sensor.converter)
         else:
             sensors_without_converters_set.add(sensor.name + "_" + device_name_lower)
 
-if False:
+if params.DEBUG:
     print("converters_map = {") 
     for converter in sorted(list(used_converters_set)):
         print(f'    "{converter}": "",')
     print("}")
       
-print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)) )
+
+# Get datatype for sensors
+device_to_actual_param_to_datatype = sensor_data.get_device_to_actual_param_to_datatype()
+sensors_without_datatypes = 0
+sensor_datatypes_set = set()
+for device_name_lower, device in dict_devices_sensor.items():
+
+    # device_to_actual_param_to_datatype stores all flair units under "flair"
+    if device_name_lower:
+        device_name = "flair"
+    else:
+        device_name = device_name_lower
+
+    for sensor in device.sensors:
+        sensor.datatype = device_to_actual_param_to_datatype[device_name].get(sensor.converter.name_actual, None)
+        sensor_datatypes_set.add(sensor.datatype)
+        if not sensor.datatype:
+            if False:
+                print(sensor.name + " " + str(sensor.converter))
+            sensors_without_datatypes +=1
+
 
 converter_sensor_unused_set = set()  
 for device_name_lower, device in device_to_name_param_to_converter_unused.items():
     for sensor_name in device:       
         converter_sensor_unused_set.add(sensor_name + "_" + device_name_lower)
 
+print("sensor_datatypes_set: " + str(sensor_datatypes_set))
+print("sensors_without_datatypes: "+ str(sensors_without_datatypes) )
+print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)) )
 print("converter_fields_without_sensor_set: "+ str(len(converter_sensor_unused_set)) )
 
 out.write_csv_files(dict_devices_sensor, config_data.get_devices_param())

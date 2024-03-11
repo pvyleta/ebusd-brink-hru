@@ -1,6 +1,9 @@
 import re
 import glob
+import params
 
+
+# TODO ActualStateViewModel_ has conversion between the type handler and 'Current' name -> can be likely more useful than 'actual' parsing through converters
 def get_device_to_actual_param_to_datatype():
     device_to_actual_param_to_datatype = {}
     files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
@@ -20,7 +23,6 @@ def get_device_to_actual_param_to_datatype():
                     device_to_actual_param_to_datatype[device_name_lower][match.group('actual_name')] = match.group('datatype')
 
     return device_to_actual_param_to_datatype
-
 
 value_type_dict = {
     '': "",
@@ -79,6 +81,8 @@ class CommandEBus:
 def get_commands_dict():
     cmd_dict = {}
     cmd_bytes_dict = {}
+    cmd_dict_conflict_counter = 0
+    cmd_bytes_dict_conflict_counter = 0
     files_commands = glob.glob('./BCSServiceTool/BusinessLogic/Commands/*Commands.cs', recursive=True)
     for file in files_commands:
         with open(file) as f:
@@ -93,15 +97,22 @@ def get_commands_dict():
                     # Sanity checks - if command is present more than once, it must the an identical command, otherwise throw an error
                     if cmd.cmd in cmd_dict:
                         if cmd != cmd_dict[cmd.cmd]:
-                            print("cmd_dict: " + str(vars(cmd)))
-                            print("cmd_dict: " + str(vars(cmd_dict[cmd.cmd])))
+                            cmd_dict_conflict_counter += 1
+                            if params.DEBUG:
+                                print("Warning: Duplicate: cmd_dict: " + str(vars(cmd)))
+                                print("Warning: Duplicate: cmd_dict: " + str(vars(cmd_dict[cmd.cmd])))
                     if command_bytes in cmd_bytes_dict:
                         if cmd != cmd_bytes_dict[command_bytes]:
-                            print("cmd_bytes_dict: " + str(vars(cmd)))
-                            print("cmd_bytes_dict: " + str(vars(cmd_bytes_dict[command_bytes])))
+                            cmd_bytes_dict_conflict_counter += 1
+                            if params.DEBUG:
+                                print("Warning: Duplicate: cmd_bytes_dict: " + str(vars(cmd)))
+                                print("Warning: Duplicate: cmd_bytes_dict: " + str(vars(cmd_bytes_dict[command_bytes])))
                     
                     cmd_dict[cmd.cmd] = cmd
                     cmd_bytes_dict[command_bytes] = cmd
+
+    print("cmd_dict_conflict_counter: " + str(cmd_dict_conflict_counter))
+    print("cmd_bytes_dict_conflict_counter: " + str(cmd_bytes_dict_conflict_counter))
 
     return cmd_dict, cmd_bytes_dict
 

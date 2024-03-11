@@ -42,6 +42,15 @@ manual_values_sensors = {
     0x21: "0=Error;1=Not Initialized;2=Sensor Not Active;3=PowerUp Delay;4=Normal RH;5=Boost Rising;6=Boost Stable;7=Boost Decending", # HumidityBoostState
 }
 
+# Convert the type from BrinkServiceTool to ebusd .csv file type
+sensor_datatype_conversion = {
+    'WordSignedValue': "SIR", 
+    'WordValue': "UIR",
+    'LongValue': "ULR",
+    'WordTruncString': "UIR",
+    'WordString': "UIR",
+}
+
 # Sometimes we know the enum even if the UI retrieved converter would give only conversion to a number
 manual_values_sensors_subset = {
     0x18: "0=Clean;1=Dirty", # FilterStatus
