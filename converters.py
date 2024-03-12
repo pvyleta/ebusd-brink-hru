@@ -177,7 +177,7 @@ converters_map = {
     "default": Converter("default","HEX:*", 1, 0, ""),
     "unknown": Converter("unknown","SIR", 1, 2, ""),
 
-    # TODO figure out if these converters are used
+    # TODO figure out if these converters are used - and if not, why?
     "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02","UIR", 1, 2, ""),

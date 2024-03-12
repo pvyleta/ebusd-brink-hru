@@ -56,9 +56,8 @@ def csv_line_param_read(circuit, name, id, unit, datatype):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     if int(id, 16) in known_values_params:
         values = known_values_params[int(id, 16)]
-        # for known enum we ignore the min/max/step parameters; we only care about the default
-        # TODO add the above comment into comment in CSV
-        return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,,,IGN:3,,,,Default,,{datatype},{values},{unit},\n'
+        comment = 'This field has also "min/max/step" fields - but we skip them since we only care for the dafault'
+        return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,,,IGN:3,,,,Default,,{datatype},{values},{unit},{comment}\n'
     else:
         values = ""
         return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,Max,,{datatype},,{unit},,Min,,{datatype},,{unit},,Step,,{datatype},,{unit},,Default,,{datatype},,{unit},\n'

@@ -9,7 +9,6 @@ import params
 
 # TODO figure out length for default and unknown converters
 # TODO add special instructions and special handling
-# TODO define handling of scan response
 # TODO add default slave address for the known devices
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
@@ -33,7 +32,6 @@ manual_current_to_param_conversion = {
     "CurrentHardwareVersionUIFModule" : "paramBaseHardwareVersion", # Vitovent300WH32SC325 speciality
 }
 
-# TODO add ActualNAmes for these converters
 # Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
 manual_current_to_converter = {
     "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
@@ -115,7 +113,6 @@ for device_name_lower, device in dict_devices_sensor.items():
             continue
 
         # If everything else fails, we manually search for the most suitable converter from otehr units
-        # TODO Mark these sensors somehow, since there may have been a reason the parameter was hidden for certain units
         # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
             sensor.converter = converters.converters_map[converter]
