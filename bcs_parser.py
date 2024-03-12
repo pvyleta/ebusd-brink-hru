@@ -107,10 +107,7 @@ for device_name_lower, device in dict_devices_sensor.items():
             continue
 
         # If everything else fails, we manually search for the most suitable converter from otehr units
-        # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
-            if "CurrentImageVersionUIFModule" == sensor.name_current:
-                pass
             sensor.converter = converters.converters_map[converter]
             sensor.converter_match = "manual_full"
             continue
