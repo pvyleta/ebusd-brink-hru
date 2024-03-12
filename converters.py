@@ -201,6 +201,7 @@ converters_map = {
     "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus","UIR", 1, 2, ""), # length based on CmdReadActualUIFButtons
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing","ULR", 1, 4, ""), # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus","HEX:9", 1, 9, ""), # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
+    "ConverterUCharToNumber": Converter("ConverterUCharToNumber","UCH", 1, 1, ""),    
 }
 
 param_to_converter_manual = {

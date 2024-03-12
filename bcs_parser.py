@@ -30,21 +30,16 @@ manual_current_to_param_conversion = {
 }
 
 # Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
-# TODO test what fields are still used after recent changes
 manual_current_to_converter = {
     "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
-    "CurrentEBusAddressing" : "ConverterUInt32ToEBusAddressing", # Manually created 'dummy' converter
+    "CurrentEBusAddressing" : "ConverterUInt32ToEBusAddressing", # unknown; we create out own empty converter
     "CurrenteBusPowerStatus": "ConverterUInt16ToEBusPowerState", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
     "CurrentEBusSyncGenErrorCount" : "ConverterUInt16ToUNumber", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
     "CurrentExhaustFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
     "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
     "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
     "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
-
-    # Some flair specific stuff
-    "CurrentDeviceID" : "ConverterUInt32ToDeviceID", # TODO for flair response is 4; for others (only elan) it is 1; ElanReadActualDeviceID
     "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
-    "CurrentUIFButtonsStatus" : "ConverterUInt16ToUIFButtonsStatus", # TODO flair length 2; elan length 1
 
     # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
     "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
@@ -64,6 +59,8 @@ manual_current_to_converter = {
     "CurrentPressureInlet" : "ConverterUInt16ToPressure", 
     "CurrentRelativeHumidity" : "ConverterInt16ToPercentageFact10", 
 }
+
+manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
     
 # assign converters to each sensor in each device
 cmd_dict, cmd_bytes_dict = sensor_data.get_commands_dict()
@@ -110,7 +107,25 @@ for device_name_lower, device in dict_devices_sensor.items():
         if converter := manual_current_to_converter.get(sensor.name_current, None):
             sensor.converter = converters.converters_map[converter]
             sensor.converter_match = "manual_full"
+            manual_current_to_converter_unused.pop(sensor.name_current, None)
             continue
+
+        # Sigh, there are two very special cases, where the length of the field is different for different units,
+        # and no converter is paired through the code, so we just manually fill those:
+        if "flair" in device_name_lower or "vitovent" in device_name_lower:
+            if "CurrentDeviceID" == sensor.name_current:
+                sensor.converter = converters.converters_map["ConverterUInt32ToDeviceID"]
+                continue
+            elif "CurrentUIFButtonsStatus" == sensor.name_current:
+                sensor.converter = converters.converters_map["ConverterUInt16ToUIFButtonsStatus"]
+                continue
+        elif "elan" in device_name_lower:
+            if "CurrentDeviceID" == sensor.name_current:
+                sensor.converter = converters.converters_map["ConverterUCharToNumber"] # see ElanReadActualDeviceID
+                continue
+            elif "CurrentUIFButtonsStatus" == sensor.name_current:
+                sensor.converter = converters.converters_map["ConverterUCharToNumber"]
+                continue
         
         print(f"Error: Sensor not found: device: {device.name} lower: {device_name_lower} name: {sensor.name} name_current: {sensor.name_current} name_param: {name_param}")
             
@@ -163,6 +178,7 @@ for device_name_lower, device in device_to_name_param_to_converter_unused.items(
     for sensor_name in device:       
         converter_sensor_unused_set.add(sensor_name + "_" + device_name_lower)
 
+print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
 print("default_converter_set: " + str(default_converter_set))
 print("unknown_converter_set: " + str(unknown_converter_set))
 print("sensor_datatypes_set: " + str(sensor_datatypes_set))
