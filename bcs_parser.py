@@ -174,3 +174,5 @@ print("sensors_without_converters_set: " + str(len(sensors_without_converters_se
 print("converter_fields_without_sensor_set: "+ str(len(converter_sensor_unused_set)) )
 
 out.write_csv_files(dict_devices_sensor, config_data.get_devices_param())
+
+print("SUCCESS")
