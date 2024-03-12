@@ -27,27 +27,24 @@ manual_current_to_param_conversion = {
     "CurrentCO2Sensor2Status" : "paramCO2Sensor2Value", # conversion missing for all units for no apparent reason
     "CurrentCO2Sensor3Status" : "paramCO2Sensor3Value", # conversion missing for all units for no apparent reason
     "CurrentCO2Sensor4Status" : "paramCO2Sensor4Value", # conversion missing for all units for no apparent reason
-    "CurrentSoftwareVersionUIFModule" : "paramBaseSoftwareVersion", # Vitovent300WH32SC325 speciality
-    "CurrentHardwareVersionUIFModule" : "paramBaseHardwareVersion", # Vitovent300WH32SC325 speciality
 }
 
 # Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
+# TODO test what fields are still used after recent changes
 manual_current_to_converter = {
     "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
-    "CurrentEBusAddressing" : "unknown", # 
+    "CurrentEBusAddressing" : "ConverterUInt32ToEBusAddressing", # Manually created 'dummy' converter
     "CurrenteBusPowerStatus": "ConverterUInt16ToEBusPowerState", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
     "CurrentEBusSyncGenErrorCount" : "ConverterUInt16ToUNumber", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
     "CurrentExhaustFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentHardwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
     "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
     "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
     "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
-    "CurrentSoftwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
 
     # Some flair specific stuff
-    "CurrentDeviceID" : "unknown", 
-    "CurrentDeviceType" : "unknown",
-    "CurrentUIFButtonsStatus" : "unknown",
+    "CurrentDeviceID" : "ConverterUInt32ToDeviceID", # TODO for flair response is 4; for others (only elan) it is 1; ElanReadActualDeviceID
+    "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
+    "CurrentUIFButtonsStatus" : "ConverterUInt16ToUIFButtonsStatus", # TODO flair length 2; elan length 1
 
     # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
     "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
@@ -59,7 +56,7 @@ manual_current_to_converter = {
     "CurrentHumidityBoostState" : "ConverterUInt16ToHumidityBoostState", 
     "CurrentInletFlow" : "ConverterUInt16ToUNumber", 
     "CurrentInsideTemperature" : "ConverterInt16ToTemperatureFact10", 
-    "CurrentMRCConfigurationStatus" : "unknown", 
+    "CurrentMRCConfigurationStatus" : "ConverterByteArrayToMRCConfigurationStatus", 
     "CurrentOptionTemperature" : "ConverterInt16ToTemperatureFact10", 
     "CurrentPostheaterPower" : "ConverterUInt16ToUNumber", 
     "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # TODO This would not work on 'old flair'

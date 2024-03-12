@@ -147,6 +147,7 @@ class Converter:
     def __hash__(self):
         return hash(str(self))
 
+# TODO figure out if all of these converters are used - and if not, why?
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
 converters_map = {
     "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10","SIR", 10, 2, ""),
@@ -173,10 +174,7 @@ converters_map = {
     "ConverterUInt16ToValveStatus": Converter("ConverterUInt16ToValveStatus","UIR", 1, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
     "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction","UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
     "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber","ULR", 1, 4, ""),
-    
-    "unknown": Converter("unknown","SIR", 1, 2, ""),
 
-    # TODO figure out if these converters are used - and if not, why?
     "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02","UIR", 1, 2, ""),
@@ -193,12 +191,16 @@ converters_map = {
     "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode","UIR", 1, 2, ""),
 
-    
     # Following block of converters is manually created; these converters do not exist otherwise in code
     "ConverterByteArrayToSoftwareVersion": Converter("ConverterByteArrayToSoftwareVersion","STR:13", 1, 13, ""), # length based on appropriate CommandEBus CmdReadActualSoftwareVersion
     "ConverterByteArrayToSerialNumber": Converter("ConverterByteArrayToSerialNumber","STR:12", 1, 12, ""), # length based on appropriate CommandEBus CmdReadActualSerialNumber
     "ConverterByteArrayToHardwareVersion": Converter("ConverterByteArrayToHardwareVersion","STR:4", 1, 4, ""), # length based on appropriate CommandEBus CmdReadActualHardwareVersionBase
     "ConverterUInt16ToVirtualDipswitch": Converter("ConverterUInt16ToVirtualDipswitch","UIR", 1, 2, ""), # length based on HandleReadVirtualDipswitchResponse; I am far from confident I got the length and offset in the message correct
+    "ConverterUInt32ToDeviceID": Converter("ConverterUInt32ToDeviceID","ULR", 1, 4, ""), # length based on CmdReadParameterDeviceID
+    "ConverterUInt16ToDeviceType": Converter("ConverterUInt16ToDeviceType","UIR", 1, 2, ""), # length based on CmdReadParameterDeviceType
+    "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus","UIR", 1, 2, ""), # length based on CmdReadActualUIFButtons
+    "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing","ULR", 1, 4, ""), # length based on CmdReadActualEBusAddressing
+    "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus","HEX:9", 1, 9, ""), # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
 }
 
 param_to_converter_manual = {
