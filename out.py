@@ -34,6 +34,8 @@ sensor_datatype_conversion = {
     'WordValue': "UIR",
     'LongValue': "ULR",
     'WordTruncString': "UIR",
+
+    # TODO this is likely wrong - word string is osmething else
     'WordString': "UIR",
 }
 

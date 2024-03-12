@@ -7,7 +7,6 @@ import config_data
 import params
 
 
-# TODO figure out length for default and unknown converters
 # TODO add special instructions and special handling
 # TODO add default slave address for the known devices
 
@@ -42,15 +41,12 @@ manual_current_to_converter = {
     "CurrentHardwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
     "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
     "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
-    "CurrentSoftwareVersion" : "default", # Missing for many units, but present for some
+    "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
     "CurrentSoftwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
 
     # Some flair specific stuff
     "CurrentDeviceID" : "unknown", 
     "CurrentDeviceType" : "unknown",
-    "CurrentImageVersionUIFModule" : "unknown", # Not easy to figure out, DynamicResource, parameterDescriptionUIFImageVersion
-    "CurrentLanguageVersionUIFModule" : "unknown", # Not easy to figure out, DynamicResource, parameterDescriptionUIFLanguageVersion
-    "CurrentLocalUIFSwitchPosition" : "unknown",
     "CurrentUIFButtonsStatus" : "unknown",
 
     # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
@@ -98,10 +94,11 @@ for device_name_lower, device in dict_devices_sensor.items():
         
         # Try the 'base' flair converter as a backup for vitovent units
         if "vitovent" in device_name_lower:
-            if converter := device_to_name_param_to_converter["flair"].get(name_param, None):
+            name_param_flair = device_to_name_current_to_name_param_dict["flair"].get(sensor.name_current, None)
+            if converter := device_to_name_param_to_converter["flair"].get(name_param_flair, None):
                 sensor.converter = converter
                 sensor.converter_match = "from_code_flair"
-                device_to_name_param_to_converter_unused["flair"].pop(name_param, None)
+                device_to_name_param_to_converter_unused["flair"].pop(name_param_flair, None)
                 continue
         
         # For some parameters the convertors are listed, but the conversion path is broken, so we manually connect the dots
@@ -115,6 +112,8 @@ for device_name_lower, device in dict_devices_sensor.items():
         # If everything else fails, we manually search for the most suitable converter from otehr units
         # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
+            if "CurrentImageVersionUIFModule" == sensor.name_current:
+                pass
             sensor.converter = converters.converters_map[converter]
             sensor.converter_match = "manual_full"
             continue
@@ -142,6 +141,8 @@ if params.DEBUG:
 device_to_actual_param_to_datatype = sensor_data.get_device_to_actual_param_to_datatype()
 sensors_without_datatypes = 0
 sensor_datatypes_set = set()
+default_converter_set = set()
+unknown_converter_set = set()
 for device_name_lower, device in dict_devices_sensor.items():
 
     # device_to_actual_param_to_datatype stores all flair units under "flair"
@@ -158,12 +159,18 @@ for device_name_lower, device in dict_devices_sensor.items():
                 print(sensor.name + " " + str(sensor.converter))
             sensors_without_datatypes +=1
 
+        if sensor.converter.name == 'default':
+            default_converter_set.add(device_name_lower + " " + sensor.name)
+        elif sensor.converter.name == 'unknown':
+            unknown_converter_set.add(device_name_lower + " " + sensor.name)
 
 converter_sensor_unused_set = set()  
 for device_name_lower, device in device_to_name_param_to_converter_unused.items():
     for sensor_name in device:       
         converter_sensor_unused_set.add(sensor_name + "_" + device_name_lower)
 
+print("default_converter_set: " + str(default_converter_set))
+print("unknown_converter_set: " + str(unknown_converter_set))
 print("sensor_datatypes_set: " + str(sensor_datatypes_set))
 print("sensors_without_datatypes: "+ str(sensors_without_datatypes) )
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)) )

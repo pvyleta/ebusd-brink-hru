@@ -11,7 +11,7 @@ r,constantrpm400,SwitchPosition,SwitchPosition,,,4022,06,,,UIR,0=Position_0;1=Po
 r,constantrpm400,Contact1Position,Contact1Position,,,4022,1B,,,UIR,0=Off;1=On,,
 r,constantrpm400,Contact2Position,Contact2Position,,,4022,1C,,,UIR,0=Off;1=On,,
 r,constantrpm400,DipswitchValue,DipswitchValue,,,4022,04,,,UIR,,,
-r,constantrpm400,SoftwareVersion,SoftwareVersion,,,4022,00,,,HEX:*,,,
+r,constantrpm400,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,constantrpm400,BypassStatus,BypassStatus,,,4022,0E,,,UIR,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error,,
 r,constantrpm400,BypassCurrent,BypassCurrent,,,4022,0D,,,UIR,,,
 r,constantrpm400,PreheaterStatus,PreheaterStatus,,,4022,0F,,,UIR,0=Initializing;1=Off;2=On,,

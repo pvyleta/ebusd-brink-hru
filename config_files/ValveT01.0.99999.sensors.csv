@@ -1,8 +1,8 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-r,valvet01,SoftwareVersion,SoftwareVersion,,,4022,00,,,HEX:*,,,
+r,valvet01,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,valvet01,DeviceID,DeviceID,,,4022,80,,,UIR,,,
 r,valvet01,EBusAddressing,EBusAddressing,,,4022,50,,,SIR,,,
-r,valvet01,SerialNumber,SerialNumber,,,4022,51,,,HEX:*,,,
+r,valvet01,SerialNumber,SerialNumber,,,4022,51,,,STR:12,,,
 r,valvet01,OperatingTime,OperatingTime,,,4022,83,,,ULR,,Hour,
 r,valvet01,ValveStatus,ValveStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating,,
 r,valvet01,ValvePosition,ValvePosition,,,4022,81,,,UIR,,,

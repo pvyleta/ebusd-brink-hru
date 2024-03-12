@@ -174,7 +174,6 @@ converters_map = {
     "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction","UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
     "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber","ULR", 1, 4, ""),
     
-    "default": Converter("default","HEX:*", 1, 0, ""),
     "unknown": Converter("unknown","SIR", 1, 2, ""),
 
     # TODO figure out if these converters are used - and if not, why?
@@ -193,6 +192,30 @@ converters_map = {
     "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode","UIR", 1, 2, ""),
+
+    
+    # Following block of converters is manually created; these converters do not exist otherwise in code
+    "ConverterByteArrayToSoftwareVersion": Converter("ConverterByteArrayToSoftwareVersion","STR:13", 1, 13, ""), # length based on appropriate CommandEBus CmdReadActualSoftwareVersion
+    "ConverterByteArrayToSerialNumber": Converter("ConverterByteArrayToSerialNumber","STR:12", 1, 12, ""), # length based on appropriate CommandEBus CmdReadActualSerialNumber
+    "ConverterByteArrayToHardwareVersion": Converter("ConverterByteArrayToHardwareVersion","STR:4", 1, 4, ""), # length based on appropriate CommandEBus CmdReadActualHardwareVersionBase
+    "ConverterUInt16ToVirtualDipswitch": Converter("ConverterUInt16ToVirtualDipswitch","UIR", 1, 2, ""), # length based on HandleReadVirtualDipswitchResponse; I am far from confident I got the length and offset in the message correct
+}
+
+param_to_converter_manual = {
+    "paramSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramPlusSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramBaseSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramUIFSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramUIFImageTblVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramUIFLanguageTblVersion": "ConverterByteArrayToSoftwareVersion",
+    "paramExtensionSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
+    
+    "paramBaseHardwareVersion": "ConverterByteArrayToHardwareVersion",
+    "paramUIFHardwareVersion": "ConverterByteArrayToHardwareVersion",
+    "paramExtensionHardwareVersion": "ConverterByteArrayToHardwareVersion",
+
+    "paramSerialNumber": "ConverterByteArrayToSerialNumber",
+    "paramVirtualDipswitch": "ConverterUInt16ToVirtualDipswitch",
 }
 
 def find_converters():
@@ -237,7 +260,7 @@ def find_converters():
             matches = re.finditer(f'<my:ParameterField Name="(?P<name_param>\\w*)"([^<>]*)FieldValue="{{Binding Path=(?P<name_actual>\\w*)}}', file_str)
             for m in matches:
                 name_param = m.group('name_param')
-                converter = copy.deepcopy(converters_map["default"])
+                converter = copy.deepcopy(converters_map[param_to_converter_manual[name_param]])
                 converter.set_name_actual(m.group('name_actual'))
                 
                 device_to_name_param_to_converter[device_name_lower][name_param] = converter
