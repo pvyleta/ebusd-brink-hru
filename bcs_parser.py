@@ -94,6 +94,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         name_param = device_to_name_current_to_name_param_dict[device_name_lower].get(sensor.name_current, None)
         if converter := device_converters.get(name_param, None):
             sensor.converter = converter
+            sensor.converter_match = "from_code"
             device_converters_unused.pop(name_param, None)
             continue
         
@@ -101,6 +102,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         if "vitovent" in device_name_lower:
             if converter := device_to_name_param_to_converter["flair"].get(name_param, None):
                 sensor.converter = converter
+                sensor.converter_match = "from_code_flair"
                 device_to_name_param_to_converter_unused["flair"].pop(name_param, None)
                 continue
         
@@ -108,6 +110,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         name_param_manual = manual_current_to_param_conversion.get(sensor.name_current, None)
         if converter := device_converters.get(name_param_manual, None):
             sensor.converter = converter
+            sensor.converter_match = "manual_param"
             device_converters_unused.pop(name_param_manual, None)
             continue
 
@@ -116,6 +119,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         # TODO the device type is likely viessmann/brink, so we might figure that out from code
         if converter := manual_current_to_converter.get(sensor.name_current, None):
             sensor.converter = converters.converters_map[converter]
+            sensor.converter_match = "manual_full"
             continue
         
         print(f"Error: Sensor not found: device: {device.name} lower: {device_name_lower} name: {sensor.name} name_current: {sensor.name_current} name_param: {name_param}")

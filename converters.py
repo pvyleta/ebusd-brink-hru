@@ -72,6 +72,9 @@ class Converter:
         self.length = length
         self.values = values
         self.name_actual = None
+
+    def set_match_type(self, match_type):
+        self.match_type = match_type
     
     def set_name_actual(self, name_actual):
         self.name_actual = name_actual

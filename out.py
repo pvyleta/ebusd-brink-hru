@@ -100,6 +100,8 @@ def csv_line_param_write(circuit, name, id, unit, datatype):
  
 csv_header = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
+
+# TODO add length checks from CMDs
 def datatype_from_sign(is_signed):
     if is_signed == "true":
         return "SIR"

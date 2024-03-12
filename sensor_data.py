@@ -48,9 +48,11 @@ class Sensor:
         self.name_current = name_current
         self.unit = unit
         self.update_rate = update_rate
-        self.converter = ""
         self.cmd = cmd
         self.datatype = datatype
+        
+        self.converter = None
+        self.converter_match = ""
 
 class DeviceSensor:
     def __init__(self, name, first_version, last_version, sensors):
