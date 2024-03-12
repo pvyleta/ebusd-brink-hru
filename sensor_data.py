@@ -10,9 +10,8 @@ def get_device_to_actual_param_to_datatype():
     for file in files_view_model:
         
         match = re.search(f'BCSServiceTool/ViewModel/Devices.*\\\\(?P<name>\\w+)ActualState.*ViewModel_...cs$', file)
-        if match:
-            device_name_lower = match.group('name').lower()
-            device_to_actual_param_to_datatype.setdefault(device_name_lower, {})
+        device_name_lower = match.group('name').lower()
+        device_to_actual_param_to_datatype.setdefault(device_name_lower, {})
 
         with open(file) as f:
             datafile = f.readlines()
@@ -61,11 +60,6 @@ class DeviceSensor:
         self.last_version = last_version
         self.sensors = sensors
 
-search_list_sensor = [
-    ("name", "(private|public) static (?P<match>.*)ParameterDataModel_.. (I|i)nstance;"),
-    ("first_version", "public (new )?const uint VALID_FIRST_VERSION = (?P<match>.*);"),
-    ("last_version", "public (new )?const uint VALID_LAST_VERSION = (?P<match>.*);"),
-]
 
 class CommandEBus:
     def __init__(self, cmd, pbsb, len, id, write_len, read_len):
@@ -118,6 +112,12 @@ def get_commands_dict():
 
     return cmd_dict, cmd_bytes_dict
 
+
+search_list_sensor = [
+    ("first_version", "public (new )?const uint VALID_FIRST_VERSION = (?P<match>.*);"),
+    ("last_version", "public (new )?const uint VALID_LAST_VERSION = (?P<match>.*);"),
+]
+
 def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
     dict_devices_sensor = {}
     missing_commands_set = set()
@@ -128,11 +128,13 @@ def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
         if "FlairBase" in file:
             print("sensor: skipping file " + file)
             continue
-
-        # TODO get device name from filename
+        
+        device_dict = {}
+        match = re.search(f'BCSServiceTool/Model/Devices.*\\\\(?P<name>\\w+)ParameterDataModel_...cs$', file)
+        device_dict['name'] = match.group('name')
+        device_name_lower = device_dict['name'].lower()
         
         with open(file) as f:
-            device_dict = {}
             sensors = []
             datafile = f.readlines()
 
@@ -158,19 +160,19 @@ def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
                     if command_bytes not in cmd_bytes_dict:
                         missing_commands_set.add(command_bytes)
                         
-                    sensors.append(Sensor(device_dict['name'].lower(), match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
+                    sensors.append(Sensor(device_name_lower, match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
                     continue
 
                 # We need to check separately for flair units that have different definition
                 # this._currentSoftwareVersion = new ParameterData("parameterDescriptionSoftwareVersion", "", (ushort) 60, FlairEBusCommands.CmdReadActualSoftwareVersion.Cmd);
                 match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), FlairEBusCommands\\.(?P<cmd>.*)\\.Cmd.;', line)
                 if match:
-                    sensors.append(Sensor(device_dict['name'].lower(), cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
+                    sensors.append(Sensor(device_name_lower, cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
                     continue
 
             device_dict["sensors"] = sensors
             device = DeviceSensor(**device_dict)
-            dict_devices_sensor[device.name.lower()] = device
+            dict_devices_sensor[device_name_lower] = device
 
     print("Info: missing commands definition: " + str(missing_commands_set))
 
