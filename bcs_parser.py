@@ -36,14 +36,14 @@ manual_current_to_param_conversion = {
 # TODO add ActualNAmes for these converters
 # Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
 manual_current_to_converter = {
-    "CurrentDipswitchValue" : "UInt16ToUNumberConverter", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
+    "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
     "CurrentEBusAddressing" : "unknown", # 
-    "CurrenteBusPowerStatus": "UInt16ToEBusPowerStateConverter", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentEBusSyncGenErrorCount" : "UInt16ToUNumberConverter", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
-    "CurrentExhaustFanPWMValue" : "UInt16ToUNumberConverter",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
+    "CurrenteBusPowerStatus": "ConverterUInt16ToEBusPowerState", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
+    "CurrentEBusSyncGenErrorCount" : "ConverterUInt16ToUNumber", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
+    "CurrentExhaustFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
     "CurrentHardwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
-    "CurrentInletFanPWMValue" : "UInt16ToUNumberConverter",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentPerilexPosition" : "UInt16ToFanSwitchConverter", # paramPerilexPosition; Mising for Sky units
+    "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
+    "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
     "CurrentSoftwareVersion" : "default", # Missing for many units, but present for some
     "CurrentSoftwareVersionExtensionModule" : "unknown", # Vitovent300WH32SC325 speciality
 
@@ -56,22 +56,22 @@ manual_current_to_converter = {
     "CurrentUIFButtonsStatus" : "unknown",
 
     # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
-    "CurrentBypassCurrent" : "UInt16ToUNumberConverter", 
-    "CurrentBypassStatus" : "UInt16ToBypassStatusConverter", 
-    "CurrentContact1Position" : "UInt16ToOnOffConverter", 
-    "CurrentContact2Position" : "UInt16ToOnOffConverter", 
-    "CurrentEWTStatus" : "UInt16ToEWTStatusConverter", 
-    "CurrentExhaustFlow" : "UInt16ToUNumberConverter", 
-    "CurrentHumidityBoostState" : "UInt16ToHumidityBoostStateConverter", 
-    "CurrentInletFlow" : "UInt16ToUNumberConverter", 
-    "CurrentInsideTemperature" : "Int16ToTemperatureConverterFact10", 
+    "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
+    "CurrentBypassStatus" : "ConverterUInt16ToBypassStatus", 
+    "CurrentContact1Position" : "ConverterUInt16ToOnOff", 
+    "CurrentContact2Position" : "ConverterUInt16ToOnOff", 
+    "CurrentEWTStatus" : "ConverterUInt16ToEWTStatus", 
+    "CurrentExhaustFlow" : "ConverterUInt16ToUNumber", 
+    "CurrentHumidityBoostState" : "ConverterUInt16ToHumidityBoostState", 
+    "CurrentInletFlow" : "ConverterUInt16ToUNumber", 
+    "CurrentInsideTemperature" : "ConverterInt16ToTemperatureFact10", 
     "CurrentMRCConfigurationStatus" : "unknown", 
-    "CurrentOptionTemperature" : "Int16ToTemperatureConverterFact10", 
-    "CurrentPostheaterPower" : "UInt16ToUNumberConverter", 
-    "CurrentPostheaterStatus" : "UInt16ToHeaterStatusConverter", 
-    "CurrentPressureExhaust" : "UInt16ToPressureConverter", 
-    "CurrentPressureInlet" : "UInt16ToPressureConverter", 
-    "CurrentRelativeHumidity" : "Int16ToPercentageFact10Converter", 
+    "CurrentOptionTemperature" : "ConverterInt16ToTemperatureFact10", 
+    "CurrentPostheaterPower" : "ConverterUInt16ToUNumber", 
+    "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # TODO This would not work on 'old flair'
+    "CurrentPressureExhaust" : "ConverterUInt16ToPressure", 
+    "CurrentPressureInlet" : "ConverterUInt16ToPressure", 
+    "CurrentRelativeHumidity" : "ConverterInt16ToPercentageFact10", 
 }
     
 # assign converters to each sensor in each device
@@ -157,7 +157,7 @@ for device_name_lower, device in dict_devices_sensor.items():
         sensor.datatype = device_to_actual_param_to_datatype[device_name].get(sensor.converter.name_actual, None)
         sensor_datatypes_set.add(sensor.datatype)
         if not sensor.datatype:
-            if False:
+            if params.DEBUG:
                 print(sensor.name + " " + str(sensor.converter))
             sensors_without_datatypes +=1
 

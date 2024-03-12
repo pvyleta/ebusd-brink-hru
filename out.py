@@ -28,20 +28,6 @@ known_values_params = {
     0x44: "0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown", # ModbusParity
 }
 
-# Manually retrieved values from various sources other than decompiling
-# Note: The naming is a bit off, they do not apply to Elan and Flair in all cases, and sometimes are incomplete.
-manual_values_sensors = {
-    0x01: "0=Min;1=Low;2=Medium;3=High", # FanMode
-    0x0e: "0=Initialize;1=Opening;2=Closing;3=Open;4=Closed;5=Error;255=Unknown", # BypassStatus
-    0x0f: "0=Initialize;1=Disabled;2=Enabled;3=Testmode;255=Unknown", # PreheaterStatus
-    0x11: "0=Initialize;1=Const. Flow;2=Const. RPM;3=Off;4=Error", # FanStatus
-    0x16: "0=Initialize;1=No Frost;2=Defrost Wait;3=Heater;4=Error;5=Velu Heater;6=Velu Unbalance;7=Unbalanace", # FrostStatus
-    0x18: "0=Clean;1=Dirty", # FilterStatus
-    0x1d: "0=Initialize;1=Disabled;2=Enabled", # PostheaterStatus
-    0x1f: "2=Precool;1=Disabled;0=Preheat", # EWTStatus
-    0x21: "0=Error;1=Not Initialized;2=Sensor Not Active;3=PowerUp Delay;4=Normal RH;5=Boost Rising;6=Boost Stable;7=Boost Decending", # HumidityBoostState
-}
-
 # Convert the type from BrinkServiceTool to ebusd .csv file type
 sensor_datatype_conversion = {
     'WordSignedValue': "SIR", 
@@ -49,11 +35,6 @@ sensor_datatype_conversion = {
     'LongValue': "ULR",
     'WordTruncString': "UIR",
     'WordString': "UIR",
-}
-
-# Sometimes we know the enum even if the UI retrieved converter would give only conversion to a number
-manual_values_sensors_subset = {
-    0x18: "0=Clean;1=Dirty", # FilterStatus
 }
 
 def multiplier_to_divider(multiplier):
@@ -66,16 +47,8 @@ def multiplier_to_divider(multiplier):
 
 def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    if len(sensor.converter.values) > 0:
-        values = sensor.converter.values
-        type = sensor.converter.type
-    elif int(sensor.id, 16) in manual_values_sensors:
-        print(f'Warning: using manual sensor values for {sensor.name}')
-        values = manual_values_sensors[int(id, 16)]
-        type = 'UIR'
-    else:
-        values = ""
-        type = "SIR"
+    values = sensor.converter.values
+    type = sensor.converter.type
 
     return f'r,{sensor.device_lowercase},{sensor.name},{sensor.name},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
@@ -129,6 +102,7 @@ def csv_from_device_param(device_param, is_basic):
             file_str += csv_line_param_write(device_param.name, param.name, param.id, param.unit, datatype_from_sign(param.is_signed))
     return file_str
 
+# TODO Add comment to converters that were filled manually
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_csv_files(dict_devices_sensor, devices_param):
