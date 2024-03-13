@@ -32,8 +32,8 @@ class Parameter:
         self.step = step
         self.default = default
 
-class Device:
-    def __init__(self, name: str, params_basic: str, params_plus: str, first_version: str, last_version: str, params: str, controller_code: str):
+class DeviceParameters:
+    def __init__(self, name: str, params_basic: str, params_plus: str, first_version: str, last_version: str, params: list[Parameter], controller_code: str):
         self.name = name
         self.params_basic = params_basic
         self.params_plus = params_plus
@@ -54,12 +54,12 @@ search_list_params = [
     ("controller_code", "public (new )?const (uint|byte) CONTROLLER_CODE = (?P<match>.*);"),
 ]
 
-def get_devices_param():
-    devices_param = []
+def get_device_parameters() -> dict[str, DeviceParameters]:
+    device_parameters: list[DeviceParameters] = []
     for file in files_params:
         with open(file) as f:
-            device_dict = {}
-            params = []
+            device_dict: dict[str, str] = {}
+            params: list[Parameter] = []
             datafile = f.readlines()
 
             # The files first contain some constants that are useful
@@ -94,9 +94,9 @@ def get_devices_param():
                 if match:
                     params[-1].values(match.group(1),match.group(2),match.group(3),match.group(4),match.group(5))
 
-
             device_dict["params"] = params
-            device = Device(**device_dict)
-            devices_param.append(device)
+            device = DeviceParameters(**device_dict)
+
+            device_parameters.append(device)
     
-    return devices_param
+    return device_parameters

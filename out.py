@@ -3,6 +3,7 @@ import shutil
 
 import sensor_data
 import config_data
+import dev
 
 output_dir = "config_files"
 
@@ -29,17 +30,6 @@ known_values_params = {
     0x44: "0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown", # ModbusParity
 }
 
-# Convert the type from BrinkServiceTool to ebusd .csv file type
-sensor_datatype_conversion = {
-    'WordSignedValue': "SIR", 
-    'WordValue': "UIR",
-    'LongValue': "ULR",
-    'WordTruncString': "UIR",
-
-    # TODO this is likely wrong - word string is osmething else
-    'WordString': "UIR",
-}
-
 def multiplier_to_divider(multiplier: str):
     multiplier_float = float(multiplier)
     if multiplier_float < 1:
@@ -54,25 +44,27 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
     values = sensor.converter.values
     type = sensor.converter.type
 
-    return f'r,{sensor.device_lowercase},{sensor.name},{sensor.name},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
+    return f'r,{sensor.device_lowercase},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
 def csv_line_param_read(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
+    datatype = datatype_from_sign(param.is_signed)
     if int(param.id, 16) in known_values_params:
         values = known_values_params[int(param.id, 16)]
         comment = 'This field has also "min/max/step" fields - but we skip them since we only care for the dafault'
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype_from_sign(param.is_signed)},{values},{param.unit},{comment}\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},,Max,,{datatype_from_sign(param.is_signed)},,{param.unit},,Min,,{datatype_from_sign(param.is_signed)},,{param.unit},,Step,,{datatype_from_sign(param.is_signed)},,{param.unit},,Default,,{datatype_from_sign(param.is_signed)},,{param.unit},\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,Max,,{datatype},,{param.unit},,Min,,{datatype},,{param.unit},,Step,,{datatype},,{param.unit},,Default,,{datatype},,{param.unit},\n'
  
 def csv_line_param_write(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
+    datatype = datatype_from_sign(param.is_signed)
     if int(param.id, 16) in known_values_params:
         values = known_values_params[int(param.id, 16)]
     else:
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},\n'
+    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype},{values},{param.unit},\n'
  
 csv_header = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
@@ -85,9 +77,9 @@ def datatype_from_sign(is_signed):
     else:
         raise 0
     
-def csv_from_device_sensor(device_sensor):
+def csv_from_sensors(sensors):
     file_str = csv_header
-    for sensor in device_sensor.sensors:
+    for sensor in sensors:
         file_str += csv_line_sensor(sensor)
     return file_str
 
@@ -107,15 +99,15 @@ def csv_from_device_param(device_param, is_basic):
 # TODO Add comment to converters that were filled manually
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
-def write_csv_files(dict_devices_sensor, devices_param):
+def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Sensor]], device_parameters: list[config_data.DeviceParameters]):
     shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
-    for device in dict_devices_sensor.values():
+    for device, sensors in dict_devices_sensor.items():
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_sensor(device))
+            text_file.write(csv_from_sensors(sensors))
 
-    for device in devices_param:
+    for device in device_parameters:
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(device, True))
             

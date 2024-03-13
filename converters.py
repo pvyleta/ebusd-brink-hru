@@ -2,6 +2,7 @@ import glob
 import re
 import copy
 
+import dev
 
 # All converters from BCSServiceTool/Converters
 list_converters = [
@@ -120,36 +121,32 @@ list_converters_files = [
     "ConverterUnitTypeToString",
 ]
 class Converter:
-    def __init__(self, name: str, type: str, multiplier: str, length: str, values: str, name_actual=None):
-        self.name = name
-        self.type = type
-        self.multiplier = multiplier
-        self.length = length
-        self.values = values
-        self.name_actual = None
-        self.converter_str = None
+    def __init__(self, name: str, type: str, multiplier: str, length: str, values: str):
+        self.name: str = name
+        self.type: str  = type
+        self.multiplier: str  = multiplier
+        self.length: str  = length
+        self.values: str  = values
 
-    def set_match_type(self, match_type: str):
-        self.match_type = match_type
-    
-    def set_name_actual(self, name_actual: str):
-        self.name_actual = name_actual
-
-    def set_converter_str(self, converter_str: str):
-        self.converter_str = converter_str
+        self.name_actual: str  = None
+        self.converter_str: str  = None
+        self.match_type: str  = None
 
     def __eq__(self, other):
-        return vars(self) == vars(other)
+        return str(self) == str(other)
     
     def __str__(self):
-        return str(vars(self))
+        return str([vars(self)[key] for key in sorted(vars(self).keys())])
     
     def __hash__(self):
         return hash(str(self))
+    
+    def __repr__(self):
+        return str(self)
 
 # TODO figure out if all of these converters are used - and if not, why?
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
-converters_map = {
+converters_map: dict[str, Converter] = {
     "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10","SIR", 10, 2, ""),
     "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10","SIR", 10, 2, ""),
     "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10","SIR", 10, 2, ""),
@@ -175,6 +172,7 @@ converters_map = {
     "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction","UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
     "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber","ULR", 1, 4, ""),
 
+    # FIXME following converters should be filled in!
     "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02","UIR", 1, 2, ""),
     "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02","UIR", 1, 2, ""),
@@ -204,7 +202,8 @@ converters_map = {
     "ConverterUCharToNumber": Converter("ConverterUCharToNumber","UCH", 1, 1, ""),    
 }
 
-param_to_converter_manual = {
+# For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them
+param_to_converter_manual: dict[str, str] = {
     "paramSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
     "paramPlusSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
     "paramBaseSoftwareVersion": "ConverterByteArrayToSoftwareVersion",
@@ -221,23 +220,28 @@ param_to_converter_manual = {
     "paramVirtualDipswitch": "ConverterUInt16ToVirtualDipswitch",
 }
 
-def find_converters():
+def find_converters() -> dict[dev.DeviceView, dict[str, Converter]]:
     files_converters = glob.glob('./BCSServiceTool/View/Devices/**/*actual*view_*.xaml', recursive=True)
-    device_to_name_param_to_converter = {}
+    device_to_name_param_to_converter: dict[str, dict[str, Converter]] = {}
     converters_str = "|".join(list_converters)
 
     for file in files_converters:
-        # retrieve the device name
-        match = re.search(f'BCSServiceTool/View/Devices.*\\\\(?P<name>\\w+)actual.*view_...xaml$', file)
-        device_name_lower = match.group('name').lower()
-        device_to_name_param_to_converter.setdefault(device_name_lower, {})
-
-        converter_dict = {}
         with open(file) as f:
             file_str = f.read().replace('\n', ' ')
 
+            # <UserControl x:Class="BrinkClimatSystems.BCSServiceTool.View.Devices.CWLTower300.CWLTower300ActualStateView_01"
+            match = re.search(r'x:Class="BrinkClimatSystems\.BCSServiceTool\.View.Devices\.\w*\.(?P<name>\w+)ActualState(Sub\d)?View_\d(?P<view_no>\d)".*Resources', file_str) # added 'resources' to filter out base-class xamls
+            if not match:
+                print("converters: skipping file: " + file)
+                continue
+            
+            dev_view = dev.DeviceView(match.group('name'), match.group('view_no'))
+            device_to_name_param_to_converter.setdefault(dev_view, {})
+            
             # Find the right Converter based on the referenced StaticResource string
+            # Note: Flair units have sub views, some converters are declared in multiple sub views, but they are used only in one of them
             # <local:ConverterUInt16ToFanMode x:Key="UInt16ToFanModeConverter"/>
+            converter_dict = {}
             matches = re.finditer(f'<local:(?P<converter_file>Converter\\w*) x:Key="(?P<converter_str>\\w*Converter\\w*)"/>', file_str)
             for m in matches:
                 converter_str = m.group('converter_str')
@@ -255,45 +259,58 @@ def find_converters():
                 name_param = m.group('name_param')
                 converter_file = converter_dict[m.group('converter_str')]
                 converter = copy.deepcopy(converters_map[converter_file])
-                converter.set_name_actual(m.group('name_actual'))
-                converter.set_converter_str(m.group('converter_str'))
+                converter.name_actual = m.group('name_actual')
+                converter.converter_str = m.group('converter_str')
 
-                device_to_name_param_to_converter[device_name_lower][name_param] = converter
+                assert not (converter_in_dict := device_to_name_param_to_converter[dev_view].get(name_param)) or converter_in_dict == converter
+                device_to_name_param_to_converter[dev_view][name_param] = converter
 
             matches = re.finditer(f'<my:ParameterField Name="(?P<name_param>\\w*)"([^<>]*)FieldValue="{{Binding Path=(?P<name_actual>\\w*)}}', file_str)
             for m in matches:
                 name_param = m.group('name_param')
                 converter = copy.deepcopy(converters_map[param_to_converter_manual[name_param]])
-                converter.set_name_actual(m.group('name_actual'))
+                converter.name_actual = m.group('name_actual')
                 
-                device_to_name_param_to_converter[device_name_lower][name_param] = converter
+                assert name_param not in device_to_name_param_to_converter[dev_view]
+                device_to_name_param_to_converter[dev_view][name_param] = converter
     
     return device_to_name_param_to_converter
 
-def device_to_name_current_to_name_param():
-    device_to_name_current_to_name_param_dict = {}
-    files = glob.glob('./BCSServiceTool/View/Devices/**/*Actual*.xaml.cs', recursive=True)
-    for file in files:
-        # Matches the name - name can be identified as the repeated string in the file name
-        match = re.search(r'(\w{3,}?)\1+(.*)', file)
-        if not match:
-            print("converter: skipping file " + file)
-            continue
-
-        name = match.group(1).lower()
-
-        # Special case of Nather300 being in Nather dir breaking pattern for any other HRU
-        if name == "nather":
-            name += "300"
-        
-        device_to_name_current_to_name_param_dict.setdefault(name, {})
-
+def device_to_name_current_to_name_param() -> dict[str, dict[str, str]]:
+    device_to_name_current_to_name_param_dict: dict[str, dict[str, str]] = {}
+    files = glob.glob('./BCSServiceTool/View/Devices/**/*ActualState*.xaml.cs', recursive=True)
+    for file in files:       
         with open(file) as f:
-            datafile = f.readlines()
-            for line in datafile:
-                # this.paramExtContact1.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentExtContact1Position.Description).ToString();
-                match = re.search(r'this\.(?P<name_param>.*)\.ParameterName = this.FindResource..object. this._viewModel\..*\.(?P<name_current>.*)\.Description', line)
-                if match:
-                    device_to_name_current_to_name_param_dict[name][match.group('name_current')] = match.group('name_param')
-                                
+            file_str = f.read()
+            
+            match1 = re.search(r'public (partial )?class (?P<name>\w+)ActualState(Sub\d)?View_\d(?P<view_no>\d)', file_str)
+            match2 = re.search(r'public const uint VALID_FIRST_VERSION = (?P<first_version>\d*);', file_str)
+            match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
+            match4 = re.search(r'SetUITextItems', file_str) # 'hack' to filter out any base classes without definitions
+            if not match4:
+                print("converters: skipping file: " + file)
+                continue
+
+            device = dev.Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            device_to_name_current_to_name_param_dict.setdefault(device, {})
+            # this.paramExtContact1.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentExtContact1Position.Description).ToString();
+            matches = re.finditer(r'this\.(?P<name_param>.*)\.ParameterName = this.FindResource\(\(object\) this\._viewModel\.\w*\.(?P<name_current>\w*)\.Description', file_str)
+            for m in matches:
+                # For whatever reason, a lot (if not all) units have switched CO2 Status and values; we manually fix those here.
+                #   this.paramCO2Sensor1Status.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentCO2Sensor1Value.Description).ToString();
+                #   this.paramCO2Sensor1Value.ParameterName = string.Empty;
+                name_param = m.group('name_param')
+                name_current = m.group('name_current')
+                if match_co2 := re.search(r'CurrentCO2Sensor(?P<co2_index>[0-9])Value', name_current):
+                    co2status = "CurrentCO2Sensor" + match_co2.group('co2_index') + "Status"
+                    co2ParamStatus = "paramCO2Sensor" + match_co2.group('co2_index') + "Status"
+                    co2ParamValue = "paramCO2Sensor" + match_co2.group('co2_index') + "Value"
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(name_current)) or name_param_in_dict == co2ParamValue
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(co2status)) or name_param_in_dict == co2ParamStatus
+                    device_to_name_current_to_name_param_dict[device][name_current] = co2ParamValue
+                    device_to_name_current_to_name_param_dict[device][co2status] = co2ParamStatus
+                else:
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(name_current)) or name_param_in_dict == name_param
+                    device_to_name_current_to_name_param_dict[device][name_current] = name_param
+                                            
     return device_to_name_current_to_name_param_dict

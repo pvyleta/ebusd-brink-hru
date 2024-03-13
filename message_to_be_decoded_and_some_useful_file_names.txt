@@ -112,3 +112,10 @@ def_global_uptime-payload = %global_prefix,
 193=CO2Sensor;
 
 ResetNotificationsDialog for resetting errors and filter
+
+
+parsing version str: 
+
+if !int.TryParse(!itemResponseType.WordString.Substring(2, 1).Equals(".")) ? 
+   itemResponseType.WordString.Substring(2, 1) + itemResponseType.WordString.Substring(4, 2) + itemResponseType.WordString.Substring(7, 2) : 
+   itemResponseType.WordString.Substring(1, 1) + itemResponseType.WordString.Substring(3, 2) + itemResponseType.WordString.Substring(6, 2),

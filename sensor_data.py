@@ -1,27 +1,10 @@
 import re
 import glob
-import params
+import copy
 
-
-# TODO ActualStateViewModel_ has conversion between the type handler and 'Current' name -> can be likely more useful than 'actual' parsing through converters
-def get_device_to_actual_param_to_datatype():
-    device_to_actual_param_to_datatype = {}
-    files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
-    for file in files_view_model:
-        
-        match = re.search(f'BCSServiceTool/ViewModel/Devices.*\\\\(?P<name>\\w+)ActualState.*ViewModel_...cs$', file)
-        device_name_lower = match.group('name').lower()
-        device_to_actual_param_to_datatype.setdefault(device_name_lower, {})
-
-        with open(file) as f:
-            datafile = f.readlines()
-            for line in datafile:
-                #     this.ActualFanState = itemResponseType.WordValue;
-                match = re.search('this.(?P<actual_name>\\w*) = itemResponseType.(?P<datatype>\\w*);', line)
-                if match:
-                    device_to_actual_param_to_datatype[device_name_lower][match.group('actual_name')] = match.group('datatype')
-
-    return device_to_actual_param_to_datatype
+import dev
+import command_ebus
+import converters
 
 value_type_dict = {
     '': "",
@@ -39,12 +22,46 @@ value_type_dict = {
     '%': "%"
 }
 
+# Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
+manual_current_to_converter = {
+    "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
+    "CurrentEBusAddressing" : "ConverterUInt32ToEBusAddressing", # unknown; we create out own empty converter
+    "CurrenteBusPowerStatus": "ConverterUInt16ToEBusPowerState", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
+    "CurrentEBusSyncGenErrorCount" : "ConverterUInt16ToUNumber", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
+    "CurrentExhaustFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
+    "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
+    "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
+    "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
+    "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
+
+    # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
+    "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
+    "CurrentBypassStatus" : "ConverterUInt16ToBypassStatus", 
+    "CurrentContact1Position" : "ConverterUInt16ToOnOff", 
+    "CurrentContact2Position" : "ConverterUInt16ToOnOff", 
+    "CurrentEWTStatus" : "ConverterUInt16ToEWTStatus", 
+    "CurrentExhaustFlow" : "ConverterUInt16ToUNumber", 
+    "CurrentHumidityBoostState" : "ConverterUInt16ToHumidityBoostState", 
+    "CurrentInletFlow" : "ConverterUInt16ToUNumber", 
+    "CurrentInsideTemperature" : "ConverterInt16ToTemperatureFact10", 
+    "CurrentMRCConfigurationStatus" : "ConverterByteArrayToMRCConfigurationStatus", 
+    "CurrentOptionTemperature" : "ConverterInt16ToTemperatureFact10", 
+    "CurrentPostheaterPower" : "ConverterUInt16ToUNumber", 
+    "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # Note: This would not work on 'old flair'; however, I don't see any way to find out if it is correct for the given device programatically, and it seems that for devices this is used, they should not use the 'old flair' version
+    "CurrentPressureExhaust" : "ConverterUInt16ToPressure", 
+    "CurrentPressureInlet" : "ConverterUInt16ToPressure", 
+    "CurrentRelativeHumidity" : "ConverterInt16ToPercentageFact10", 
+}
+
+manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
+
 class Sensor:
-    def __init__(self, device_lowercase, id, name, name_current, unit, update_rate, cmd=None, datatype=None):
+    def __init__(self, device_lowercase: str, id: str, name_description: str, name_current: str, name_param: str, unit: str, update_rate: str, cmd, datatype=None):
         self.device_lowercase = device_lowercase
         self.id = id
-        self.name = name
+        self.name_description = name_description
         self.name_current = name_current
+        self.name_param = name_param
         self.unit = unit
         self.update_rate = update_rate
         self.cmd = cmd
@@ -53,74 +70,29 @@ class Sensor:
         self.converter = None
         self.converter_match = ""
 
-class DeviceSensor:
-    def __init__(self, name, first_version, last_version, sensors):
-        self.name = name
-        self.first_version = first_version
-        self.last_version = last_version
-        self.sensors = sensors
-
-
-class CommandEBus:
-    def __init__(self, cmd, pbsb, len, id, write_len, read_len):
-        self.cmd = cmd
-        self.pbsb = pbsb
-        self.len = len
-        self.id = id
-        self.write_len = write_len
-        self.read_len = read_len
-    
     def __eq__(self, other):
-        return vars(self) == vars(other)
-
-# TODO must be done per-device
-def get_commands_dict():
-    cmd_dict = {}
-    cmd_bytes_dict = {}
-    cmd_dict_conflict_counter = 0
-    cmd_bytes_dict_conflict_counter = 0
-    files_commands = glob.glob('./BCSServiceTool/BusinessLogic/Commands/*Commands.cs', recursive=True)
-    for file in files_commands:
-        with open(file) as f:
-            datafile = f.readlines()
-            for line in datafile:
-                #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);
-                match = re.search('public static CommandEBus (?P<cmd>.*) = new CommandEBus."(?P<pbsb>....)(?P<len>..)(?P<id>.*)", .* (?P<write_len>.*), (?P<read_len>.*)U.;', line)
-                if match:
-                    cmd = CommandEBus(match.group('cmd'),match.group('pbsb'),match.group('len'),match.group('id'),match.group('write_len'),match.group('read_len'))
-                    command_bytes = cmd.pbsb + cmd.len + cmd.id
-                    
-                    # Sanity checks - if command is present more than once, it must the an identical command, otherwise throw an error
-                    if cmd.cmd in cmd_dict:
-                        if cmd != cmd_dict[cmd.cmd]:
-                            cmd_dict_conflict_counter += 1
-                            if params.DEBUG:
-                                print("Warning: Duplicate: cmd_dict: " + str(vars(cmd)))
-                                print("Warning: Duplicate: cmd_dict: " + str(vars(cmd_dict[cmd.cmd])))
-                    if command_bytes in cmd_bytes_dict:
-                        if cmd != cmd_bytes_dict[command_bytes]:
-                            cmd_bytes_dict_conflict_counter += 1
-                            if params.DEBUG:
-                                print("Warning: Duplicate: cmd_bytes_dict: " + str(vars(cmd)))
-                                print("Warning: Duplicate: cmd_bytes_dict: " + str(vars(cmd_bytes_dict[command_bytes])))
-                    
-                    cmd_dict[cmd.cmd] = cmd
-                    cmd_bytes_dict[command_bytes] = cmd
-
-    print("cmd_dict_conflict_counter: " + str(cmd_dict_conflict_counter))
-    print("cmd_bytes_dict_conflict_counter: " + str(cmd_bytes_dict_conflict_counter))
-
-    return cmd_dict, cmd_bytes_dict
-
+        return str(self) == str(other)
+    
+    def __str__(self):
+        return str([vars(self)[key] for key in sorted(vars(self).keys())])
+    
+    def __hash__(self):
+        return hash(str(self))
+    
+    def __repr__(self):
+        return str(self)
 
 search_list_sensor = [
     ("first_version", "public (new )?const uint VALID_FIRST_VERSION = (?P<match>.*);"),
     ("last_version", "public (new )?const uint VALID_LAST_VERSION = (?P<match>.*);"),
 ]
 
-def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
-    dict_devices_sensor = {}
-    missing_commands_set = set()
+def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus.CommandEBus], dict[str, command_ebus.CommandEBus]]]) -> dict[str, list[Sensor]]:
+
+    device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
+
+    dict_devices_sensor: dict[str, list[Sensor]] = {}
+    missing_commands_set: set[str] = set()
     
     files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
     for file in files_sensor:
@@ -129,51 +101,154 @@ def get_dict_devices_sensor(cmd_dict, cmd_bytes_dict):
             print("sensor: skipping file " + file)
             continue
         
-        device_dict = {}
-        match = re.search(f'BCSServiceTool/Model/Devices.*\\\\(?P<name>\\w+)ParameterDataModel_...cs$', file)
-        device_dict['name'] = match.group('name')
-        device_name_lower = device_dict['name'].lower()
-        
         with open(file) as f:
-            sensors = []
-            datafile = f.readlines()
+            file_str = f.read()
+            match1 = re.search(r'public (partial )?class (?P<name>\w+)ParameterDataModel_\d(?P<view_no>\d)', file_str)
+            match2 = re.search(r'public const uint VALID_FIRST_VERSION = (?P<first_version>\d*);', file_str)
+            match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
 
-            for line in datafile:
+            device = dev.Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            sensors: list[Sensor] = []
                 
-                # The files first contain some constants that are useful
-                for property, regex in search_list_sensor:
-                    match = re.search(regex, line)
-                    if match:
-                        device_dict[property] = match.group('match')
-                
-                # Then there is a line with sensor definition
-                # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
-                # TODO some flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
-                match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), "(?P<pbsb>....)(?P<len>..)(?P<id>..)".;', line)
-                if match:
-                    # Sanity checks
-                    assert match.group('pbsb') == "4022"
-                    assert match.group('len') == "01"
+            # Then there is a line with sensor definition
+            # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
+            matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), "(?P<pbsb>....)(?P<len>..)(?P<id>..)"\);', file_str)
+            for m in matches:
+                # Sanity checks
+                assert m.group('pbsb') == "4022"
+                assert m.group('len') == "01"
 
+                # Try finding the commands in te right category - else use the "Common" commands
+                command_bytes = m.group('pbsb') + m.group('len') + m.group('id')
+                command = None
+                for category in dev_commands:
+                    if category in device.name:
+                        if command_bytes in dev_commands[category][1]:
+                            command = dev_commands[category][1][command_bytes]
+                            break
+                if not command and command_bytes in dev_commands["Common"][1]:
+                    command = dev_commands["Common"][1][command_bytes]
+                else:
                     # Unfortunately, not all Commands are defined - at least track those that are missing
-                    command_bytes = match.group('pbsb') + match.group('len') + match.group('id')
-                    if command_bytes not in cmd_bytes_dict:
-                        missing_commands_set.add(command_bytes)
-                        
-                    sensors.append(Sensor(device_name_lower, match.group('id'),match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
-                    continue
+                    missing_commands_set.add(command_bytes)
 
-                # We need to check separately for flair units that have different definition
-                # this._currentSoftwareVersion = new ParameterData("parameterDescriptionSoftwareVersion", "", (ushort) 60, FlairEBusCommands.CmdReadActualSoftwareVersion.Cmd);
-                match = re.search('this._current(?P<name_current>.*) = new ParameterData."parameterDescription(?P<name>.*)", "(?P<unit>.*)", .* (?P<update_rate>.*), FlairEBusCommands\\.(?P<cmd>.*)\\.Cmd.;', line)
-                if match:
-                    sensors.append(Sensor(device_name_lower, cmd_dict[match.group('cmd')].id,match.group('name'),"Current"+match.group('name_current'),value_type_dict[match.group('unit')],match.group('update_rate'), cmd_bytes_dict.get(command_bytes, None)))
-                    continue
+                name_current = "Current" + m.group('name_current')
+                name_param = device_to_name_current_to_name_param_dict[device].get(name_current)
+                if not name_param:
+                    print(f'Missing param for {device.name.lower()} sensor {name_current}')
+                    
+                sensors.append(Sensor(device.name.lower(), m.group('id'),m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
-            device_dict["sensors"] = sensors
-            device = DeviceSensor(**device_dict)
-            dict_devices_sensor[device_name_lower] = device
+            # We need to check separately for flair units that have different definition
+            # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
+            # TODO some flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
+            matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), FlairEBusCommands\.(?P<cmd>\w*)\.Cmd\);', file_str)
+            for m in matches:
+                # TODO separate the flair parsing completely, it is very different from the above
+
+                # Try finding the commands in the right (=flair) category - else use the "Common" commands
+                cmd_name = m.group('cmd')
+                if cmd_name in dev_commands['Flair'][0]:
+                    command = dev_commands['Flair'][0][cmd_name]
+                elif not command and cmd_name in dev_commands["Common"][0]:
+                    command = dev_commands["Common"][0][cmd_name]
+                else:
+                    # Unfortunately, not all Commands are defined - at least track those that are missing
+                    command = None
+                    missing_commands_set.add(cmd_name)
+                
+                name_current = "Current" + m.group('name_current')
+                name_param = None
+
+                # Vitovent units have some params definition for themselves, and for some they use the Flair base, so we first try with their name, and only then go to the flair base
+                device_flair = copy.deepcopy(device) # Make copy so that we can manipulate the data TODO test if this is necessary
+                if "Vitovent" in device_flair.name:        
+                    # This Particular Vitovent comes in too many flavors but only one converter
+                    if "Vitovent300WH32S" in device_flair.name:
+                        device_flair.name = "Vitovent300WH32S"
+                    name_param = device_to_name_current_to_name_param_dict[device_flair].get(name_current)
+                
+                # Flair units share common params definition:
+                if not name_param:
+                    device_flair.name = "Flair"
+                    name_param = device_to_name_current_to_name_param_dict[device_flair].get(name_current)
+
+                if not name_param:
+                    print(f'Missing flair param for {device.name.lower()} sensor {name_current}')
+
+                sensors.append(Sensor(device.name.lower(), command.id, m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
+
+            dict_devices_sensor[device] = sensors
 
     print("Info: missing commands definition: " + str(missing_commands_set))
+
+    device_to_name_param_to_converter = converters.find_converters()
+    device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
+
+    # assign converters to each sensor in each device
+    for d, sensors in dict_devices_sensor.items():
+        d_copy = dev.DeviceView(d.name, d.view_no)
+
+        # flair units have a shared converter under the name 'flair'
+        if "Flair" in d_copy.name:
+            d_copy.name = "Flair"
+        # This Particular Vitovent comes in too many flavors but only one converter
+        elif "Vitovent300WH32S" in d_copy.name:
+            d_copy.name = "Vitovent300WH32S"
+
+        for sensor in sensors:
+            # First, Try to match the converter through following the path in code from ebus to UI
+            if converter := device_to_name_param_to_converter[d_copy].get(sensor.name_param):
+                sensor.converter = converter
+                sensor.converter_match = "from_code"
+                device_to_name_param_to_converter_unused[d_copy].pop(sensor.name_param, None)
+                continue
+            
+            # Try the 'base' flair converter as a backup for vitovent units
+            if "Vitovent" in d_copy.name:
+                d_flair = dev.DeviceView("Flair", "1")
+                if converter := device_to_name_param_to_converter[d_flair].get(sensor.name_param):
+                    sensor.converter = converter
+                    sensor.converter_match = "from_code_flair"
+                    device_to_name_param_to_converter_unused[d_flair].pop(sensor.name_param, None)
+                    continue
+
+            # If everything else fails, we manually search for the most suitable converter from other units
+            if converter := manual_current_to_converter.get(sensor.name_current):
+                sensor.converter = converters.converters_map[converter]
+                sensor.converter_match = "manual_full"
+                manual_current_to_converter_unused.pop(sensor.name_current, None)
+                continue
+
+            # Sigh, there are two very special cases, where the length of the field is different for different units,
+            # and no converter is paired through the code, so we just manually fill those:
+            if "Flair" in d_copy.name or "Vitovent" in d_copy.name:
+                if "CurrentDeviceID" == sensor.name_current:
+                    sensor.converter = converters.converters_map["ConverterUInt32ToDeviceID"]
+                    continue
+                elif "CurrentUIFButtonsStatus" == sensor.name_current:
+                    sensor.converter = converters.converters_map["ConverterUInt16ToUIFButtonsStatus"]
+                    continue
+            # TODO This elif is never true yet no converter is mising. Find out why.
+            elif "elan" in d_copy.name:
+                if "CurrentDeviceID" == sensor.name_current:
+                    sensor.converter = converters.converters_map["ConverterUCharToNumber"] # see ElanReadActualDeviceID
+                    continue
+                elif "CurrentUIFButtonsStatus" == sensor.name_current:
+                    sensor.converter = converters.converters_map["ConverterUCharToNumber"]
+                    continue
+            
+            print(f"Error: Sensor without convertor: device: {d} sensor: {sensor.name} name_current: {sensor.name_current} name_param: {sensor.name_param}")
+
+    converter_param_unused_set = set()  
+    for dev_view, params_to_converter in device_to_name_param_to_converter_unused.items():
+        for param in params_to_converter:       
+            converter_param_unused_set.add(dev_view.name + "_" + param)
+
+    # FIXME some units (decentral, elan, ...) have no sensors. double check on that
+    print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
+    print("converter_param_unused_set: "+ str(len(converter_param_unused_set)) )
+    for param_unused in sorted(converter_param_unused_set):
+        print(param_unused)
 
     return dict_devices_sensor

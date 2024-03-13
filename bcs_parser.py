@@ -1,192 +1,67 @@
 import copy
 
-import converters
 import out
 import sensor_data
 import config_data
+import command_ebus
+import current_param
 import params
-
+import  dev
 
 # TODO add special instructions and special handling
 # TODO add default slave address for the known devices
+# TODO fill in dipswitch values for known devices
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
-
-# Get converters
-device_to_name_param_to_converter = converters.find_converters()
-device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
-device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
-
-# FIXME status and value is switched - figure out reason, fix it:
-    #   this.paramCO2Sensor1Status.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentCO2Sensor1Value.Description).ToString();
-    #   this.paramCO2Sensor1Value.ParameterName = string.Empty;
-
-# For some parameters, there is no valid conversion in code, manually pick the best backups
-manual_current_to_param_conversion = {
-    "CurrentCO2Sensor1Status" : "paramCO2Sensor1Value", # conversion missing for all units for no apparent reason
-    "CurrentCO2Sensor2Status" : "paramCO2Sensor2Value", # conversion missing for all units for no apparent reason
-    "CurrentCO2Sensor3Status" : "paramCO2Sensor3Value", # conversion missing for all units for no apparent reason
-    "CurrentCO2Sensor4Status" : "paramCO2Sensor4Value", # conversion missing for all units for no apparent reason
-}
-
-# Some parameters seem not to be present in UI at all - we fabricate the converters on other knowledge
-manual_current_to_converter = {
-    "CurrentDipswitchValue" : "ConverterUInt16ToUNumber", # paramDipswitch; conversion missing for Flair units and few others for no apparent reason
-    "CurrentEBusAddressing" : "ConverterUInt32ToEBusAddressing", # unknown; we create out own empty converter
-    "CurrenteBusPowerStatus": "ConverterUInt16ToEBusPowerState", # paramEBusPowerState; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentEBusSyncGenErrorCount" : "ConverterUInt16ToUNumber", # paramSyncGenErrorCount; conversion missing for Flair units and few others for no apparent reason
-    "CurrentExhaustFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentInletFanPWMValue" : "ConverterUInt16ToUNumber",  # paramFanPWMSetpoint; Assumed from decentralair70actualstateview_01.xaml
-    "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
-    "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
-    "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
-
-    # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
-    "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
-    "CurrentBypassStatus" : "ConverterUInt16ToBypassStatus", 
-    "CurrentContact1Position" : "ConverterUInt16ToOnOff", 
-    "CurrentContact2Position" : "ConverterUInt16ToOnOff", 
-    "CurrentEWTStatus" : "ConverterUInt16ToEWTStatus", 
-    "CurrentExhaustFlow" : "ConverterUInt16ToUNumber", 
-    "CurrentHumidityBoostState" : "ConverterUInt16ToHumidityBoostState", 
-    "CurrentInletFlow" : "ConverterUInt16ToUNumber", 
-    "CurrentInsideTemperature" : "ConverterInt16ToTemperatureFact10", 
-    "CurrentMRCConfigurationStatus" : "ConverterByteArrayToMRCConfigurationStatus", 
-    "CurrentOptionTemperature" : "ConverterInt16ToTemperatureFact10", 
-    "CurrentPostheaterPower" : "ConverterUInt16ToUNumber", 
-    "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # Note: This would not work on 'old flair'; however, I don't see any way to find out if it is correct for the given device programatically
-    "CurrentPressureExhaust" : "ConverterUInt16ToPressure", 
-    "CurrentPressureInlet" : "ConverterUInt16ToPressure", 
-    "CurrentRelativeHumidity" : "ConverterInt16ToPercentageFact10", 
-}
-
-manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
     
-# assign converters to each sensor in each device
-cmd_dict, cmd_bytes_dict = sensor_data.get_commands_dict()
-dict_devices_sensor = sensor_data.get_dict_devices_sensor(cmd_dict, cmd_bytes_dict)
-for device_name_lower, device in dict_devices_sensor.items():
+dev_category_list: list[str] = ["Flair", "Decentral", "Elan", "Common"]
+dev_commands: dict[str, tuple[dict[str, command_ebus.CommandEBus], dict[str, command_ebus.CommandEBus]]] = {category:command_ebus.get_commands_dict_for_file(category) for category in dev_category_list}
+dict_devices_sensor = sensor_data.get_dict_devices_sensor(dev_commands)
 
-    # flair units have a shared converter under the name 'flair'
-    if "flair" in device_name_lower:
-        device_name_lower = "flair"
-    # This Particular Vitovent comes in too many flavors but only one converter
-    elif "vitovent300wh32s" in device_name_lower:
-        device_name_lower = "vitovent300wh32s"
-
-    device_converters = device_to_name_param_to_converter[device_name_lower]
-    device_converters_unused = device_to_name_param_to_converter_unused[device_name_lower]
-
-    for sensor in device.sensors:
-        # First, Try to match the converter through following the path in code from ebus to UI
-        name_param = device_to_name_current_to_name_param_dict[device_name_lower].get(sensor.name_current, None)
-        if converter := device_converters.get(name_param, None):
-            sensor.converter = converter
-            sensor.converter_match = "from_code"
-            device_converters_unused.pop(name_param, None)
-            continue
-        
-        # Try the 'base' flair converter as a backup for vitovent units
-        if "vitovent" in device_name_lower:
-            name_param_flair = device_to_name_current_to_name_param_dict["flair"].get(sensor.name_current, None)
-            if converter := device_to_name_param_to_converter["flair"].get(name_param_flair, None):
-                sensor.converter = converter
-                sensor.converter_match = "from_code_flair"
-                device_to_name_param_to_converter_unused["flair"].pop(name_param_flair, None)
-                continue
-        
-        # For some parameters the convertors are listed, but the conversion path is broken, so we manually connect the dots
-        name_param_manual = manual_current_to_param_conversion.get(sensor.name_current, None)
-        if converter := device_converters.get(name_param_manual, None):
-            sensor.converter = converter
-            sensor.converter_match = "manual_param"
-            device_converters_unused.pop(name_param_manual, None)
-            continue
-
-        # If everything else fails, we manually search for the most suitable converter from otehr units
-        if converter := manual_current_to_converter.get(sensor.name_current, None):
-            sensor.converter = converters.converters_map[converter]
-            sensor.converter_match = "manual_full"
-            manual_current_to_converter_unused.pop(sensor.name_current, None)
-            continue
-
-        # Sigh, there are two very special cases, where the length of the field is different for different units,
-        # and no converter is paired through the code, so we just manually fill those:
-        if "flair" in device_name_lower or "vitovent" in device_name_lower:
-            if "CurrentDeviceID" == sensor.name_current:
-                sensor.converter = converters.converters_map["ConverterUInt32ToDeviceID"]
-                continue
-            elif "CurrentUIFButtonsStatus" == sensor.name_current:
-                sensor.converter = converters.converters_map["ConverterUInt16ToUIFButtonsStatus"]
-                continue
-        # TODO This elif is never true yet no converter is mising. Find out why.
-        elif "elan" in device_name_lower:
-            if "CurrentDeviceID" == sensor.name_current:
-                sensor.converter = converters.converters_map["ConverterUCharToNumber"] # see ElanReadActualDeviceID
-                continue
-            elif "CurrentUIFButtonsStatus" == sensor.name_current:
-                sensor.converter = converters.converters_map["ConverterUCharToNumber"]
-                continue
-        
-        print(f"Error: Sensor not found: device: {device.name} lower: {device_name_lower} name: {sensor.name} name_current: {sensor.name_current} name_param: {name_param}")
-            
 # Now we have added all known converters to all known fields - but there are potential missed matches -> we calculate their count for debugging purposses
 sensors_without_converters_set = set()   
 used_converters_set = set()        
-for device_name_lower, device in dict_devices_sensor.items():
-    for sensor in device.sensors:
+for device, sensors in dict_devices_sensor.items():
+    for sensor in sensors:
         if sensor.converter:
             used_converters_set.add(sensor.converter)
         else:
-            sensors_without_converters_set.add(sensor.name + "_" + device_name_lower)
+            sensors_without_converters_set.add(sensor.name + "_" + device.name)
 
 if params.DEBUG:
     print("converters_map = {") 
-    for converter in sorted(list(used_converters_set)):
+    for converter in sorted([converter.name for converter in used_converters_set]):
         print(f'    "{converter}": "",')
     print("}")
       
 
 # Get datatype for sensors
-device_to_actual_param_to_datatype = sensor_data.get_device_to_actual_param_to_datatype()
+device_to_current_param = current_param.get_device_to_current_param()
 sensors_without_datatypes = 0
 sensor_datatypes_set = set()
-default_converter_set = set()
-unknown_converter_set = set()
-for device_name_lower, device in dict_devices_sensor.items():
+for device, sensors in dict_devices_sensor.items():
+    d_copy = copy.deepcopy(device)
 
-    # device_to_actual_param_to_datatype stores all flair units under "flair"
-    if device_name_lower:
-        device_name = "flair"
-    else:
-        device_name = device_name_lower
+    # flair units have a shared converter under the name 'flair'
+    if "Flair" in d_copy.name:
+        d_copy.name = "Flair"
+    # This Particular Vitovent comes in too many flavors but only one converter
+    elif "Vitovent300WH32S" in d_copy.name:
+        d_copy.name = "Vitovent300WH32S"
 
-    for sensor in device.sensors:
-        sensor.datatype = device_to_actual_param_to_datatype[device_name].get(sensor.converter.name_actual, None)
-        sensor_datatypes_set.add(sensor.datatype)
-        if not sensor.datatype:
-            if params.DEBUG:
-                print(sensor.name + " " + str(sensor.converter))
+    for sensor in sensors:
+        if current_param := device_to_current_param[d_copy].get(sensor.name_current):
+            sensor.datatype = current_param.datatype
+            sensor_datatypes_set.add(sensor.datatype)
+        else:
             sensors_without_datatypes +=1
+            if params.DEBUG:
+                print("Warning: No current_param for device: " + str(device) + " sensor: " + str(sensor.name_current))
 
-        if sensor.converter.name == 'default':
-            default_converter_set.add(device_name_lower + " " + sensor.name)
-        elif sensor.converter.name == 'unknown':
-            unknown_converter_set.add(device_name_lower + " " + sensor.name)
-
-converter_sensor_unused_set = set()  
-for device_name_lower, device in device_to_name_param_to_converter_unused.items():
-    for sensor_name in device:       
-        converter_sensor_unused_set.add(sensor_name + "_" + device_name_lower)
-
-print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
-print("default_converter_set: " + str(default_converter_set))
-print("unknown_converter_set: " + str(unknown_converter_set))
 print("sensor_datatypes_set: " + str(sensor_datatypes_set))
 print("sensors_without_datatypes: "+ str(sensors_without_datatypes) )
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)) )
-print("converter_fields_without_sensor_set: "+ str(len(converter_sensor_unused_set)) )
 
-out.write_csv_files(dict_devices_sensor, config_data.get_devices_param())
+out.write_csv_files(dict_devices_sensor, config_data.get_device_parameters())
 
 print("SUCCESS")
