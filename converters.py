@@ -120,7 +120,7 @@ list_converters_files = [
     "ConverterUnitTypeToString",
 ]
 class Converter:
-    def __init__(self, name, type, multiplier, length, values, name_actual=None):
+    def __init__(self, name: str, type: str, multiplier: str, length: str, values: str, name_actual=None):
         self.name = name
         self.type = type
         self.multiplier = multiplier
@@ -129,13 +129,13 @@ class Converter:
         self.name_actual = None
         self.converter_str = None
 
-    def set_match_type(self, match_type):
+    def set_match_type(self, match_type: str):
         self.match_type = match_type
     
-    def set_name_actual(self, name_actual):
+    def set_name_actual(self, name_actual: str):
         self.name_actual = name_actual
 
-    def set_converter_str(self, converter_str):
+    def set_converter_str(self, converter_str: str):
         self.converter_str = converter_str
 
     def __eq__(self, other):

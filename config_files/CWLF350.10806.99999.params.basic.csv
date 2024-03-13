@@ -9,19 +9,19 @@ r,CWLF350,UnbalanceFlow,UnbalanceFlow,,,4050,9,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Mi
 r,CWLF350,ExtraHeaterType,ExtraHeaterType,,,4050,10,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
 r,CWLF350,PostheaterTemp,PostheaterTemp,,,4050,11,,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,,,,IGN:3,,,,Default,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
 r,CWLF350,Input1Mode,Input1Mode,,,4050,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:3,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
-r,CWLF350,Input1VMin,Input1VMin,,,4050,13,,,SIR,,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
-r,CWLF350,Input1VMax,Input1VMax,,,4050,14,,,SIR,,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+r,CWLF350,Input1VMin,Input1VMin,,,4050,13,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+r,CWLF350,Input1VMax,Input1VMax,,,4050,14,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
 r,CWLF350,CN1Coupling,CN1Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:3,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
 r,CWLF350,CN1Inlet,CN1Inlet,,,4050,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
 r,CWLF350,CN1Exhaust,CN1Exhaust,,,4050,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
 r,CWLF350,Input2Mode,Input2Mode,,,4050,18,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,This field has also "min/max/step" fields - but we skip them since we only care for the dafault
-r,CWLF350,Input2VMin,Input2VMin,,,4050,19,,,SIR,,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
-r,CWLF350,Input2VMax,Input2VMax,,,4050,20,,,SIR,,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+r,CWLF350,Input2VMin,Input2VMin,,,4050,19,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+r,CWLF350,Input2VMax,Input2VMax,,,4050,20,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
 r,CWLF350,CN2Coupling,CN2Coupling,,,4050,21,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLF350,CN2Inlet,CN2Inlet,,,4050,22,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLF350,CN2Exhaust,CN2Exhaust,,,4050,23,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLF350,EWTMode,EWTMode,,,4050,24,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-r,CWLF350,EWTTempMin,EWTTempMin,,,4050,25,,,SIR,,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
-r,CWLF350,EWTTempMax,EWTTempMax,,,4050,26,,,SIR,,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+r,CWLF350,EWTTempMin,EWTTempMin,,,4050,25,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+r,CWLF350,EWTTempMax,EWTTempMax,,,4050,26,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
 r,CWLF350,RHTSensorPresent,RHTSensorPresent,,,4050,50,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLF350,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,51,,,SIR,,,,Max,,SIR,,,,Min,,SIR,,,,Step,,SIR,,,,Default,,SIR,,,

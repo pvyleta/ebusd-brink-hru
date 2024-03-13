@@ -2,6 +2,7 @@ import os
 import shutil
 
 import sensor_data
+import config_data
 
 output_dir = "config_files"
 
@@ -39,13 +40,14 @@ sensor_datatype_conversion = {
     'WordString': "UIR",
 }
 
-def multiplier_to_divider(multiplier):
-    if multiplier < 1:
-        return 1 / multiplier
-    elif multiplier > 1:
-        return -multiplier
+def multiplier_to_divider(multiplier: str):
+    multiplier_float = float(multiplier)
+    if multiplier_float < 1:
+        return str(int(1 / multiplier_float))
+    elif multiplier_float > 1:
+        return str(-int(multiplier_float))
     else:
-        return 1
+        return ""
 
 def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
@@ -54,26 +56,25 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
 
     return f'r,{sensor.device_lowercase},{sensor.name},{sensor.name},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
-def csv_line_param_read(circuit, name, id, unit, datatype):
+def csv_line_param_read(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    if int(id, 16) in known_values_params:
-        values = known_values_params[int(id, 16)]
+    if int(param.id, 16) in known_values_params:
+        values = known_values_params[int(param.id, 16)]
         comment = 'This field has also "min/max/step" fields - but we skip them since we only care for the dafault'
-        return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,,,IGN:3,,,,Default,,{datatype},{values},{unit},{comment}\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype_from_sign(param.is_signed)},{values},{param.unit},{comment}\n'
     else:
-        values = ""
-        return f'r,{circuit},{name},{name},,,4050,{id},,,{datatype},{values},{unit},,Max,,{datatype},,{unit},,Min,,{datatype},,{unit},,Step,,{datatype},,{unit},,Default,,{datatype},,{unit},\n'
+        values = multiplier_to_divider(param.multiplier)
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},,Max,,{datatype_from_sign(param.is_signed)},,{param.unit},,Min,,{datatype_from_sign(param.is_signed)},,{param.unit},,Step,,{datatype_from_sign(param.is_signed)},,{param.unit},,Default,,{datatype_from_sign(param.is_signed)},,{param.unit},\n'
  
-def csv_line_param_write(circuit, name, id, unit, datatype):
+def csv_line_param_write(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    if int(id, 16) in known_values_params:
-        values = known_values_params[int(id, 16)]
+    if int(param.id, 16) in known_values_params:
+        values = known_values_params[int(param.id, 16)]
     else:
-        values = ""
-    return f'w,{circuit},{name},{name},,,4080,{id},,,{datatype},{values},{unit},\n'
+        values = multiplier_to_divider(param.multiplier)
+    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype_from_sign(param.is_signed)},{values},{param.unit},\n'
  
 csv_header = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
-
 
 # TODO add length checks from CMDs
 def datatype_from_sign(is_signed):
@@ -98,9 +99,9 @@ def csv_from_device_param(device_param, is_basic):
 
     file_str = csv_header
     for param in params:
-        file_str += csv_line_param_read(device_param.name, param.name, param.id, param.unit, datatype_from_sign(param.is_signed))
+        file_str += csv_line_param_read(param)
         if not param.is_read_only:
-            file_str += csv_line_param_write(device_param.name, param.name, param.id, param.unit, datatype_from_sign(param.is_signed))
+            file_str += csv_line_param_write(param)
     return file_str
 
 # TODO Add comment to converters that were filled manually

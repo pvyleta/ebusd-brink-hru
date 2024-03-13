@@ -17,7 +17,7 @@ device_to_name_param_to_converter = converters.find_converters()
 device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
 device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
 
-# TODO status and value is switched - figure out reason, fix it:
+# FIXME status and value is switched - figure out reason, fix it:
     #   this.paramCO2Sensor1Status.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentCO2Sensor1Value.Description).ToString();
     #   this.paramCO2Sensor1Value.ParameterName = string.Empty;
 
@@ -54,7 +54,7 @@ manual_current_to_converter = {
     "CurrentMRCConfigurationStatus" : "ConverterByteArrayToMRCConfigurationStatus", 
     "CurrentOptionTemperature" : "ConverterInt16ToTemperatureFact10", 
     "CurrentPostheaterPower" : "ConverterUInt16ToUNumber", 
-    "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # TODO This would not work on 'old flair'
+    "CurrentPostheaterStatus" : "ConverterUInt16ToHeaterStatus", # Note: This would not work on 'old flair'; however, I don't see any way to find out if it is correct for the given device programatically
     "CurrentPressureExhaust" : "ConverterUInt16ToPressure", 
     "CurrentPressureInlet" : "ConverterUInt16ToPressure", 
     "CurrentRelativeHumidity" : "ConverterInt16ToPercentageFact10", 
@@ -119,6 +119,7 @@ for device_name_lower, device in dict_devices_sensor.items():
             elif "CurrentUIFButtonsStatus" == sensor.name_current:
                 sensor.converter = converters.converters_map["ConverterUInt16ToUIFButtonsStatus"]
                 continue
+        # TODO This elif is never true yet no converter is mising. Find out why.
         elif "elan" in device_name_lower:
             if "CurrentDeviceID" == sensor.name_current:
                 sensor.converter = converters.converters_map["ConverterUCharToNumber"] # see ElanReadActualDeviceID
