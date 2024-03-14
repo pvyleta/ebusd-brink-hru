@@ -130,17 +130,19 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                 assert m.group('pbsb') == "4022"
                 assert m.group('len') == "01"
 
-                # Try finding the commands in the right category - else use the "Common" commands
+                # Try finding the commands based on the cooomand_bytes
                 command_bytes = m.group('pbsb') + m.group('len') + m.group('id')
                 if command_bytes in cmd_bytes_dict:
                     command = cmd_bytes_dict[command_bytes]
                 else:
-                    # Unfortunately, not all Commands are defined - at least track those that are missing
+                    # Unfortunately, not all Commands are defined - track those that are missing
                     command = None
                     missing_commands_set.add(command_bytes)
 
                 name_current = "Current" + m.group('name_current')
                 name_param = device_to_name_current_to_name_param_dict[device].get(name_current)
+
+                # Not all params exist in UI -> we manually assign the most suitable converter later
                 if not name_param:
                     missing_params_count += 1
                     if params.DEBUG:
@@ -153,38 +155,31 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
             matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), (?P<cmd>\w*\.\w*)\.Cmd\);', file_str)
             for m in matches:
 
-                # Try finding the commands in the right (=flair) category - else use the "Common" commands
-                cmd_name = m.group('cmd')
-                if cmd_name in cmd_dict:
-                    command = cmd_dict[cmd_name]
-                else:
-                    # Unfortunately, not all Commands are defined - at least track those that are missing
-                    command = None
-                    missing_commands_set.add(cmd_name)
-                
                 name_current = "Current" + m.group('name_current')
                 name_param = None
-
                 device_copy = copy.deepcopy(device) # Make copy so that we can manipulate the data
  
-                # This Particular Vitovent comes in too many flavors but only one converter
+                # Vitovent300WH32S comes in too many flavors but only one converter
                 if "Vitovent300WH32S" in device_copy.name:
                     device_copy.name = "Vitovent300WH32S"
-                    name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
-                elif "Flair" not in device.name:
-                    name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
+                # Flair units share common params definition:
+                elif "Flair" in device.name:
+                    device_copy.name = "Flair"
+
+                name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
                 
-                # Vitovent units have some params definition for themselves, and for some they use the Flair base, so we first try with their name, and only then go to the flair base
-                if not name_param and "Vitovent" in device.name or "Flair" in device.name:
-                    # Flair units share common params definition:
+                # Vitovent units have some params definition for themselves, and for some they use the Flair base, so if we failed to find it earlier, try the base now
+                if not name_param and "Vitovent" in device.name:
                     device_copy.name = "Flair"
                     name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
 
+                # Not all params exist in UI -> we manually assign the most suitable converter later
                 if not name_param:
                     missing_params_count += 1
                     if params.DEBUG:
                         print(f'Missing named param for {device.name} sensor {name_current}')
 
+                command = cmd_dict[m.group('cmd')]
                 sensors.append(Sensor(device.name, command.id, m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
             dict_devices_sensor[device] = sensors
@@ -201,7 +196,7 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
         # flair units have a shared converter under the name 'flair'
         if "Flair" in d_copy.name:
             d_copy.name = "Flair"
-        # This Particular Vitovent comes in too many flavors but only one converter
+        # Vitovent300WH32S comes in too many flavors but only one converter
         elif "Vitovent300WH32S" in d_copy.name:
             d_copy.name = "Vitovent300WH32S"
 
