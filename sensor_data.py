@@ -165,7 +165,7 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                 name_current = "Current" + m.group('name_current')
                 name_param = None
 
-                device_copy = copy.deepcopy(device) # Make copy so that we can manipulate the data TODO test if this is necessary
+                device_copy = copy.deepcopy(device) # Make copy so that we can manipulate the data
  
                 # This Particular Vitovent comes in too many flavors but only one converter
                 if "Vitovent300WH32S" in device_copy.name:
