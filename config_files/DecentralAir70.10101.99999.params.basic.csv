@@ -6,7 +6,7 @@ r,DecentralAir70,FlowPreset03,FlowPreset03,,,4050,83,,,UIR,,m³/h,,Max,,UIR,,m³
 r,DecentralAir70,FlowPreset04,FlowPreset04,,,4050,84,,,UIR,,m³/h,,Max,,UIR,,m³/h,,Min,,UIR,,m³/h,,Step,,UIR,,m³/h,,Default,,UIR,,m³/h,
 r,DecentralAir70,FlowPreset05,FlowPreset05,,,4050,85,,,UIR,,m³/h,,Max,,UIR,,m³/h,,Min,,UIR,,m³/h,,Step,,UIR,,m³/h,,Default,,UIR,,m³/h,
 r,DecentralAir70,BypassTemp,BypassTemp,,,4050,4,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
-r,DecentralAir70,BypassMode,BypassMode,,,4050,27,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+r,DecentralAir70,BypassMode,BypassMode,,,4050,27,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,"min/max/step" fields of this enum message omitted
 r,DecentralAir70,FilterMaximumFlow,FilterMaximumFlow,,,4050,28,,,UIR,,m³/h,,Max,,UIR,,m³/h,,Min,,UIR,,m³/h,,Step,,UIR,,m³/h,,Default,,UIR,,m³/h,
 r,DecentralAir70,LedIntensity,LedIntensity,,,4050,29,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
 r,DecentralAir70,BypassTempHyst,BypassTempHyst,,,4050,48,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,

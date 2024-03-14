@@ -7,30 +7,6 @@ import dev
 
 output_dir = "config_files"
 
-# Manually retrieved values from various sources other than decompiling
-# FIXME these do not match flair - either make it by name, or only for sky/renovent units (i.e. those with the one board)
-known_values_params = {
-    0x07: "0=off;1=on", # CVWTWMode
-    0x08: "0=Not Permitted;1=Permitted", # UnbalanceMode
-    0x0c: "0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed", # Input1Mode
-    0x0f: "0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve", # CN1Coupling
-    0x10: "0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive", # CN1Inlet
-    0x11: "0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive", # CN1Exhaust
-    0x12: "0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed", # Input2Mode
-    0x15: "0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve", # CN2Coupling
-    0x16: "0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive", # CN2Inlet
-    0x17: "0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive", # CN2Exhaust
-    0x18: "0=off;1=on", # EWTMode
-    0x1b: "0=Auto;1=Closed;2=Open", # BypassMode
-    0x31: "1=yes;0=no", # PreheaterPresent
-    0x32: "1=yes;0=no", # RHSensorPresent
-    0x3c: "1=yes;0=no", # CO2SensorsActivated
-    0x40: "0=off;1=on", # SwitchDefaultPos
-    0x41: "0=Modbus internal;1=Modbus external connect;2=External customer", # ModbusInterface
-    0x43: "0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud", # ModbusSpeed
-    0x44: "0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown", # ModbusParity
-}
-
 def multiplier_to_divider(multiplier: str):
     multiplier_float = float(multiplier)
     if multiplier_float < 1:
@@ -39,7 +15,8 @@ def multiplier_to_divider(multiplier: str):
         return str(-int(multiplier_float))
     else:
         return ""
-
+    
+# TODO Add original min/max/step/default as a comment to fields
 def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     values = sensor.converter.values
@@ -50,9 +27,8 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
 def csv_line_param_read(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
-    if int(param.id, 16) in known_values_params:
-        values = known_values_params[int(param.id, 16)]
-        comment = 'This field has also "min/max/step" fields - but we omit them since this is enum'
+    if values := param.values:
+        comment = '"min/max/step" fields of this enum message omitted'
         return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
@@ -61,8 +37,8 @@ def csv_line_param_read(param: config_data.Parameter):
 def csv_line_param_write(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
-    if int(param.id, 16) in known_values_params:
-        values = known_values_params[int(param.id, 16)]
+    if values := param.values:
+        pass
     else:
         values = multiplier_to_divider(param.multiplier)
     return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype},{values},{param.unit},\n'

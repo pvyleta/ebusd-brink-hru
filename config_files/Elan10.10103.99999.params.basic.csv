@@ -5,12 +5,12 @@ r,Elan10,ControlFlowCooling,ControlFlowCooling,,,4050,3,,,UIR,,%,,Max,,UIR,,%,,M
 r,Elan10,ControlStartTemp10,ControlStartTemp10,,,4050,4,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
 r,Elan10,ControlEndTemp10,ControlEndTemp10,,,4050,5,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
 r,Elan10,FanStartTemp10,FanStartTemp10,,,4050,6,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
-r,Elan10,FanOffTemp10,FanOffTemp10,,,4050,7,,,SIR,0=off;1=on,°C,,,,IGN:3,,,,Default,,SIR,0=off;1=on,°C,This field has also "min/max/step" fields - but we omit them since this is enum
-r,Elan10,FanStartTempHyst10,FanStartTempHyst10,,,4050,8,,,SIR,0=Not Permitted;1=Permitted,°C,,,,IGN:3,,,,Default,,SIR,0=Not Permitted;1=Permitted,°C,This field has also "min/max/step" fields - but we omit them since this is enum
+r,Elan10,FanOffTemp10,FanOffTemp10,,,4050,7,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+r,Elan10,FanStartTempHyst10,FanStartTempHyst10,,,4050,8,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
 r,Elan10,VentilationProgram,VentilationProgram,,,4050,9,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-r,Elan10,FrostLimitOneTemp10,FrostLimitOneTemp10,,,4050,10,,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,,,,IGN:3,,,,Default,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,This field has also "min/max/step" fields - but we omit them since this is enum
-r,Elan10,FrostLimitTwoTemp10,FrostLimitTwoTemp10,,,4050,11,,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,,,,IGN:3,,,,Default,,SIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,°C,This field has also "min/max/step" fields - but we omit them since this is enum
-r,Elan10,FrostTempHyst10,FrostTempHyst10,,,4050,12,,,SIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,°C,,,,IGN:3,,,,Default,,SIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,°C,This field has also "min/max/step" fields - but we omit them since this is enum
+r,Elan10,FrostLimitOneTemp10,FrostLimitOneTemp10,,,4050,10,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+r,Elan10,FrostLimitTwoTemp10,FrostLimitTwoTemp10,,,4050,11,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+r,Elan10,FrostTempHyst10,FrostTempHyst10,,,4050,12,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
 r,Elan10,EBusGroupNumber,EBusGroupNumber,,,4050,208,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,Elan10,BacklightLevel,BacklightLevel,,,4050,211,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
 r,Elan10,HeartBeatTimeout,HeartBeatTimeout,,,4050,210,,,UIR,,Minutes,,Max,,UIR,,Minutes,,Min,,UIR,,Minutes,,Step,,UIR,,Minutes,,Default,,UIR,,Minutes,
