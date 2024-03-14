@@ -60,6 +60,15 @@ class Fields:
         self.max = max
         self.step = step
         self.default = default
+        
+    def __str__(self):
+        return str([vars(self)[key] for key in sorted(vars(self).keys())])
+    def __eq__(self, other):
+        return str(self) == str(other)
+    def __hash__(self):
+        return hash(str(self))
+    def __repr__(self):
+        return str(self)
 
 class Parameter:
     def __init__(self, device_name: str, id: str, name: str, unit: str, multiplier: str, is_signed: str, is_read_only: str, fields: Fields):
@@ -74,6 +83,9 @@ class Parameter:
 
         self.values = self.__get_enum_values()
 
+    # Check as many conditions as possible to make sure that the enum fields are used only on applicable places.
+    # This is necessary, since we only have the values from handful of units. We may assume those to be applicable on other units,
+    # But in fact other units may have different values.
     def __get_enum_values(self):
         if param_enum := known_values_params.get(self.name):
             if param_enum.min != self.fields.min:
@@ -90,6 +102,15 @@ class Parameter:
                 return param_enum.values
         else:
             return None
+        
+    def __str__(self):
+        return str([vars(self)[key] for key in sorted(vars(self).keys())])
+    def __eq__(self, other):
+        return str(self) == str(other)
+    def __hash__(self):
+        return hash(str(self))
+    def __repr__(self):
+        return str(self)
 
 class DeviceParameters:
     def __init__(self, name: str, params_basic: str, params_plus: str, first_version: str, last_version: str, params: list[Parameter], controller_code: str):

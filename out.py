@@ -7,6 +7,10 @@ import dev
 
 output_dir = "config_files"
 
+# TODO Add comment to converters that were filled manually
+# TODO Add original min/max/step/default as a comment to fields
+# TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
+
 def multiplier_to_divider(multiplier: str):
     multiplier_float = float(multiplier)
     if multiplier_float < 1:
@@ -16,7 +20,6 @@ def multiplier_to_divider(multiplier: str):
     else:
         return ""
     
-# TODO Add original min/max/step/default as a comment to fields
 def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     values = sensor.converter.values
@@ -73,7 +76,6 @@ def csv_from_device_param(device_param, is_basic):
             file_str += csv_line_param_write(param)
     return file_str
 
-# TODO Add comment to converters that were filled manually
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Sensor]], device_parameters: list[config_data.DeviceParameters]):

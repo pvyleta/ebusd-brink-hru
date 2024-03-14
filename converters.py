@@ -134,13 +134,10 @@ class Converter:
 
     def __eq__(self, other):
         return str(self) == str(other)
-    
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
-    
     def __hash__(self):
         return hash(str(self))
-    
     def __repr__(self):
         return str(self)
 
