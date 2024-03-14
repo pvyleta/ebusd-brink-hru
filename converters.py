@@ -172,13 +172,12 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction","UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
     "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber","ULR", 1, 4, ""),
 
-    # FIXME following converters should be filled in!
-    "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus","UIR", 1, 2, ""),
-    "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02","UIR", 1, 2, ""),
-    "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02","UIR", 1, 2, ""),
-    "ConverterUInt16ToElanFanStatus": Converter("ConverterUInt16ToElanFanStatus","UIR", 1, 2, ""),
-    "ConverterUInt16ToElanFrostStatus": Converter("ConverterUInt16ToElanFrostStatus","UIR", 1, 2, ""),
-    "ConverterUInt16ToElanStatus": Converter("ConverterUInt16ToElanStatus","UIR", 1, 2, ""),
+    "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus","UIR", 1, 2, "0=Off;1=On;2=Blocked;255=Error"),
+    "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02","UIR", 1, 2, "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode"),
+    "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02","UIR", 1, 2, "0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off"),
+    "ConverterUInt16ToElanFanStatus": Converter("ConverterUInt16ToElanFanStatus","UIR", 1, 2, "0=NotInitialized;1=Initializing;2=Stopped;3=Running;4=Error"),
+    "ConverterUInt16ToElanFrostStatus": Converter("ConverterUInt16ToElanFrostStatus","UIR", 1, 2, "0=NoFrost;1=FrostLevel_1;2=FrostLevel_2"),
+    "ConverterUInt16ToElanStatus": Converter("ConverterUInt16ToElanStatus","UIR", 1, 2, "0=NotInitialized;1=UnknownError;2=PowerUp;3=ModeLow;4=ModeHigh;5=ModeNormal;6=ModeOffNormal;7=ModeCooling;8=ModeOutSideHigh;9=ErrorMinFlow;10=ErrorNoFlow"),
     "ConverterUInt16ToFanCtrlTypeOldFlair": Converter("ConverterUInt16ToFanCtrlTypeOldFlair","UIR", 1, 2, "0=MassBalance;1=ConstantFlow;2=ConstantPWM"),
     
     # TODO filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame
@@ -194,14 +193,13 @@ converters_map: dict[str, Converter] = {
     "ConverterByteArrayToSerialNumber": Converter("ConverterByteArrayToSerialNumber","STR:12", 1, 12, ""), # length based on appropriate CommandEBus CmdReadActualSerialNumber
     "ConverterByteArrayToHardwareVersion": Converter("ConverterByteArrayToHardwareVersion","STR:4", 1, 4, ""), # length based on appropriate CommandEBus CmdReadActualHardwareVersionBase
     "ConverterUInt16ToVirtualDipswitch": Converter("ConverterUInt16ToVirtualDipswitch","UIR", 1, 2, ""), # length based on HandleReadVirtualDipswitchResponse; I am far from confident I got the length and offset in the message correct
-    "ConverterUInt32ToDeviceID": Converter("ConverterUInt32ToDeviceID","ULR", 1, 4, ""), # length based on CmdReadParameterDeviceID
+    "ConverterUInt32ToDeviceID": Converter("ConverterUInt32ToDeviceID","ULR", 1, 4, ""), # length based on CmdReadParameterDeviceID for flair units
     "ConverterUInt16ToDeviceType": Converter("ConverterUInt16ToDeviceType","UIR", 1, 2, ""), # length based on CmdReadParameterDeviceType
     "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus","UIR", 1, 2, ""), # length based on CmdReadActualUIFButtons
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing","ULR", 1, 4, ""), # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus","HEX:9", 1, 9, ""), # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
     "ConverterUCharToNumber": Converter("ConverterUCharToNumber","UCH", 1, 1, ""),   
     "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000","UIR", 0.001, 2, ""), # length based on CmdReadActualFiltersUsedIn1000M3
- 
 }
 
 # For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them

@@ -37,6 +37,8 @@ manual_current_to_converter = {
     "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
     "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
     "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
+    "CurrentUIFButtonsStatus" : "ConverterUInt16ToUIFButtonsStatus", # Missing for flair units
+    "CurrentDeviceID" : "ConverterUInt32ToDeviceID", # Missing for flair units
 
     # DecentralAir70 missing these params in UI meaning we must add converters manually
     "CurrentUIFButtons" : "ConverterUInt16ToUIFButtonsStatus", 
@@ -219,31 +221,14 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                     sensor.converter_match = "from_code_flair"
                     device_to_name_param_to_converter_unused[d_flair].pop(sensor.name_param, None)
                     continue
-
+            
+            # TODO add sanity check that converter length matches the CMD read
             # If everything else fails, we manually search for the most suitable converter from other units
             if converter := manual_current_to_converter.get(sensor.name_current):
                 sensor.converter = converters.converters_map[converter]
                 sensor.converter_match = "manual_full"
                 manual_current_to_converter_unused.pop(sensor.name_current, None)
                 continue
-
-            # Sigh, there are two very special cases, where the length of the field is different for different units,
-            # and no converter is paired through the code, so we just manually fill those:
-            if "Flair" in d_copy.name or "Vitovent" in d_copy.name:
-                if "CurrentDeviceID" == sensor.name_current:
-                    sensor.converter = converters.converters_map["ConverterUInt32ToDeviceID"]
-                    continue
-                elif "CurrentUIFButtonsStatus" == sensor.name_current:
-                    sensor.converter = converters.converters_map["ConverterUInt16ToUIFButtonsStatus"]
-                    continue
-            # TODO This elif is never true yet no converter is mising. Find out why.
-            elif "elan" in d_copy.name:
-                if "CurrentDeviceID" == sensor.name_current:
-                    sensor.converter = converters.converters_map["ConverterUCharToNumber"] # see ElanReadActualDeviceID
-                    continue
-                elif "CurrentUIFButtonsStatus" == sensor.name_current:
-                    sensor.converter = converters.converters_map["ConverterUCharToNumber"]
-                    continue
             
             print(f"Error: Sensor without convertor: device: {d} name_current: {sensor.name_current} name_param: {sensor.name_param} cmd: {sensor.cmd}")
 
