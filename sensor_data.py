@@ -8,6 +8,12 @@ import converters
 import current_param
 import params
 
+# TODO output
+# 1 add version info to sensors
+# 2 add version info to params
+# 3 add view group info to param and sensor
+# 4 print out as json+csv
+
 value_type_dict = {
     '': "",
     'rpm': "rpm",
@@ -216,7 +222,6 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                 if params.DEBUG:
                     print("Warning: No current_param for device: " + str(device) + " sensor: " + str(sensor.name_current))
 
-                    
             dev_view = dev.DeviceView(d_copy.name, d_copy.view_no)
 
             # First, Try to match the converter through following the path in code from ebus to UI
