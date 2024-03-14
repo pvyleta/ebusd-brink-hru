@@ -109,6 +109,9 @@ class Sensor:
 
     def __eq__(self, other):
         return str(self) == str(other)
+    
+    def __lt__(self, other):
+        return self.device_name + self.first_version + self.last_version < other.device_name + other.first_version + other.last_version
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])

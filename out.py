@@ -4,6 +4,7 @@ import shutil
 import sensor_data
 import config_data
 import dev
+import jsonpickle
 
 output_dir = "config_files"
 
@@ -54,8 +55,6 @@ def csv_line_param_write(param: config_data.Parameter):
 csv_header = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 # TODO add length checks from CMDs
-
-
 def datatype_from_sign(is_signed):
     if is_signed == "true":
         return "SIR"
@@ -85,21 +84,34 @@ def csv_from_device_param(device_param, is_basic):
             file_str += csv_line_param_write(param)
     return file_str
 
+# TODO rename Sensor to State?
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
-
-
 def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Sensor]], device_parameters: list[config_data.DeviceParameters]):
     shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
+    sensors_all: list[sensor_data.Sensor] = []
+    params_all: list[config_data.Parameter] = []
     for device, sensors in dict_devices_sensor.items():
+        sensors_all.extend(sensors)
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_sensors(sensors))
 
     for device in device_parameters:
+        params_all.extend(device.params)
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(device, True))
 
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(device, False))
+
+    jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
+    sensors_all.sort()
+    with open(os.path.join(output_dir, 'sensors.json'), "w", encoding="utf-8") as text_file:
+        text_file.write(jsonpickle.dumps(sensors_all, text_file))
+  
+    params_all.sort()
+    with open(os.path.join(output_dir, 'params.json'), "w", encoding="utf-8") as text_file:
+        text_file.write(jsonpickle.dumps(params_all, text_file))
+    
