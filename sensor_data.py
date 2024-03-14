@@ -15,7 +15,10 @@ value_type_dict = {
     'Â°C': "°C",
     '°C': "°C",
     'PPM': "ppm",
+    'ppm': "ppm",
+    'days': "Days",
     'Hour': "Hour",
+    'hours': "Hours",
     'Steps': "Steps",
     'PWM': "PWM",
     'V': "V",
@@ -33,6 +36,12 @@ manual_current_to_converter = {
     "CurrentPerilexPosition" : "ConverterUInt16ToFanSwitch", # paramPerilexPosition; Mising for Sky units
     "CurrentSoftwareVersion" : "ConverterByteArrayToSoftwareVersion", # Missing for many units, but present for some
     "CurrentDeviceType" : "ConverterUInt16ToDeviceType",
+
+    # DecentralAir70 missing these params in UI meaning we must add converters manually
+    "CurrentUIFButtons" : "ConverterUInt16ToUIFButtonsStatus", 
+    "CurrentFilterUsedIn1000M3" : "ConverterUInt16ToVolumeFact1000", 
+    "CurrentTotalFlowIn1000M3" : "ConverterUInt16ToVolumeFact1000", 
+    "CurrentSerialNumber" : "ConverterByteArrayToSerialNumber",
 
     # Some random fields that seems almost forgotten for some units, as they exist for the rest, taken from other places almost at random
     "CurrentBypassCurrent" : "ConverterUInt16ToUNumber", 
@@ -72,13 +81,10 @@ class Sensor:
 
     def __eq__(self, other):
         return str(self) == str(other)
-    
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
-    
     def __hash__(self):
         return hash(str(self))
-    
     def __repr__(self):
         return str(self)
 
@@ -87,9 +93,10 @@ search_list_sensor = [
     ("last_version", "public (new )?const uint VALID_LAST_VERSION = (?P<match>.*);"),
 ]
 
-def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus.CommandEBus], dict[str, command_ebus.CommandEBus]]]) -> dict[str, list[Sensor]]:
+def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
 
     device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
+    cmd_dict, cmd_bytes_dict = command_ebus.get_commands_dict()
 
     dict_devices_sensor: dict[str, list[Sensor]] = {}
     missing_commands_set: set[str] = set()
@@ -114,22 +121,18 @@ def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus
             # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
             matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), "(?P<pbsb>....)(?P<len>..)(?P<id>..)"\);', file_str)
             for m in matches:
+
                 # Sanity checks
                 assert m.group('pbsb') == "4022"
                 assert m.group('len') == "01"
 
                 # Try finding the commands in te right category - else use the "Common" commands
                 command_bytes = m.group('pbsb') + m.group('len') + m.group('id')
-                command = None
-                for category in dev_commands:
-                    if category in device.name:
-                        if command_bytes in dev_commands[category][1]:
-                            command = dev_commands[category][1][command_bytes]
-                            break
-                if not command and command_bytes in dev_commands["Common"][1]:
-                    command = dev_commands["Common"][1][command_bytes]
+                if command_bytes in cmd_bytes_dict:
+                    command = cmd_bytes_dict[command_bytes]
                 else:
                     # Unfortunately, not all Commands are defined - at least track those that are missing
+                    command = None
                     missing_commands_set.add(command_bytes)
 
                 name_current = "Current" + m.group('name_current')
@@ -139,19 +142,15 @@ def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus
                     
                 sensors.append(Sensor(device.name.lower(), m.group('id'),m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
-            # We need to check separately for flair units that have different definition
+            # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
-            # TODO some flair units are reading one ID multiple times for different values in UI, e.g. CurrentSoftwareVersionUIFModule
-            matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), FlairEBusCommands\.(?P<cmd>\w*)\.Cmd\);', file_str)
+            matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), (?P<cmd>\w*\.\w*)\.Cmd\);', file_str)
             for m in matches:
-                # TODO separate the flair parsing completely, it is very different from the above
 
                 # Try finding the commands in the right (=flair) category - else use the "Common" commands
                 cmd_name = m.group('cmd')
-                if cmd_name in dev_commands['Flair'][0]:
-                    command = dev_commands['Flair'][0][cmd_name]
-                elif not command and cmd_name in dev_commands["Common"][0]:
-                    command = dev_commands["Common"][0][cmd_name]
+                if cmd_name in cmd_dict:
+                    command = cmd_dict[cmd_name]
                 else:
                     # Unfortunately, not all Commands are defined - at least track those that are missing
                     command = None
@@ -160,27 +159,29 @@ def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus
                 name_current = "Current" + m.group('name_current')
                 name_param = None
 
-                # Vitovent units have some params definition for themselves, and for some they use the Flair base, so we first try with their name, and only then go to the flair base
-                device_flair = copy.deepcopy(device) # Make copy so that we can manipulate the data TODO test if this is necessary
-                if "Vitovent" in device_flair.name:        
-                    # This Particular Vitovent comes in too many flavors but only one converter
-                    if "Vitovent300WH32S" in device_flair.name:
-                        device_flair.name = "Vitovent300WH32S"
-                    name_param = device_to_name_current_to_name_param_dict[device_flair].get(name_current)
+                device_copy = copy.deepcopy(device) # Make copy so that we can manipulate the data TODO test if this is necessary
+ 
+                # This Particular Vitovent comes in too many flavors but only one converter
+                if "Vitovent300WH32S" in device_copy.name:
+                    device_copy.name = "Vitovent300WH32S"
+                    name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
+                elif "Flair" not in device.name:
+                    name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
                 
-                # Flair units share common params definition:
-                if not name_param:
-                    device_flair.name = "Flair"
-                    name_param = device_to_name_current_to_name_param_dict[device_flair].get(name_current)
+                # Vitovent units have some params definition for themselves, and for some they use the Flair base, so we first try with their name, and only then go to the flair base
+                if not name_param and "Vitovent" in device.name or "Flair" in device.name:
+                    # Flair units share common params definition:
+                    device_copy.name = "Flair"
+                    name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
 
                 if not name_param:
-                    print(f'Missing flair param for {device.name.lower()} sensor {name_current}')
+                    print(f'Missing named param for {device.name.lower()} sensor {name_current}')
 
                 sensors.append(Sensor(device.name.lower(), command.id, m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
             dict_devices_sensor[device] = sensors
 
-    print("Info: missing commands definition: " + str(missing_commands_set))
+    print("Info: missing_commands_set: " + str(missing_commands_set))
 
     device_to_name_param_to_converter = converters.find_converters()
     device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
@@ -238,7 +239,7 @@ def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus
                     sensor.converter = converters.converters_map["ConverterUCharToNumber"]
                     continue
             
-            print(f"Error: Sensor without convertor: device: {d} sensor: {sensor.name} name_current: {sensor.name_current} name_param: {sensor.name_param}")
+            print(f"Error: Sensor without convertor: device: {d} name_current: {sensor.name_current} name_param: {sensor.name_param} cmd: {sensor.cmd}")
 
     converter_param_unused_set = set()  
     for dev_view, params_to_converter in device_to_name_param_to_converter_unused.items():
@@ -249,6 +250,6 @@ def get_dict_devices_sensor(dev_commands: dict[str, tuple[dict[str, command_ebus
     print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
     print("converter_param_unused_set: "+ str(len(converter_param_unused_set)) )
     for param_unused in sorted(converter_param_unused_set):
-        print(param_unused)
+        print("Unused Converter for param: " + param_unused)
 
     return dict_devices_sensor

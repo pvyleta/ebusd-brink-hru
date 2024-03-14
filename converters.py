@@ -199,7 +199,9 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus","UIR", 1, 2, ""), # length based on CmdReadActualUIFButtons
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing","ULR", 1, 4, ""), # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus","HEX:9", 1, 9, ""), # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
-    "ConverterUCharToNumber": Converter("ConverterUCharToNumber","UCH", 1, 1, ""),    
+    "ConverterUCharToNumber": Converter("ConverterUCharToNumber","UCH", 1, 1, ""),   
+    "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000","UIR", 0.001, 2, ""), # length based on CmdReadActualFiltersUsedIn1000M3
+ 
 }
 
 # For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them
@@ -278,7 +280,7 @@ def find_converters() -> dict[dev.DeviceView, dict[str, Converter]]:
 
 def device_to_name_current_to_name_param() -> dict[str, dict[str, str]]:
     device_to_name_current_to_name_param_dict: dict[str, dict[str, str]] = {}
-    files = glob.glob('./BCSServiceTool/View/Devices/**/*ActualState*.xaml.cs', recursive=True)
+    files = glob.glob('./BCSServiceTool/View/Devices/**/*ActualState*.cs', recursive=True)
     for file in files:       
         with open(file) as f:
             file_str = f.read()

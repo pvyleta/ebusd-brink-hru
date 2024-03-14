@@ -11,12 +11,11 @@ import  dev
 # TODO add special instructions and special handling
 # TODO add default slave address for the known devices
 # TODO fill in dipswitch values for known devices
+# TODO missing MultiRoomCtrlT01 contents
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
-    
-dev_category_list: list[str] = ["Flair", "Decentral", "Elan", "Common"]
-dev_commands: dict[str, tuple[dict[str, command_ebus.CommandEBus], dict[str, command_ebus.CommandEBus]]] = {category:command_ebus.get_commands_dict_for_file(category) for category in dev_category_list}
-dict_devices_sensor = sensor_data.get_dict_devices_sensor(dev_commands)
+
+dict_devices_sensor = sensor_data.get_dict_devices_sensor()
 
 # Now we have added all known converters to all known fields - but there are potential missed matches -> we calculate their count for debugging purposses
 sensors_without_converters_set = set()   
@@ -26,7 +25,7 @@ for device, sensors in dict_devices_sensor.items():
         if sensor.converter:
             used_converters_set.add(sensor.converter)
         else:
-            sensors_without_converters_set.add(sensor.name + "_" + device.name)
+            sensors_without_converters_set.add(sensor.name_current + "_" + device.name)
 
 if params.DEBUG:
     print("converters_map = {") 

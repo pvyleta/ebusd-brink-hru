@@ -22,22 +22,32 @@ class CommandEBus:
     def __repr__(self):
         return str(self)
 
-def get_commands_dict_for_file(name: str) -> tuple[dict[str, CommandEBus], dict[str, CommandEBus]]:
+def get_commands_dict() -> tuple[dict[str, CommandEBus], dict[str, CommandEBus]]:
     cmd_dict: dict[str, CommandEBus] = {}
     cmd_bytes_dict: dict[str, CommandEBus] = {}
-    with open(f'./BCSServiceTool/BusinessLogic/Commands/{name}EBusCommands.cs') as f:
-        datafile = f.readlines()
-        for line in datafile:
-            #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);
-            match = re.search('public static CommandEBus (?P<cmd>.*) = new CommandEBus."(?P<pbsb>....)(?P<len>..)(?P<id>.*)", .* (?P<write_len>.*), (?P<read_len>.*)U.;', line)
-            if match:
-                cmd = CommandEBus(match.group('cmd'),match.group('pbsb'),match.group('len'),match.group('id'),match.group('write_len'),match.group('read_len'))
-                command_bytes = cmd.pbsb + cmd.len + cmd.id
-                
-                assert cmd.cmd not in cmd_dict
-                assert command_bytes not in cmd_bytes_dict
+    
+    files = glob.glob(f'./BCSServiceTool/BusinessLogic/Commands/*EBusCommands.cs', recursive=True)
+    for file in files:
+        with open(file) as f:
+            file_str = f.read()
 
-                cmd_dict[cmd.cmd] = cmd
-                cmd_bytes_dict[command_bytes] = cmd
+            # public static class ElanEBusCommands
+            match = re.search(r'public static class (?P<class_name>\w*)', file_str)
+            class_name = match.group('class_name')
+            
+            #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);
+            matches = re.finditer(r'public static CommandEBus (?P<cmd>\w*) = new CommandEBus\("(?P<pbsb>....)(?P<len>..)(?P<id>[\w]*)", [^ ]* (?P<write_len>\d*), (?P<read_len>\d*)U\);', file_str)
+            for m in matches:
+                cmd_name = class_name + "." + m.group('cmd')
+                cmd = CommandEBus(cmd_name,m.group('pbsb'),m.group('len'),m.group('id'),m.group('write_len'),m.group('read_len'))
+                
+                assert cmd_name not in cmd_dict
+                cmd_dict[cmd_name] = cmd
+
+                # For common commands, we also store them by raw 'bytes' value
+                if "Common" in cmd_name:
+                    command_bytes = cmd.pbsb + cmd.len + cmd.id
+                    assert command_bytes not in cmd_bytes_dict
+                    cmd_bytes_dict[command_bytes] = cmd
 
     return cmd_dict, cmd_bytes_dict
