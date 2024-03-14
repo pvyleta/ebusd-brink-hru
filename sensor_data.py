@@ -91,8 +91,10 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 class Sensor:
-    def __init__(self, device_name: str, id: str, name_description: str, name_current: str, name_param: str, unit: str, update_rate: str, cmd, datatype=None):
+    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name_description: str, name_current: str, name_param: str, unit: str, update_rate: str, cmd, datatype=None):
         self.device_name = device_name
+        self.first_version = first_version
+        self.last_version = last_version
         self.id = id
         self.name_description = name_description
         self.name_current = name_current
@@ -176,7 +178,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
                     command = None
                     missing_commands_set.add(command_bytes)
 
-                sensors.append(Sensor(device.name, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
 
             # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
@@ -200,7 +202,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
                         print(f'Missing named param for {device.name} sensor {name_current}')
 
                 command = cmd_dict[m.group('cmd')]
-                sensors.append(Sensor(device.name, command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version,  command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
 
             dict_devices_sensor[device] = sensors
 

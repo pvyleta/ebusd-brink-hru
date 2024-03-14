@@ -57,7 +57,6 @@ known_values_params = {
     "ModbusParity": ParamEnum('0', '3', "0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown"),  # ModbusParity
 }
 
-
 class Fields:
     def __init__(self, curent: str, min: str, max: str, step: str, default: str):
         self.curent = curent
@@ -80,8 +79,10 @@ class Fields:
 
 
 class Parameter:
-    def __init__(self, device_name: str, id: str, name: str, unit: str, multiplier: str, is_signed: str, is_read_only: str, fields: Fields):
+    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name: str, unit: str, multiplier: str, is_signed: str, is_read_only: str, fields: Fields):
         self.device_name = device_name
+        self.first_version = first_version
+        self.last_version = last_version
         self.id = id
         self.name = name
         self.unit = unit
@@ -182,7 +183,7 @@ def get_device_parameters() -> dict[str, DeviceParameters]:
                                   r'[\s\S]*((?P=param_def))\.SetApplianceData[^ ]* (?P<current>-?\d*), [^ ]* (?P<min>-?\d*), [^ ]* (?P<max>-?\d*), [^ ]* (?P<step>-?\d*), [^ ]* (?P<default>-?\d*)\);', file_str)
             for m in matches:
                 fields = Fields(m.group('current'), m.group('min'), m.group('max'), m.group('step'), m.group('default'))
-                param = Parameter(device_dict['name'], m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
+                param = Parameter(device_dict['name'], device_dict['first_version'], device_dict['last_version'], m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
                 params.append(param)
 
             device_dict["params"] = params
