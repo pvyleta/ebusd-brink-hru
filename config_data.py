@@ -1,7 +1,6 @@
 import glob
 import re
 
-files_params = glob.glob('./BCSServiceTool/Model/Devices/**/*ParameterSet_*.cs', recursive=True)
 
 value_type_dict_config = {
     'NoUnit': "", 
@@ -134,6 +133,8 @@ search_list_params = [
     ("last_version", r'public (new )?const uint VALID_LAST_VERSION = (?P<match>\d*);'),
     ("controller_code", r'public (new )?const (uint|byte) CONTROLLER_CODE = (?P<match>\d*);'),
 ]
+
+files_params = glob.glob('./BCSServiceTool/Model/Devices/**/*ParameterSet_*.cs', recursive=True)
 
 def get_device_parameters() -> dict[str, DeviceParameters]:
     device_parameters: list[DeviceParameters] = []

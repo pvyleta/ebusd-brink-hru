@@ -5,6 +5,7 @@ import copy
 import dev
 import command_ebus
 import converters
+import current_param
 import params
 
 value_type_dict = {
@@ -188,10 +189,14 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
 
     device_to_name_param_to_converter = converters.find_converters()
     device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
+    
+    device_to_current_param = current_param.get_device_to_current_param()
+    sensors_without_datatypes = 0
+    sensor_datatypes_set = set()
 
     # assign converters to each sensor in each device
     for d, sensors in dict_devices_sensor.items():
-        d_copy = dev.DeviceView(d.name, d.view_no)
+        d_copy = copy.deepcopy(d)
 
         # flair units have a shared converter under the name 'flair'
         if "Flair" in d_copy.name:
@@ -201,20 +206,33 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
             d_copy.name = "Vitovent300WH32S"
 
         for sensor in sensors:
+
+            # Get datatype for sensors
+            if curr_param := device_to_current_param[d_copy].get(sensor.name_current):
+                sensor.datatype = curr_param.datatype
+                sensor_datatypes_set.add(sensor.datatype)
+            else:
+                sensors_without_datatypes +=1
+                if params.DEBUG:
+                    print("Warning: No current_param for device: " + str(device) + " sensor: " + str(sensor.name_current))
+
+                    
+            dev_view = dev.DeviceView(d_copy.name, d_copy.view_no)
+
             # First, Try to match the converter through following the path in code from ebus to UI
-            if converter := device_to_name_param_to_converter[d_copy].get(sensor.name_param):
+            if converter := device_to_name_param_to_converter[dev_view].get(sensor.name_param):
                 sensor.converter = converter
                 sensor.converter_match = "from_code"
-                device_to_name_param_to_converter_unused[d_copy].pop(sensor.name_param, None)
+                device_to_name_param_to_converter_unused[dev_view].pop(sensor.name_param, None)
                 continue
             
             # Try the 'base' flair converter as a backup for vitovent units
-            if "Vitovent" in d_copy.name:
-                d_flair = dev.DeviceView("Flair", "1")
-                if converter := device_to_name_param_to_converter[d_flair].get(sensor.name_param):
+            if "Vitovent" in dev_view.name:
+                dev_view_flair = dev.DeviceView("Flair", "1")
+                if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
                     sensor.converter = converter
                     sensor.converter_match = "from_code_flair"
-                    device_to_name_param_to_converter_unused[d_flair].pop(sensor.name_param, None)
+                    device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
                     continue
             
             # TODO add sanity check that converter length matches the CMD read
@@ -235,6 +253,10 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
     print("missing_params_count: " + str(missing_params_count))
     print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
     print("converter_param_unused_set: "+ str(len(converter_param_unused_set)) )
+    
+    print("sensor_datatypes_set: " + str(sensor_datatypes_set))
+    print("sensors_without_datatypes: "+ str(sensors_without_datatypes) )
+
     if params.DEBUG:
         for param_unused in sorted(converter_param_unused_set):
             print("Unused Converter for param: " + param_unused)
