@@ -7,14 +7,19 @@ class Device:
 
     def __eq__(self, other):
         return str(self) == str(other)
+
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
+
     def __hash__(self):
         return hash(str(self))
+
     def __repr__(self):
         return str(self)
-    
+
 # .xaml files do not have verson information, so we must rely on the view 'index' for matching
+
+
 class DeviceView:
     def __init__(self, name, view_no):
         self.name = name
@@ -22,10 +27,12 @@ class DeviceView:
 
     def __eq__(self, other):
         return str(self) == str(other)
+
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
+
     def __hash__(self):
         return hash(str(self))
+
     def __repr__(self):
         return str(self)
-    

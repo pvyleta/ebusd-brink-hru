@@ -3,6 +3,7 @@ import glob
 import params
 import dev
 
+
 class CurrentParam:
     def __init__(self, name_current: str, datatype: str):
         self.name_current = name_current
@@ -10,20 +11,24 @@ class CurrentParam:
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
+
     def __eq__(self, other):
         return str(self) == str(other)
+
     def __hash__(self):
         return hash(str(self))
+
     def __repr__(self):
         return str(self)
-        
+
+
 def get_device_to_current_param() -> dict[str, dict[str, CurrentParam]]:
     device_to_current_param: dict[str, dict[str, CurrentParam]] = {}
     files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
     for file in files_view_model:
         with open(file) as f:
             file_str = f.read()
-            
+
             match1 = re.search(r'public (partial )?class (?P<name>\w+)ActualState(Sub\d)?ViewModel_\d(?P<view_no>\d) :', file_str)
             match2 = re.search(r'public const uint VALID_FIRST_VERSION = (?P<first_version>\d*);', file_str)
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
