@@ -5,6 +5,7 @@ import copy
 import dev
 import command_ebus
 import converters
+import params
 
 value_type_dict = {
     '': "",
@@ -100,6 +101,7 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
 
     dict_devices_sensor: dict[str, list[Sensor]] = {}
     missing_commands_set: set[str] = set()
+    missing_params_count = 0
     
     files_sensor = glob.glob('./BCSServiceTool/Model/Devices/**/*DataModel_*.cs', recursive=True)
     for file in files_sensor:
@@ -126,7 +128,7 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                 assert m.group('pbsb') == "4022"
                 assert m.group('len') == "01"
 
-                # Try finding the commands in te right category - else use the "Common" commands
+                # Try finding the commands in the right category - else use the "Common" commands
                 command_bytes = m.group('pbsb') + m.group('len') + m.group('id')
                 if command_bytes in cmd_bytes_dict:
                     command = cmd_bytes_dict[command_bytes]
@@ -138,7 +140,9 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                 name_current = "Current" + m.group('name_current')
                 name_param = device_to_name_current_to_name_param_dict[device].get(name_current)
                 if not name_param:
-                    print(f'Missing param for {device.name.lower()} sensor {name_current}')
+                    missing_params_count += 1
+                    if params.DEBUG:
+                        print(f'Missing param for {device.name.lower()} sensor {name_current}')
                     
                 sensors.append(Sensor(device.name.lower(), m.group('id'),m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
@@ -175,7 +179,9 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
                     name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
 
                 if not name_param:
-                    print(f'Missing named param for {device.name.lower()} sensor {name_current}')
+                    missing_params_count += 1
+                    if params.DEBUG:
+                        print(f'Missing named param for {device.name.lower()} sensor {name_current}')
 
                 sensors.append(Sensor(device.name.lower(), command.id, m.group('name'),name_current,name_param,value_type_dict[m.group('unit')],m.group('update_rate'), command))
 
@@ -246,10 +252,11 @@ def get_dict_devices_sensor() -> dict[str, list[Sensor]]:
         for param in params_to_converter:       
             converter_param_unused_set.add(dev_view.name + "_" + param)
 
-    # FIXME some units (decentral, elan, ...) have no sensors. double check on that
+    print("missing_params_count: " + str(missing_params_count))
     print("manual_current_to_converter_unused: " + str(manual_current_to_converter_unused))
     print("converter_param_unused_set: "+ str(len(converter_param_unused_set)) )
-    for param_unused in sorted(converter_param_unused_set):
-        print("Unused Converter for param: " + param_unused)
+    if params.DEBUG:
+        for param_unused in sorted(converter_param_unused_set):
+            print("Unused Converter for param: " + param_unused)
 
     return dict_devices_sensor
