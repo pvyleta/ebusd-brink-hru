@@ -4,10 +4,8 @@ import params
 import dev
 
 class CurrentParam:
-    def __init__(self, name_current: str, name_actual: str, datatype: str):
+    def __init__(self, name_current: str, datatype: str):
         self.name_current = name_current
-        # TODO this field creates conflicts - do we need it?
-        # self.name_actual = name_actual
         self.datatype = datatype
 
     def __str__(self):
@@ -34,7 +32,7 @@ def get_device_to_current_param() -> dict[str, dict[str, CurrentParam]]:
             device_to_current_param.setdefault(device, {})
             matches = re.finditer(r'public (?P<datatype_out>\w*) (?P<name_actual>\w*)\n *\{\n *get => this\.\w*\.(?P<name_current>\w*)\.(?P<datatype_in>\w*)Value;', file_str)
             for m in matches:
-                current_param = CurrentParam(m.group('name_current'), m.group('name_actual'), m.group('datatype_out'))
+                current_param = CurrentParam(m.group('name_current'), m.group('datatype_out'))
                 assert not (current_param_in_dict := device_to_current_param[device].get(m.group('name_current'))) or current_param_in_dict == current_param
                 device_to_current_param[device][m.group('name_current')] = current_param
 

@@ -11,7 +11,6 @@ import  dev
 # TODO add special instructions and special handling
 # TODO add default slave address for the known devices
 # TODO fill in dipswitch values for known devices
-# TODO missing MultiRoomCtrlT01 contents
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
