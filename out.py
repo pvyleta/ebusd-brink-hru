@@ -8,6 +8,7 @@ import dev
 output_dir = "config_files"
 
 # Manually retrieved values from various sources other than decompiling
+# FIXME these do not match flair - either make it by name, or only for sky/renovent units (i.e. those with the one board)
 known_values_params = {
     0x07: "0=off;1=on", # CVWTWMode
     0x08: "0=Not Permitted;1=Permitted", # UnbalanceMode
@@ -44,14 +45,14 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
     values = sensor.converter.values
     type = sensor.converter.type
 
-    return f'r,{sensor.device_lowercase},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
+    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
  
 def csv_line_param_read(param: config_data.Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
     if int(param.id, 16) in known_values_params:
         values = known_values_params[int(param.id, 16)]
-        comment = 'This field has also "min/max/step" fields - but we skip them since we only care for the dafault'
+        comment = 'This field has also "min/max/step" fields - but we omit them since this is enum'
         return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
