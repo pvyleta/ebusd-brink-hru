@@ -2,14 +2,14 @@ import re
 import glob
 import copy
 
-import dev
-import command_ebus
-import converters
-import current_param
-import params
+from params import DEBUG
+from converters import Converter, device_to_name_current_to_name_param, find_converters, converters_map
+from dev import Device, DeviceView
+from command_ebus import get_commands_dict
+from current_param import get_device_to_current_param
 
 
-def substitute_flair_name(device: dev.Device) -> dev.Device:
+def substitute_flair_name(device: Device) -> Device:
     device_copy = copy.deepcopy(device)  # Make copy so that we can manipulate the data
 
     # Vitovent300WH32S comes in too many flavors but only one converter
@@ -97,7 +97,7 @@ class Sensor:
         self.cmd = cmd
         self.datatype = datatype
 
-        self.converter: converters.Converter|None = None
+        self.converter: Converter|None = None
         self.converter_match = ""
 
     def __eq__(self, other):
@@ -122,12 +122,12 @@ search_list_sensor = [
 ]
 
 
-def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
+def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
 
-    device_to_name_current_to_name_param_dict = converters.device_to_name_current_to_name_param()
-    cmd_dict, cmd_bytes_dict = command_ebus.get_commands_dict()
+    device_to_name_current_to_name_param_dict = device_to_name_current_to_name_param()
+    cmd_dict, cmd_bytes_dict = get_commands_dict()
 
-    dict_devices_sensor: dict[dev.Device, list[Sensor]] = {}
+    dict_devices_sensor: dict[Device, list[Sensor]] = {}
     missing_commands_set: set[str] = set()
     missing_params_count = 0
 
@@ -145,7 +145,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
             assert match1 and match2 and match3
 
-            device = dev.Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            device = Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
             sensors: list[Sensor] = []
 
             # Then there is a line with sensor definition
@@ -163,7 +163,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
                 # Not all params exist in UI -> we manually assign the most suitable converter later
                 if not name_param:
                     missing_params_count += 1
-                    if params.DEBUG:
+                    if DEBUG:
                         print(f'Missing param for {device.name.lower()} sensor {name_current}')
 
                 # Try finding the commands based on the command_bytes
@@ -195,7 +195,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
                 # Not all params exist in UI -> we manually assign the most suitable converter later
                 if not name_param:
                     missing_params_count += 1
-                    if params.DEBUG:
+                    if DEBUG:
                         print(f'Missing named param for {device.name} sensor {name_current}')
 
                 command = cmd_dict[m.group('cmd')]
@@ -205,10 +205,10 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
 
     print("Info: missing_commands_set: " + str(missing_commands_set))
 
-    device_to_name_param_to_converter = converters.find_converters()
+    device_to_name_param_to_converter = find_converters()
     device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
 
-    device_to_current_param = current_param.get_device_to_current_param()
+    device_to_current_param = get_device_to_current_param()
     sensors_without_datatypes = 0
     sensor_datatypes_set = set()
 
@@ -224,10 +224,10 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
                 sensor_datatypes_set.add(sensor.datatype)
             else:
                 sensors_without_datatypes += 1
-                if params.DEBUG:
+                if DEBUG:
                     print("Warning: No current_param for device: " + str(device) + " sensor: " + str(sensor.name_current))
 
-            dev_view = dev.DeviceView(d_copy.name, d_copy.view_no)
+            dev_view = DeviceView(d_copy.name, d_copy.view_no)
 
             if sensor.name_param:
                 # First, Try to match the converter through following the path in code from ebus to UI
@@ -239,7 +239,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
 
                 # Try the 'base' flair converter as a backup for vitovent units
                 if "Vitovent" in dev_view.name:
-                    dev_view_flair = dev.DeviceView("Flair", "1")
+                    dev_view_flair = DeviceView("Flair", "1")
                     if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
                         sensor.converter = converter
                         sensor.converter_match = "from_code_flair"
@@ -249,7 +249,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
             # TODO add sanity check that converter length matches the CMD read
             # If everything else fails, we manually search for the most suitable converter from other units
             if converter_str := manual_current_to_converter.get(sensor.name_current):
-                sensor.converter = converters.converters_map[converter_str]
+                sensor.converter = converters_map[converter_str]
                 sensor.converter_match = "manual_full"
                 manual_current_to_converter_unused.pop(sensor.name_current, None)
                 continue
@@ -268,7 +268,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
     print("sensor_datatypes_set: " + str(sensor_datatypes_set))
     print("sensors_without_datatypes: " + str(sensors_without_datatypes))
 
-    if params.DEBUG:
+    if DEBUG:
         for param_unused in sorted(converter_param_unused_set):
             print("Unused Converter for param: " + param_unused)
 
