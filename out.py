@@ -128,6 +128,7 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
         for param in sensors_all:
             csv_writer.writerow([getattr(param, key) for key in keys])
 
+    # TODO unify the fals/False capitalization in the output for various fields
     with open(os.path.join(output_dir, 'params.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
         keys = params_all[0].__dict__.keys()

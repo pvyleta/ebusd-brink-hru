@@ -79,10 +79,11 @@ class Fields:
 
 
 class Parameter:
-    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name: str, unit: str, multiplier: str, is_signed: str, is_read_only: str, fields: Fields):
+    def __init__(self, device_name: str, first_version: str, last_version: str, is_plus_only: bool, id: str, name: str, unit: str, multiplier: str, is_signed: str, is_read_only: str, fields: Fields):
         self.device_name = device_name
         self.first_version = first_version
         self.last_version = last_version
+        self.is_plus_only = is_plus_only
         self.id = id
         self.name = name
         self.unit = unit
@@ -186,11 +187,16 @@ def get_device_parameters() -> dict[str, DeviceParameters]:
                 device_dict["params_plus"] = "60"
                 del device_dict["name_flair_2"]
 
+            params_basic_int = int(device_dict["params_basic"])
+
             matches = re.finditer(r'WTWParameterDefinition (?P<param_def>\w*) = new WTWParameterDefinition[^ ]* (?P<id>\d*), "parameter(SetDescription)?(?P<name>\w*)", (?P<is_read_only>\w*), WTWParameterDefinition\.UnitType\.(?P<unit>\w*), (?P<multiplier>[^ ]*), (?P<is_signed>\w*)\);'
                                   r'[\s\S]*((?P=param_def))\.SetApplianceData[^ ]* (?P<current>-?\d*), [^ ]* (?P<min>-?\d*), [^ ]* (?P<max>-?\d*), [^ ]* (?P<step>-?\d*), [^ ]* (?P<default>-?\d*)\);', file_str)
             for m in matches:
+                # First 'params_basic' count of parameters are present in basic and plus variants of device, the subsequent ones are only in plus version
+                is_plus_only = params_basic_int < 1
+                params_basic_int -= 1
                 fields = Fields(m.group('current'), m.group('min'), m.group('max'), m.group('step'), m.group('default'))
-                param = Parameter(device_dict['name'], device_dict['first_version'], device_dict['last_version'], m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
+                param = Parameter(device_dict['name'], device_dict['first_version'], device_dict['last_version'], is_plus_only, m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
                 params.append(param)
 
             device_dict["params"] = params
