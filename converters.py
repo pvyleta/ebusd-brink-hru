@@ -123,16 +123,15 @@ list_converters_files = [
 
 
 class Converter:
-    def __init__(self, name: str, type: str, multiplier: str, length: str, values: str):
+    def __init__(self, name: str, type: str, multiplier: float, length: int, values: str):
         self.name: str = name
         self.type: str = type
-        self.multiplier: str = multiplier
-        self.length: str = length
+        self.multiplier: float = multiplier
+        self.length: int = length
         self.values: str = values
 
-        self.name_actual: str = None
-        self.converter_str: str = None
-        self.match_type: str = None
+        self.name_actual: str = ""
+        self.converter_str: str = ""
 
     def __eq__(self, other):
         return str(self) == str(other)
@@ -226,7 +225,7 @@ param_to_converter_manual: dict[str, str] = {
 
 def find_converters() -> dict[dev.DeviceView, dict[str, Converter]]:
     files_converters = glob.glob('./BCSServiceTool/View/Devices/**/*actual*view_*.xaml', recursive=True)
-    device_to_name_param_to_converter: dict[str, dict[str, Converter]] = {}
+    device_to_name_param_to_converter: dict[dev.DeviceView, dict[str, Converter]] = {}
     converters_str = "|".join(list_converters)
 
     for file in files_converters:
@@ -281,8 +280,8 @@ def find_converters() -> dict[dev.DeviceView, dict[str, Converter]]:
     return device_to_name_param_to_converter
 
 
-def device_to_name_current_to_name_param() -> dict[str, dict[str, str]]:
-    device_to_name_current_to_name_param_dict: dict[str, dict[str, str]] = {}
+def device_to_name_current_to_name_param() -> dict[dev.Device, dict[str, str]]:
+    device_to_name_current_to_name_param_dict: dict[dev.Device, dict[str, str]] = {}
     files = glob.glob('./BCSServiceTool/View/Devices/**/*ActualState*.cs', recursive=True)
     for file in files:
         with open(file) as f:
@@ -296,6 +295,7 @@ def device_to_name_current_to_name_param() -> dict[str, dict[str, str]]:
                 print("converters: skipping file: " + file)
                 continue
 
+            assert match1 and match2 and match3
             device = dev.Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
             device_to_name_current_to_name_param_dict.setdefault(device, {})
             # this.paramExtContact1.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentExtContact1Position.Description).ToString();

@@ -38,6 +38,7 @@ def get_commands_dict() -> tuple[dict[str, CommandEBus], dict[str, CommandEBus]]
 
             # public static class ElanEBusCommands
             match = re.search(r'public static class (?P<class_name>\w*)', file_str)
+            assert match
             class_name = match.group('class_name')
 
             #     public static CommandEBus CmdReadActualSoftwareVersion = new CommandEBus("40220100", (ushort) 0, 15U);

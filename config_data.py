@@ -161,7 +161,7 @@ search_list_params = [
 files_params = glob.glob('./BCSServiceTool/Model/Devices/**/*ParameterSet_*.cs', recursive=True)
 
 
-def get_device_parameters() -> dict[str, DeviceParameters]:
+def get_device_parameters() -> list[DeviceParameters]:
     device_parameters: list[DeviceParameters] = []
     for file in files_params:
         with open(file) as f:
@@ -199,8 +199,7 @@ def get_device_parameters() -> dict[str, DeviceParameters]:
                 param = Parameter(device_dict['name'], device_dict['first_version'], device_dict['last_version'], is_plus_only, m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
                 params.append(param)
 
-            device_dict["params"] = params
-            device = DeviceParameters(**device_dict)
+            device = DeviceParameters(**device_dict, params=params)
 
             device_parameters.append(device)
 

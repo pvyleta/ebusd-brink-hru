@@ -2,7 +2,7 @@ import os
 import shutil
 import csv
 
-import jsonpickle
+import jsonpickle # type: ignore
 
 import sensor_data
 import config_data
@@ -30,6 +30,7 @@ def multiplier_to_divider(multiplier: str):
 
 def csv_line_sensor(sensor: sensor_data.Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
+    assert sensor.converter
     values = sensor.converter.values
     type = sensor.converter.type
 
@@ -103,13 +104,13 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_sensors(sensors))
 
-    for device in device_parameters:
-        params_all.extend(device.params)
-        with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(device, True))
+    for device_param in device_parameters:
+        params_all.extend(device_param.params)
+        with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
+            text_file.write(csv_from_device_param(device_param, True))
 
-        with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(device, False))
+        with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+            text_file.write(csv_from_device_param(device_param, False))
 
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
@@ -125,8 +126,8 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
         csv_writer = csv.writer(text_file)
         keys = sensors_all[0].__dict__.keys()
         csv_writer.writerow(keys)
-        for param in sensors_all:
-            csv_writer.writerow([getattr(param, key) for key in keys])
+        for sensor in sensors_all:
+            csv_writer.writerow([getattr(sensor, key) for key in keys])
 
     # TODO unify the fals/False capitalization in the output for various fields
     with open(os.path.join(output_dir, 'params.csv'), "w", encoding="utf-8") as text_file:

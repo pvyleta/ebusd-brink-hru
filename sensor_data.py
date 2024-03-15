@@ -91,7 +91,7 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 class Sensor:
-    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name_description: str, name_current: str, name_param: str, unit: str, update_rate: str, cmd, datatype=None):
+    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: str, cmd, datatype=None):
         self.device_name = device_name
         self.first_version = first_version
         self.last_version = last_version
@@ -104,7 +104,7 @@ class Sensor:
         self.cmd = cmd
         self.datatype = datatype
 
-        self.converter = None
+        self.converter: converters.Converter|None = None
         self.converter_match = ""
 
     def __eq__(self, other):
@@ -150,6 +150,7 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
             match1 = re.search(r'public (partial )?class (?P<name>\w+)ParameterDataModel_\d(?P<view_no>\d)', file_str)
             match2 = re.search(r'public const uint VALID_FIRST_VERSION = (?P<first_version>\d*);', file_str)
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
+            assert match1 and match2 and match3
 
             device = dev.Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
             sensors: list[Sensor] = []
@@ -235,26 +236,27 @@ def get_dict_devices_sensor() -> dict[dev.Device, list[Sensor]]:
 
             dev_view = dev.DeviceView(d_copy.name, d_copy.view_no)
 
-            # First, Try to match the converter through following the path in code from ebus to UI
-            if converter := device_to_name_param_to_converter[dev_view].get(sensor.name_param):
-                sensor.converter = converter
-                sensor.converter_match = "from_code"
-                device_to_name_param_to_converter_unused[dev_view].pop(sensor.name_param, None)
-                continue
-
-            # Try the 'base' flair converter as a backup for vitovent units
-            if "Vitovent" in dev_view.name:
-                dev_view_flair = dev.DeviceView("Flair", "1")
-                if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
+            if sensor.name_param:
+                # First, Try to match the converter through following the path in code from ebus to UI
+                if converter := device_to_name_param_to_converter[dev_view].get(sensor.name_param):
                     sensor.converter = converter
-                    sensor.converter_match = "from_code_flair"
-                    device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
+                    sensor.converter_match = "from_code"
+                    device_to_name_param_to_converter_unused[dev_view].pop(sensor.name_param, None)
                     continue
+
+                # Try the 'base' flair converter as a backup for vitovent units
+                if "Vitovent" in dev_view.name:
+                    dev_view_flair = dev.DeviceView("Flair", "1")
+                    if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
+                        sensor.converter = converter
+                        sensor.converter_match = "from_code_flair"
+                        device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
+                        continue
 
             # TODO add sanity check that converter length matches the CMD read
             # If everything else fails, we manually search for the most suitable converter from other units
-            if converter := manual_current_to_converter.get(sensor.name_current):
-                sensor.converter = converters.converters_map[converter]
+            if converter_str := manual_current_to_converter.get(sensor.name_current):
+                sensor.converter = converters.converters_map[converter_str]
                 sensor.converter_match = "manual_full"
                 manual_current_to_converter_unused.pop(sensor.name_current, None)
                 continue
