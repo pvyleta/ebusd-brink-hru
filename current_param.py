@@ -1,6 +1,5 @@
 import re
 import glob
-import params
 import dev
 
 

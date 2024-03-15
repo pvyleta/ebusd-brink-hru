@@ -8,13 +8,6 @@ import converters
 import current_param
 import params
 
-# TODO output
-# 1 add version info to sensors
-# 2 add version info to params
-# 3 add view group info to param and sensor
-# 4 print out as json+csv
-
-
 
 def substitute_flair_name(device: dev.Device) -> dev.Device:
     device_copy = copy.deepcopy(device)  # Make copy so that we can manipulate the data

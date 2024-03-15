@@ -1,6 +1,7 @@
 import glob
 import re
 
+from dev import Device
 
 value_type_dict_config = {
     'NoUnit': "",
@@ -134,61 +135,56 @@ class Parameter:
         return str(self)
 
 
-class DeviceParameters:
-    def __init__(self, name: str, params_basic: str, params_plus: str, first_version: str, last_version: str, params: list[Parameter], controller_code: str):
-        self.name = name
+class DeviceParameters(Device):
+    def __init__(self, name: str, view_no: str, params_basic: str, params_plus: str, first_version: str, last_version: str, controller_code: str):
+        super().__init__(name, view_no, first_version, last_version)
         self.params_basic = params_basic
         self.params_plus = params_plus
-        self.first_version = first_version
-        self.last_version = last_version
-        self.params = params
         self.controller_code = controller_code
-
-
-# TODO add view_no and get rid of the DeviceParameters class
-search_list_params = [
-    ("name_flair_1", r'public class (?P<match>\w*)ParameterSet_.. : FlairBaseParameterSet_01'),
-    ("name_flair_2", r'public class (?P<match>\w*)ParameterSet_.. : FlairBaseParameterSet_02'),
-    ("name", r'public class (?P<match>\w*)ParameterSet_.. : WTWParameterFileHeader'),
-
-    ("params_basic", r'public const int PARAMETER_COUNT_(BASIC|AUTO) = (?P<match>\d*);'),
-    ("params_plus", r'public const int PARAMETER_COUNT_(PLUS|MANUAL) = (?P<match>\d*);'),
-    ("first_version", r'public (new )?const uint VALID_FIRST_VERSION = (?P<match>\d*);'),
-    ("last_version", r'public (new )?const uint VALID_LAST_VERSION = (?P<match>\d*);'),
-    ("controller_code", r'public (new )?const (uint|byte) CONTROLLER_CODE = (?P<match>\d*);'),
-]
 
 files_params = glob.glob('./BCSServiceTool/Model/Devices/**/*ParameterSet_*.cs', recursive=True)
 
-
-def get_device_parameters() -> list[DeviceParameters]:
-    device_parameters: list[DeviceParameters] = []
+def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
+    device_parameters: dict[DeviceParameters, list[Parameter]] = {}
     for file in files_params:
         with open(file) as f:
-            device_dict: dict[str, str] = {}
             params: list[Parameter] = []
             file_str = f.read()
 
-            # The files first contain some constants that are useful
-            for property, regex in search_list_params:
-                match = re.search(regex, file_str)
-                if match:
-                    device_dict[property] = match.group('match')
+            match = re.search(r'public class (?P<name>\w*)ParameterSet_\d(?P<view_no>\d) : (?P<device_type>FlairBaseParameterSet_01|FlairBaseParameterSet_02|WTWParameterFileHeader)', file_str)
+            assert match
+            
+            name = match.group('name')
+            view_no = match.group('view_no')
+            device_type = match.group('device_type')
 
             # Flair units have two different base classes, we manually overwrite the relevant base class values
-            if "name_flair_1" in device_dict:
-                device_dict["name"] = device_dict["name_flair_1"]
-                device_dict["params_basic"] = "57"
-                device_dict["params_plus"] = "57"
-                del device_dict["name_flair_1"]
-            elif "name_flair_2" in device_dict:
-                device_dict["name"] = device_dict["name_flair_2"]
-                device_dict["params_basic"] = "60"
-                device_dict["params_plus"] = "60"
-                del device_dict["name_flair_2"]
+            if device_type == 'FlairBaseParameterSet_01':
+                params_basic = params_plus = "57"
+            elif device_type == 'FlairBaseParameterSet_02':
+                params_basic = params_plus = "60"
+            else:
+                match = re.search(
+                    r'public const int PARAMETER_COUNT_(BASIC|AUTO) = (?P<params_basic>\d*);[\s\S]*'
+                    r'public const int PARAMETER_COUNT_(PLUS|MANUAL) = (?P<params_plus>\d*);', file_str)
+                assert match
+                params_basic = match.group('params_basic')
+                params_plus = match.group('params_plus')
 
-            params_basic_int = int(device_dict["params_basic"])
+            match = re.search(
+                r'public (new )?const (uint|byte) CONTROLLER_CODE = (?P<controller_code>\d*);[\s\S]*'
+                r'public (new )?const uint VALID_FIRST_VERSION = (?P<first_version>\d*);[\s\S]*'
+                r'public (new )?const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
+            assert match
 
+            first_version = match.group('first_version')
+            last_version = match.group('last_version')
+            controller_code = match.group('controller_code')
+            
+            device = DeviceParameters(name, view_no, params_basic, params_plus, first_version, last_version, controller_code)
+
+            params_basic_int = int(params_basic)
+            
             matches = re.finditer(r'WTWParameterDefinition (?P<param_def>\w*) = new WTWParameterDefinition[^ ]* (?P<id>\d*), "parameter(SetDescription)?(?P<name>\w*)", (?P<is_read_only>\w*), WTWParameterDefinition\.UnitType\.(?P<unit>\w*), (?P<multiplier>[^ ]*), (?P<is_signed>\w*)\);'
                                   r'[\s\S]*((?P=param_def))\.SetApplianceData[^ ]* (?P<current>-?\d*), [^ ]* (?P<min>-?\d*), [^ ]* (?P<max>-?\d*), [^ ]* (?P<step>-?\d*), [^ ]* (?P<default>-?\d*)\);', file_str)
             for m in matches:
@@ -196,11 +192,9 @@ def get_device_parameters() -> list[DeviceParameters]:
                 is_plus_only = params_basic_int < 1
                 params_basic_int -= 1
                 fields = Fields(m.group('current'), m.group('min'), m.group('max'), m.group('step'), m.group('default'))
-                param = Parameter(device_dict['name'], device_dict['first_version'], device_dict['last_version'], is_plus_only, m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
+                param = Parameter(name, first_version, last_version, is_plus_only, m.group('id'), m.group('name'), value_type_dict_config[m.group('unit')], m.group('multiplier'), m.group('is_signed'), m.group('is_read_only'), fields)
                 params.append(param)
 
-            device = DeviceParameters(**device_dict, params=params)
-
-            device_parameters.append(device)
+            device_parameters[device] = params
 
     return device_parameters

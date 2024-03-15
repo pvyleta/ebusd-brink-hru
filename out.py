@@ -4,9 +4,9 @@ import csv
 
 import jsonpickle # type: ignore
 
-import sensor_data
-import config_data
-import dev
+from dev import Device
+from config_data import Parameter, DeviceParameters
+from sensor_data import Sensor
 
 
 output_dir = "config_files"
@@ -28,7 +28,7 @@ def multiplier_to_divider(multiplier: str):
         return ""
 
 
-def csv_line_sensor(sensor: sensor_data.Sensor):
+def csv_line_sensor(sensor: Sensor):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     assert sensor.converter
     values = sensor.converter.values
@@ -37,7 +37,7 @@ def csv_line_sensor(sensor: sensor_data.Sensor):
     return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
 
 
-def csv_line_param_read(param: config_data.Parameter):
+def csv_line_param_read(param: Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
     if values := param.values:
@@ -48,7 +48,7 @@ def csv_line_param_read(param: config_data.Parameter):
         return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,Max,,{datatype},,{param.unit},,Min,,{datatype},,{param.unit},,Step,,{datatype},,{param.unit},,Default,,{datatype},,{param.unit},\n'
 
 
-def csv_line_param_write(param: config_data.Parameter):
+def csv_line_param_write(param: Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
     if values := param.values:
@@ -58,7 +58,7 @@ def csv_line_param_write(param: config_data.Parameter):
     return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype},{values},{param.unit},\n'
 
 
-csv_header = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
+CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 # TODO add length checks from CMDs
 def datatype_from_sign(is_signed):
@@ -71,46 +71,43 @@ def datatype_from_sign(is_signed):
 
 
 def csv_from_sensors(sensors):
-    file_str = csv_header
+    file_str = CSV_HEADER
     for sensor in sensors:
         file_str += csv_line_sensor(sensor)
     return file_str
 
 
-def csv_from_device_param(device_param, is_basic):
-    if is_basic:
-        params = device_param.params[0:int(device_param.params_basic)]
-    else:
-        params = device_param.params[0:int(device_param.params_plus)]
-
-    file_str = csv_header
-    for param in params:
-        file_str += csv_line_param_read(param)
-        if not param.is_read_only:
-            file_str += csv_line_param_write(param)
+def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
+    file_str = CSV_HEADER
+    for param in parameters:
+        if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
+            file_str += csv_line_param_read(param)
+            if not param.is_read_only:
+                file_str += csv_line_param_write(param)
     return file_str
+
 
 # TODO rename Sensor to State?
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
-def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Sensor]], device_parameters: list[config_data.DeviceParameters]):
+def write_csv_files(dict_devices_sensor: dict[Device, list[Sensor]], device_parameters: dict[DeviceParameters, list[Parameter]]):
     shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
-    sensors_all: list[sensor_data.Sensor] = []
-    params_all: list[config_data.Parameter] = []
+    sensors_all: list[Sensor] = []
+    params_all: list[Parameter] = []
     for device, sensors in dict_devices_sensor.items():
         sensors_all.extend(sensors)
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_sensors(sensors))
 
-    for device_param in device_parameters:
-        params_all.extend(device_param.params)
+    for device_param, parameters in device_parameters.items():
+        params_all.extend(parameters)
         with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(device_param, True))
+            text_file.write(csv_from_device_param(parameters, False))
 
         with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(device_param, False))
+            text_file.write(csv_from_device_param(parameters, True))
 
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)

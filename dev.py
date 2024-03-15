@@ -18,8 +18,6 @@ class Device:
         return str(self)
 
 # .xaml files do not have verson information, so we must rely on the view 'index' for matching
-
-
 class DeviceView:
     def __init__(self, name, view_no):
         self.name = name

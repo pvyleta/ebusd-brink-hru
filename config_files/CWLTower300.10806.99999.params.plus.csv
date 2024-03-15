@@ -43,3 +43,4 @@ r,CWLTower300,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4050,69,,,UIR,,,
 r,CWLTower300,ModbusInterface,ModbusInterface,,,4050,65,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLTower300,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,66,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,CWLTower300,ModbusSpeed,ModbusSpeed,,,4050,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:3,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,"min/max/step" fields of this enum message omitted
+r,CWLTower300,ModbusParity,ModbusParity,,,4050,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:3,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,"min/max/step" fields of this enum message omitted

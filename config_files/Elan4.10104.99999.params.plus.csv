@@ -23,3 +23,8 @@ r,Elan4,CO2Sensor1Address,CO2Sensor1Address,,,4050,97,,,UIR,,,,Max,,UIR,,,,Min,,
 r,Elan4,CO2Sensor2Address,CO2Sensor2Address,,,4050,98,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,Elan4,CO2Sensor3Address,CO2Sensor3Address,,,4050,99,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,Elan4,CO2Sensor4Address,CO2Sensor4Address,,,4050,100,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+r,Elan4,EBusGroupNumber,EBusGroupNumber,,,4050,208,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+r,Elan4,MasterWTWeBusGroup,MasterWTWeBusGroup,,,4050,112,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+r,Elan4,CO2SensorsActivated,CO2SensorsActivated,,,4050,60,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,"min/max/step" fields of this enum message omitted
+r,Elan4,BacklightLevel,BacklightLevel,,,4050,211,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
+r,Elan4,HeartBeatTimeout,HeartBeatTimeout,,,4050,210,,,UIR,,Minutes,,Max,,UIR,,Minutes,,Min,,UIR,,Minutes,,Step,,UIR,,Minutes,,Default,,UIR,,Minutes,
