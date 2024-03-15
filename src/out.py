@@ -9,14 +9,11 @@ from config_data import Parameter, DeviceParameters
 from sensor_data import Sensor
 
 
-output_dir = "config_files"
+output_dir = "ebusd-configuration"
 
-# TODO separate the pandas and jsonpickle outputs to separate file, as they are the only ones needing some additional libraries
-# TODO add requirements txt
 # TODO Add comment to converters that were filled manually
 # TODO Add original min/max/step/default as a comment to fields
 # TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
-
 
 def multiplier_to_divider(multiplier: str):
     multiplier_float = float(multiplier)
@@ -91,7 +88,8 @@ def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_csv_files(dict_devices_sensor: dict[Device, list[Sensor]], device_parameters: dict[DeviceParameters, list[Parameter]]):
-    shutil.rmtree(output_dir)
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
     os.mkdir(output_dir)
 
     sensors_all: list[Sensor] = []

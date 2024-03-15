@@ -1,2 +1,0 @@
-wifi co box
-MAC_addr: a0:92:08:ff:2a:08
