@@ -5,6 +5,46 @@ The configuration files were created by parsing the [Brink Service Tool](https:/
 
 For few parameters, other sources than the decompiled Brink Service Tool was used, such as datasheets, random internet forums etc. This is always noted in the source code, or even in the produced files.
 
+# Supported devices
+
+Currently, the ebusd-configuration for these heat recovery units is present:
+
+ - Brink CWLF250
+ - Brink CWLF350
+ - Brink CWLTower300
+ - Brink ConstantRPM400
+ - Brink DecentralAir70
+ - Brink Elan10
+ - Brink Elan4
+ - Brink Renovent Excellent180
+ - Brink Renovent Excellent300
+ - Brink Renovent Excellent400
+ - Brink Renovent Excellent450
+ - Brink Flair200
+ - Brink Flair225
+ - Brink Flair300
+ - Brink Flair325
+ - Brink Flair400
+ - Brink Flair450
+ - Brink Flair600
+ - Brink MultiRoomCtrlT01
+ - Brink Nather300
+ - Brink RenoventElan300
+ - Brink Renovent Sky150
+ - Brink Renovent Sky200
+ - Brink Renovent Sky300
+ - Brink ValveT01
+ - Viessmann Vitovent200W
+ - Viessmann Vitovent300C
+ - Viessmann Vitovent300W300
+ - Viessmann Vitovent300W400
+ - Viessmann Vitovent300WH32SA225
+ - Viessmann Vitovent300WH32SA600
+ - Viessmann Vitovent300WH32SC400
+ - Viessmann Vitovent300WH32SC325
+
+ Note, that Brink devices are re-branded as Viessmann, Wolf, VisionAIR, Ubbink and maybe others, os these configuration files are (mostly) applicable for those as well.
+
 # repo structure
 ## ebusd-configuration
 Contains the config files for individual Brink devices. There are two types of files - sensors and params. Sensors are read only, while params are almost in all instances writable. For params, each message contains five fields: [current, min, max, step_size, default]. This is reflected in the generated .csv files.
