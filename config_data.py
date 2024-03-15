@@ -58,8 +58,8 @@ known_values_params = {
 }
 
 class Fields:
-    def __init__(self, curent: str, min: str, max: str, step: str, default: str):
-        self.curent = curent
+    def __init__(self, current: str, min: str, max: str, step: str, default: str):
+        self.current = current
         self.min = min
         self.max = max
         self.step = step
@@ -89,7 +89,11 @@ class Parameter:
         self.multiplier = multiplier
         self.is_signed = is_signed
         self.is_read_only = is_read_only
-        self.fields = fields
+        self.field_current = fields.current
+        self.field_min = fields.min
+        self.field_max = fields.max
+        self.field_step = fields.step
+        self.field_default = fields.default
 
         self.values = self.__get_enum_values()
 
@@ -98,13 +102,13 @@ class Parameter:
     # But in fact other units may have different values.
     def __get_enum_values(self):
         if param_enum := known_values_params.get(self.name):
-            if param_enum.min != self.fields.min:
+            if param_enum.min != self.field_min:
                 return None
-            elif param_enum.max != self.fields.max:
+            elif param_enum.max != self.field_max:
                 return None
             elif self.is_signed != "false":
                 return None
-            elif self.fields.step != "1":
+            elif self.field_step != "1":
                 return None
             elif self.unit != "":
                 return None
@@ -120,7 +124,7 @@ class Parameter:
         return str(self) == str(other)
     
     def __lt__(self, other):
-        return self.device_name + self.first_version + self.last_version + self.name < other.device_name + other.first_version + other.last_version + other.name
+        return self.device_name + self.name + self.first_version + self.last_version < other.device_name + other.name + other.first_version + other.last_version
 
     def __hash__(self):
         return hash(str(self))

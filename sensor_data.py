@@ -111,7 +111,7 @@ class Sensor:
         return str(self) == str(other)
     
     def __lt__(self, other):
-        return self.device_name + self.first_version + self.last_version + self.name_current < other.device_name + other.first_version + other.last_version + other.name_current
+        return self.device_name + self.name_current + self.first_version + self.last_version < other.device_name + other.name_current + other.first_version + other.last_version
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])

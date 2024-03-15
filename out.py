@@ -1,5 +1,6 @@
 import os
 import shutil
+import csv
 
 import jsonpickle
 
@@ -10,6 +11,8 @@ import dev
 
 output_dir = "config_files"
 
+# TODO separate the pandas and jsonpickle outputs to separate file, as they are the only ones needing some additional libraries
+# TODO add requirements txt
 # TODO Add comment to converters that were filled manually
 # TODO Add original min/max/step/default as a comment to fields
 # TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
@@ -108,6 +111,7 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
         with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(device, False))
 
+    # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
     sensors_all.sort()
     with open(os.path.join(output_dir, 'sensors.json'), "w", encoding="utf-8") as text_file:
@@ -117,3 +121,16 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
     with open(os.path.join(output_dir, 'params.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(params_all, text_file))
 
+    with open(os.path.join(output_dir, 'sensors.csv'), "w", encoding="utf-8") as text_file:
+        csv_writer = csv.writer(text_file)
+        keys = sensors_all[0].__dict__.keys()
+        csv_writer.writerow(keys)
+        for param in sensors_all:
+            csv_writer.writerow([getattr(param, key) for key in keys])
+
+    with open(os.path.join(output_dir, 'params.csv'), "w", encoding="utf-8") as text_file:
+        csv_writer = csv.writer(text_file)
+        keys = params_all[0].__dict__.keys()
+        csv_writer.writerow(keys)
+        for param in params_all:
+            csv_writer.writerow([getattr(param, key) for key in keys])
