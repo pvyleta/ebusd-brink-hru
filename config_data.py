@@ -120,7 +120,7 @@ class Parameter:
         return str(self) == str(other)
     
     def __lt__(self, other):
-        return self.device_name + self.first_version + self.last_version < other.device_name + other.first_version + other.last_version
+        return self.device_name + self.first_version + self.last_version + self.name < other.device_name + other.first_version + other.last_version + other.name
 
     def __hash__(self):
         return hash(str(self))

@@ -1,10 +1,12 @@
 import os
 import shutil
 
+import jsonpickle
+
 import sensor_data
 import config_data
 import dev
-import jsonpickle
+
 
 output_dir = "config_files"
 
@@ -114,4 +116,4 @@ def write_csv_files(dict_devices_sensor: dict[dev.Device, list[sensor_data.Senso
     params_all.sort()
     with open(os.path.join(output_dir, 'params.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(params_all, text_file))
-    
+
