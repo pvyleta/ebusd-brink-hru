@@ -9,7 +9,10 @@ from config_data import Parameter, DeviceParameters
 from sensor_data import Sensor
 
 
-output_dir = "ebusd-configuration"
+OUTPUT_DIR = "ebusd-configuration"
+DUMP_DIR = "dump"
+CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
+
 
 # TODO Add comment to converters that were filled manually
 # TODO Add original min/max/step/default as a comment to fields
@@ -48,14 +51,10 @@ def csv_line_param_read(param: Parameter):
 def csv_line_param_write(param: Parameter):
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
-    if values := param.values:
-        pass
-    else:
+    if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
     return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype},{values},{param.unit},\n'
 
-
-CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 # TODO add length checks from CMDs
 def datatype_from_sign(is_signed):
@@ -87,37 +86,41 @@ def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
 # TODO rename Sensor to State?
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
-def write_csv_files(dict_devices_sensor: dict[Device, list[Sensor]], device_parameters: dict[DeviceParameters, list[Parameter]]):
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
-    os.mkdir(output_dir)
+def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+    if os.path.exists(OUTPUT_DIR):
+        shutil.rmtree(OUTPUT_DIR)
+    os.mkdir(OUTPUT_DIR)
 
     sensors_all: list[Sensor] = []
     params_all: list[Parameter] = []
     for device, sensors in dict_devices_sensor.items():
         sensors_all.extend(sensors)
-        with open(os.path.join(output_dir, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
+        with open(os.path.join(OUTPUT_DIR, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_sensors(sensors))
 
-    for device_param, parameters in device_parameters.items():
+    for device_param, parameters in dict_devices_parameter.items():
         params_all.extend(parameters)
-        with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
+        with open(os.path.join(OUTPUT_DIR, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(parameters, False))
 
-        with open(os.path.join(output_dir, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+        with open(os.path.join(OUTPUT_DIR, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(csv_from_device_param(parameters, True))
+
+    if os.path.exists(DUMP_DIR):
+        shutil.rmtree(DUMP_DIR)
+    os.mkdir(DUMP_DIR)
 
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
     sensors_all.sort()
-    with open(os.path.join(output_dir, 'sensors.json'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(sensors_all, text_file))
   
     params_all.sort()
-    with open(os.path.join(output_dir, 'params.json'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(params_all, text_file))
 
-    with open(os.path.join(output_dir, 'sensors.csv'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'sensors.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
         keys = sensors_all[0].__dict__.keys()
         csv_writer.writerow(keys)
@@ -125,7 +128,7 @@ def write_csv_files(dict_devices_sensor: dict[Device, list[Sensor]], device_para
             csv_writer.writerow([getattr(sensor, key) for key in keys])
 
     # TODO unify the fals/False capitalization in the output for various fields
-    with open(os.path.join(output_dir, 'params.csv'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'params.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
         keys = params_all[0].__dict__.keys()
         csv_writer.writerow(keys)

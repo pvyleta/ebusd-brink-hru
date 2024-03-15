@@ -1,4 +1,4 @@
-from out import write_csv_files
+from out import write_output
 from converters import Converter
 from sensor_data import get_dict_devices_sensor
 from config_data import get_device_parameters
@@ -24,6 +24,6 @@ for device, sensors in dict_devices_sensor.items():
 
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
-write_csv_files(dict_devices_sensor, device_parameters)
+write_output(dict_devices_sensor, device_parameters)
 
 print("SUCCESS")
