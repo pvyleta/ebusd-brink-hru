@@ -3,9 +3,8 @@ import glob
 import copy
 
 from params import DEBUG
-from converters import Converter, device_to_name_current_to_name_param, find_converters, converters_map
+from converters import Converter, find_converters, converters_map
 from dev import Device, DeviceView
-from command_ebus import get_commands_dict
 from current_param import get_device_to_current_param
 from command_ebus import CommandEBus
 
@@ -85,6 +84,7 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 # TODO rename Sensor to State?
+# TODO consider using f-strings with :x to reresent hexa numbers
 class Sensor:
     def __init__(self, device_name: str, first_version: int, last_version: int, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.device_name = device_name
@@ -137,10 +137,7 @@ search_list_sensor = [
 ]
 
 
-def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
-
-    device_to_name_current_to_name_param_dict = device_to_name_current_to_name_param()
-    cmd_dict, cmd_bytes_dict = get_commands_dict()
+def get_dict_devices_sensor(device_to_name_current_to_name_param_dict, cmd_dict, cmd_bytes_dict) -> dict[Device, list[Sensor]]:
 
     dict_devices_sensor: dict[Device, list[Sensor]] = {}
     missing_commands_set: set[str] = set()

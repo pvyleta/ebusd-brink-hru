@@ -144,7 +144,6 @@ class DeviceParameters(Device):
         self.controller_code = controller_code
 
 files_params = glob.glob('./BCSServiceTool/Model/Devices/**/*ParameterSet_*.cs', recursive=True)
-# TODO consider using f-strings with :x to reresent hexa numbers, also for sensor
 def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
     device_parameters: dict[DeviceParameters, list[Parameter]] = {}
     for file in files_params:
