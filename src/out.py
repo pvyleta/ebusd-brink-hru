@@ -15,7 +15,6 @@ CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field
 
 
 # TODO Add comment to converters that were filled manually
-# TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
 
 def multiplier_to_divider(multiplier: float) -> str:
     if multiplier < 1.0:

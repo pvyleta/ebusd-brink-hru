@@ -3,13 +3,13 @@ import glob
 
 
 class CommandEBus:
-    def __init__(self, cmd: str, pbsb: str, len: str, id: str, write_len: int, read_len: int):
+    def __init__(self, cmd: str, pbsb: str, len: str, id: str, write_len: int, read_len_code: int):
         self.cmd = cmd
         self.pbsb = pbsb
         self.len = len
         self.id = id
         self.write_len = write_len
-        self.read_len = read_len
+        self.read_len = read_len_code - 2 # BCServiceTool includes two additional bytes in the resp length (likely length and CRC), but we onyl care for the payload length
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])

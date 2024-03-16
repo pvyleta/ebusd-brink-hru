@@ -3,7 +3,7 @@ from converters import Converter
 from sensor_data import get_dict_devices_sensor
 from config_data import get_device_parameters
 
-# TODO add special instructions and special handling
+# TODO add special instructions and special handling - e.g. factory reset, errors reset, filter reset...
 # TODO add default slave address for the known devices
 # TODO fill in dipswitch values for known devices
 

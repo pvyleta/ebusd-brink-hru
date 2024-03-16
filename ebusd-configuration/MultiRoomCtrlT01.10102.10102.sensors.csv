@@ -1,6 +1,6 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
 r,MultiRoomCtrlT01,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
-r,MultiRoomCtrlT01,DeviceID,DeviceID,,,4022,80,,,UIR,,,
+r,MultiRoomCtrlT01,DeviceID,DeviceID,,,4022,80,,,UCH,,,
 r,MultiRoomCtrlT01,EBusAddressing,EBusAddressing,,,4022,50,,,ULR,,,
 r,MultiRoomCtrlT01,SerialNumber,SerialNumber,,,4022,51,,,STR:12,,,
 r,MultiRoomCtrlT01,OperatingTime,OperatingTime,,,4022,83,,,ULR,,Hour,

@@ -92,6 +92,7 @@ class Sensor:
         self.last_version = last_version
         self.id = id
         self.name_description = name_description
+        # TODO remove Current from Current
         self.name_current = name_current
         self.name_param = name_param
         self.unit = unit
@@ -116,6 +117,18 @@ class Sensor:
 
     def __repr__(self):
         return str(self)
+    
+    def check_converter(self):
+        if self.cmd and self.cmd.read_len != self.converter.length:
+            if self.name_current == 'CurrentVirtualDipswitch':
+                # TODO it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
+                pass
+            elif re.search('Elan|MultiRoomCtrl|Valve', self.device_name) and self.converter.length == 2 and self.cmd.read_len == 1:
+                # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
+                self.converter.length = 1
+                self.converter.type = "UCH"
+            else:
+                print(f'Length Mismatch: device: {self.device_name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
 
 
 search_list_sensor = [
@@ -201,6 +214,12 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                         print(f'Missing named param for {device.name} sensor {name_current}')
 
                 command = cmd_dict[m.group('cmd')]
+
+                # TODO find out why this mever hits
+                # Bugfix - this value is clearly written incorrectly in the BCServiceTool
+                if "Decentral" in device.name and name_current == 'CurrentFlowActualValue' and command and command.cmd == 'DecentralEBusCommands.CmdReadActualSoftwareVersion':
+                    command = cmd_dict['DecentralEBusCommands.CmdReadActualFlowValue']
+
                 sensors.append(Sensor(device.name, device.first_version, device.last_version, command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             dict_devices_sensor[device] = sensors
@@ -236,6 +255,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                 if converter := device_to_name_param_to_converter[dev_view].get(sensor.name_param):
                     sensor.converter = converter
                     sensor.converter_match = "from_code"
+                    sensor.check_converter()
                     device_to_name_param_to_converter_unused[dev_view].pop(sensor.name_param, None)
                     continue
 
@@ -245,6 +265,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                     if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
                         sensor.converter = converter
                         sensor.converter_match = "from_code_flair"
+                        sensor.check_converter()
                         device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
                         continue
 
@@ -253,6 +274,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
             if converter_str := manual_current_to_converter.get(sensor.name_current):
                 sensor.converter = converters_map[converter_str]
                 sensor.converter_match = "manual_full"
+                sensor.check_converter()
                 manual_current_to_converter_unused.pop(sensor.name_current, None)
                 continue
 
