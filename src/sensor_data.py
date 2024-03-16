@@ -92,7 +92,6 @@ class Sensor:
         self.last_version = last_version
         self.id = id
         self.name_description = name_description
-        # TODO remove Current from Current
         self.name_current = name_current
         self.name_param = name_param
         self.unit = unit
@@ -118,6 +117,7 @@ class Sensor:
     def __repr__(self):
         return str(self)
     
+    # Ensures that the CMD read length matches the converters. Turns out, we found few bugs in our and Brink code as well this way.
     def check_converter(self):
         if self.cmd and self.cmd.read_len != self.converter.length:
             if self.name_current == 'CurrentVirtualDipswitch':
@@ -215,7 +215,6 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
 
                 command = cmd_dict[m.group('cmd')]
 
-                # TODO find out why this mever hits
                 # Bugfix - this value is clearly written incorrectly in the BCServiceTool
                 if "Decentral" in device.name and name_current == 'CurrentFlowActualValue' and command and command.cmd == 'DecentralEBusCommands.CmdReadActualSoftwareVersion':
                     command = cmd_dict['DecentralEBusCommands.CmdReadActualFlowValue']
@@ -269,7 +268,6 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                         device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
                         continue
 
-            # TODO add sanity check that converter length matches the CMD read
             # If everything else fails, we manually search for the most suitable converter from other units
             if converter_str := manual_current_to_converter.get(sensor.name_current):
                 sensor.converter = converters_map[converter_str]

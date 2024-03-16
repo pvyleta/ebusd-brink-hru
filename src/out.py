@@ -13,9 +13,6 @@ OUTPUT_DIR = "ebusd-configuration"
 DUMP_DIR = "dump"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
-
-# TODO Add comment to converters that were filled manually
-
 def multiplier_to_divider(multiplier: float) -> str:
     if multiplier < 1.0:
         return str(int(1 / multiplier))
@@ -39,10 +36,10 @@ def csv_line_param_read(param: Parameter) -> str:
     datatype = datatype_from_sign(param.is_signed)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
 
 
 def csv_line_param_write(param: Parameter) -> str:
@@ -50,7 +47,7 @@ def csv_line_param_write(param: Parameter) -> str:
     datatype = datatype_from_sign(param.is_signed)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
+    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
 
 # TODO add length checks from CMDs
 def datatype_from_sign(is_signed: bool) -> str:
