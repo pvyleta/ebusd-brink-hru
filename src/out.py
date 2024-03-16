@@ -15,10 +15,9 @@ CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field
 
 
 # TODO Add comment to converters that were filled manually
-# TODO Add original min/max/step/default as a comment to fields
 # TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
 
-def multiplier_to_divider(multiplier: float):
+def multiplier_to_divider(multiplier: float) -> str:
     if multiplier < 1.0:
         return str(int(1 / multiplier))
     elif multiplier > 1.0:
@@ -27,7 +26,7 @@ def multiplier_to_divider(multiplier: float):
         return ""
 
 
-def csv_line_sensor(sensor: Sensor):
+def csv_line_sensor(sensor: Sensor) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     assert sensor.converter
     values = sensor.converter.values
@@ -36,27 +35,26 @@ def csv_line_sensor(sensor: Sensor):
     return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
 
 
-def csv_line_param_read(param: Parameter):
+def csv_line_param_read(param: Parameter) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
     if values := param.values:
-        comment = '"min/max/step" fields of this enum message omitted'
+        comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
         return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,Max,,{datatype},,{param.unit},,Min,,{datatype},,{param.unit},,Step,,{datatype},,{param.unit},,Default,,{datatype},,{param.unit},\n'
+        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
 
 
-def csv_line_param_write(param: Parameter):
+def csv_line_param_write(param: Parameter) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = datatype_from_sign(param.is_signed)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id},,,{datatype},{values},{param.unit},\n'
-
+    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
 
 # TODO add length checks from CMDs
-def datatype_from_sign(is_signed: bool):
+def datatype_from_sign(is_signed: bool) -> str:
     if is_signed:
         return "SIR"
     else:
@@ -80,7 +78,6 @@ def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
     return file_str
 
 
-# TODO rename Sensor to State?
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):

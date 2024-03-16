@@ -1,41 +1,41 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-r,Nather300,FlowMode0,FlowMode0,,,4050,33,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
-w,Nather300,FlowMode0,FlowMode0,,,4080,33,,,SIR,,m³/h,
-r,Nather300,FlowMode1,FlowMode1,,,4050,1,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
-w,Nather300,FlowMode1,FlowMode1,,,4080,1,,,SIR,,m³/h,
-r,Nather300,FlowMode2,FlowMode2,,,4050,2,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
-w,Nather300,FlowMode2,FlowMode2,,,4080,2,,,SIR,,m³/h,
-r,Nather300,FlowMode3,FlowMode3,,,4050,3,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
-w,Nather300,FlowMode3,FlowMode3,,,4080,3,,,SIR,,m³/h,
-r,Nather300,BypassTemp,BypassTemp,,,4050,4,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
-w,Nather300,BypassTemp,BypassTemp,,,4080,4,,,SIR,10,°C,
-r,Nather300,BypassTempHyst,BypassTempHyst,,,4050,48,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
-w,Nather300,BypassTempHyst,BypassTempHyst,,,4080,48,,,SIR,10,°C,
-r,Nather300,BypassMode,BypassMode,,,4050,27,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,"min/max/step" fields of this enum message omitted
-w,Nather300,BypassMode,BypassMode,,,4080,27,,,UIR,0=Auto;1=Closed;2=Open,,
-r,Nather300,CVWTWMode,CVWTWMode,,,4050,7,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,"min/max/step" fields of this enum message omitted
-w,Nather300,CVWTWMode,CVWTWMode,,,4080,7,,,UIR,0=off;1=on,,
-r,Nather300,UnbalanceMode,UnbalanceMode,,,4050,8,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,"min/max/step" fields of this enum message omitted
-w,Nather300,UnbalanceMode,UnbalanceMode,,,4080,8,,,UIR,0=Not Permitted;1=Permitted,,
-r,Nather300,UnbalanceFlow,UnbalanceFlow,,,4050,9,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
-w,Nather300,UnbalanceFlow,UnbalanceFlow,,,4080,9,,,SIR,,m³/h,
-r,Nather300,PreheaterPresent,PreheaterPresent,,,4050,49,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,"min/max/step" fields of this enum message omitted
-w,Nather300,PreheaterPresent,PreheaterPresent,,,4080,49,,,UIR,0=no;1=yes,,
-r,Nather300,RHTSensorPresent,RHTSensorPresent,,,4050,50,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-w,Nather300,RHTSensorPresent,RHTSensorPresent,,,4080,50,,,UIR,,,
-r,Nather300,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,51,,,SIR,,,,Max,,SIR,,,,Min,,SIR,,,,Step,,SIR,,,,Default,,SIR,,,
-w,Nather300,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,51,,,SIR,,,
-r,Nather300,BacklightLevel,BacklightLevel,,,4050,29,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
-w,Nather300,BacklightLevel,BacklightLevel,,,4080,29,,,UIR,,%,
-r,Nather300,FlowCorrection,FlowCorrection,,,4050,63,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
-w,Nather300,FlowCorrection,FlowCorrection,,,4080,63,,,UIR,,%,
-r,Nather300,SwitchDefaultPos,SwitchDefaultPos,,,4050,64,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,"min/max/step" fields of this enum message omitted
-w,Nather300,SwitchDefaultPos,SwitchDefaultPos,,,4080,64,,,UIR,0=off;1=on,,
-r,Nather300,ModbusInterface,ModbusInterface,,,4050,65,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-w,Nather300,ModbusInterface,ModbusInterface,,,4080,65,,,UIR,,,
-r,Nather300,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,66,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-w,Nather300,ModbusSlaveAddress,ModbusSlaveAddress,,,4080,66,,,UIR,,,
-r,Nather300,ModbusSpeed,ModbusSpeed,,,4050,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:3,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,"min/max/step" fields of this enum message omitted
-w,Nather300,ModbusSpeed,ModbusSpeed,,,4080,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,
-r,Nather300,ModbusParity,ModbusParity,,,4050,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:3,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,"min/max/step" fields of this enum message omitted
-w,Nather300,ModbusParity,ModbusParity,,,4080,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,
+r,Nather300,FlowMode0,FlowMode0,,,4050,33,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:0],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:50],Default,,SIR,,m³/h,[default:50]
+w,Nather300,FlowMode0,FlowMode0,,,4080,21,,,SIR,,m³/h,[min:0,max:50,step:50,default:50]
+r,Nather300,FlowMode1,FlowMode1,,,4050,1,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:300],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:150]
+w,Nather300,FlowMode1,FlowMode1,,,4080,1,,,SIR,,m³/h,[min:50,max:300,step:5,default:150]
+r,Nather300,FlowMode2,FlowMode2,,,4050,2,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:300],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:225]
+w,Nather300,FlowMode2,FlowMode2,,,4080,2,,,SIR,,m³/h,[min:50,max:300,step:5,default:225]
+r,Nather300,FlowMode3,FlowMode3,,,4050,3,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:300],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:230]
+w,Nather300,FlowMode3,FlowMode3,,,4080,3,,,SIR,,m³/h,[min:50,max:300,step:5,default:230]
+r,Nather300,BypassTemp,BypassTemp,,,4050,4,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:350],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:240]
+w,Nather300,BypassTemp,BypassTemp,,,4080,4,,,SIR,10,°C,[min:150,max:350,step:5,default:240]
+r,Nather300,BypassTempHyst,BypassTempHyst,,,4050,48,,,SIR,10,°C,,Min,,SIR,,°C,[min:0],Max,,SIR,,°C,[max:50],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:20]
+w,Nather300,BypassTempHyst,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0,max:50,step:5,default:20]
+r,Nather300,BypassMode,BypassMode,,,4050,27,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+w,Nather300,BypassMode,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0,max:2,step:1,default:0]
+r,Nather300,CVWTWMode,CVWTWMode,,,4050,7,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+w,Nather300,CVWTWMode,CVWTWMode,,,4080,7,,,UIR,0=off;1=on,,[min:0,max:1,step:1,default:0]
+r,Nather300,UnbalanceMode,UnbalanceMode,,,4050,8,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+w,Nather300,UnbalanceMode,UnbalanceMode,,,4080,8,,,UIR,0=Not Permitted;1=Permitted,,[min:0,max:1,step:1,default:1]
+r,Nather300,UnbalanceFlow,UnbalanceFlow,,,4050,9,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:-100],Max,,SIR,,m³/h,[max:100],Step,,SIR,,m³/h,[step:1],Default,,SIR,,m³/h,[default:0]
+w,Nather300,UnbalanceFlow,UnbalanceFlow,,,4080,9,,,SIR,,m³/h,[min:-100,max:100,step:1,default:0]
+r,Nather300,PreheaterPresent,PreheaterPresent,,,4050,49,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
+w,Nather300,PreheaterPresent,PreheaterPresent,,,4080,31,,,UIR,0=no;1=yes,,[min:0,max:1,step:1,default:0]
+r,Nather300,RHTSensorPresent,RHTSensorPresent,,,4050,50,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+w,Nather300,RHTSensorPresent,RHTSensorPresent,,,4080,32,,,UIR,,,[min:0,max:1,step:1,default:0]
+r,Nather300,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,51,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
+w,Nather300,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2,max:2,step:1,default:0]
+r,Nather300,BacklightLevel,BacklightLevel,,,4050,29,,,UIR,,%,,Min,,UIR,,%,[min:0],Max,,UIR,,%,[max:100],Step,,UIR,,%,[step:5],Default,,UIR,,%,[default:10]
+w,Nather300,BacklightLevel,BacklightLevel,,,4080,1d,,,UIR,,%,[min:0,max:100,step:5,default:10]
+r,Nather300,FlowCorrection,FlowCorrection,,,4050,63,,,UIR,,%,,Min,,UIR,,%,[min:90],Max,,UIR,,%,[max:110],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
+w,Nather300,FlowCorrection,FlowCorrection,,,4080,3f,,,UIR,,%,[min:90,max:110,step:1,default:100]
+r,Nather300,SwitchDefaultPos,SwitchDefaultPos,,,4050,64,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+w,Nather300,SwitchDefaultPos,SwitchDefaultPos,,,4080,40,,,UIR,0=off;1=on,,[min:0,max:1,step:1,default:1]
+r,Nather300,ModbusInterface,ModbusInterface,,,4050,65,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:2],Default,,UIR,,,[default:1]
+w,Nather300,ModbusInterface,ModbusInterface,,,4080,41,,,UIR,,,[min:0,max:3,step:2,default:1]
+r,Nather300,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,66,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:247],Step,,UIR,,,[step:1],Default,,UIR,,,[default:11]
+w,Nather300,ModbusSlaveAddress,ModbusSlaveAddress,,,4080,42,,,UIR,,,[min:1,max:247,step:1,default:11]
+r,Nather300,ModbusSpeed,ModbusSpeed,,,4050,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:3,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:3] - min/max/step fields of enum message omitted
+w,Nather300,ModbusSpeed,ModbusSpeed,,,4080,43,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[min:0,max:7,step:1,default:3]
+r,Nather300,ModbusParity,ModbusParity,,,4050,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:3,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[default:1] - min/max/step fields of enum message omitted
+w,Nather300,ModbusParity,ModbusParity,,,4080,44,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[min:0,max:3,step:1,default:1]

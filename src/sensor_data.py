@@ -84,6 +84,7 @@ manual_current_to_converter = {
 manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
+# TODO rename Sensor to State?
 class Sensor:
     def __init__(self, device_name: str, first_version: int, last_version: int, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.device_name = device_name
