@@ -1,5 +1,5 @@
 class Device:
-    def __init__(self, name: str, view_no: str, first_version: str, last_version: str):
+    def __init__(self, name: str, view_no: int, first_version: int, last_version: int):
         self.name = name
         self.view_no = view_no
         self.first_version = first_version
@@ -19,7 +19,7 @@ class Device:
 
 # .xaml files do not have verson information, so we must rely on the view 'index' for matching
 class DeviceView:
-    def __init__(self, name, view_no):
+    def __init__(self, name: str, view_no: int):
         self.name = name
         self.view_no = view_no
 

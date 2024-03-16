@@ -238,7 +238,7 @@ def find_converters() -> dict[DeviceView, dict[str, Converter]]:
                 print("converters: skipping file: " + file)
                 continue
 
-            dev_view = DeviceView(match.group('name'), match.group('view_no'))
+            dev_view = DeviceView(match.group('name'), int(match.group('view_no')))
             device_to_name_param_to_converter.setdefault(dev_view, {})
 
             # Find the right Converter based on the referenced StaticResource string
@@ -296,7 +296,7 @@ def device_to_name_current_to_name_param() -> dict[Device, dict[str, str]]:
                 continue
 
             assert match1 and match2 and match3
-            device = Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
             device_to_name_current_to_name_param_dict.setdefault(device, {})
             # this.paramExtContact1.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentExtContact1Position.Description).ToString();
             matches = re.finditer(r'this\.(?P<name_param>.*)\.ParameterName = this.FindResource\(\(object\) this\._viewModel\.\w*\.(?P<name_current>\w*)\.Description', file_str)

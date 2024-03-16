@@ -34,7 +34,7 @@ def get_device_to_current_param() -> dict[Device, dict[str, CurrentParam]]:
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
             assert match1 and match2 and match3
 
-            device = Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
             device_to_current_param.setdefault(device, {})
             matches = re.finditer(r'public (?P<datatype_out>\w*) (?P<name_actual>\w*)\n *\{\n *get => this\.\w*\.(?P<name_current>\w*)\.(?P<datatype_in>\w*)Value;', file_str)
             for m in matches:

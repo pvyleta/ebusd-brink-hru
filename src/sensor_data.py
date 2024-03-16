@@ -7,6 +7,7 @@ from converters import Converter, device_to_name_current_to_name_param, find_con
 from dev import Device, DeviceView
 from command_ebus import get_commands_dict
 from current_param import get_device_to_current_param
+from command_ebus import CommandEBus
 
 
 def substitute_flair_name(device: Device) -> Device:
@@ -84,7 +85,7 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 class Sensor:
-    def __init__(self, device_name: str, first_version: str, last_version: str, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: str, cmd, datatype=None):
+    def __init__(self, device_name: str, first_version: int, last_version: int, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.device_name = device_name
         self.first_version = first_version
         self.last_version = last_version
@@ -104,7 +105,7 @@ class Sensor:
         return str(self) == str(other)
     
     def __lt__(self, other):
-        return self.device_name + self.name_current + self.first_version + self.last_version < other.device_name + other.name_current + other.first_version + other.last_version
+        return self.device_name + self.name_current + str(self.first_version) + str(self.last_version) < other.device_name + other.name_current + str(other.first_version) + str(other.last_version)
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
@@ -145,7 +146,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
             assert match1 and match2 and match3
 
-            device = Device(match1.group('name'), match1.group('view_no'), match2.group('first_version'), match3.group('last_version'))
+            device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
             sensors: list[Sensor] = []
 
             # Then there is a line with sensor definition
@@ -175,7 +176,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                     command = None
                     missing_commands_set.add(command_bytes)
 
-                sensors.append(Sensor(device.name, device.first_version, device.last_version, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
@@ -199,7 +200,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
                         print(f'Missing named param for {device.name} sensor {name_current}')
 
                 command = cmd_dict[m.group('cmd')]
-                sensors.append(Sensor(device.name, device.first_version, device.last_version,  command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], m.group('update_rate'), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version, command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             dict_devices_sensor[device] = sensors
 
@@ -239,7 +240,7 @@ def get_dict_devices_sensor() -> dict[Device, list[Sensor]]:
 
                 # Try the 'base' flair converter as a backup for vitovent units
                 if "Vitovent" in dev_view.name:
-                    dev_view_flair = DeviceView("Flair", "1")
+                    dev_view_flair = DeviceView("Flair", 1)
                     if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
                         sensor.converter = converter
                         sensor.converter_match = "from_code_flair"

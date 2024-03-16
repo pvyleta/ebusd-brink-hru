@@ -18,12 +18,11 @@ CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field
 # TODO Add original min/max/step/default as a comment to fields
 # TODO filter out converter values based on the range for any given appliance - it is possible some ppliances only support some values
 
-def multiplier_to_divider(multiplier: str):
-    multiplier_float = float(multiplier)
-    if multiplier_float < 1:
-        return str(int(1 / multiplier_float))
-    elif multiplier_float > 1:
-        return str(-int(multiplier_float))
+def multiplier_to_divider(multiplier: float):
+    if multiplier < 1.0:
+        return str(int(1 / multiplier))
+    elif multiplier > 1.0:
+        return str(-int(multiplier))
     else:
         return ""
 
@@ -57,13 +56,11 @@ def csv_line_param_write(param: Parameter):
 
 
 # TODO add length checks from CMDs
-def datatype_from_sign(is_signed):
-    if is_signed == "true":
+def datatype_from_sign(is_signed: bool):
+    if is_signed:
         return "SIR"
-    elif is_signed == "false":
-        return "UIR"
     else:
-        raise 0
+        return "UIR"
 
 
 def csv_from_sensors(sensors):
@@ -127,7 +124,6 @@ def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_p
         for sensor in sensors_all:
             csv_writer.writerow([getattr(sensor, key) for key in keys])
 
-    # TODO unify the fals/False capitalization in the output for various fields
     with open(os.path.join(DUMP_DIR, 'params.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
         keys = params_all[0].__dict__.keys()

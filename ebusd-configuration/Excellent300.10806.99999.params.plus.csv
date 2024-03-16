@@ -1,47 +1,93 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
 r,Excellent300,FlowMode0,FlowMode0,,,4050,33,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
+w,Excellent300,FlowMode0,FlowMode0,,,4080,33,,,SIR,,m³/h,
 r,Excellent300,FlowMode1,FlowMode1,,,4050,1,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
+w,Excellent300,FlowMode1,FlowMode1,,,4080,1,,,SIR,,m³/h,
 r,Excellent300,FlowMode2,FlowMode2,,,4050,2,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
+w,Excellent300,FlowMode2,FlowMode2,,,4080,2,,,SIR,,m³/h,
 r,Excellent300,FlowMode3,FlowMode3,,,4050,3,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
+w,Excellent300,FlowMode3,FlowMode3,,,4080,3,,,SIR,,m³/h,
 r,Excellent300,BypassTemp,BypassTemp,,,4050,4,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+w,Excellent300,BypassTemp,BypassTemp,,,4080,4,,,SIR,10,°C,
 r,Excellent300,BypassTempHyst,BypassTempHyst,,,4050,48,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+w,Excellent300,BypassTempHyst,BypassTempHyst,,,4080,48,,,SIR,10,°C,
 r,Excellent300,BypassMode,BypassMode,,,4050,27,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,"min/max/step" fields of this enum message omitted
+w,Excellent300,BypassMode,BypassMode,,,4080,27,,,UIR,0=Auto;1=Closed;2=Open,,
 r,Excellent300,CVWTWMode,CVWTWMode,,,4050,7,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CVWTWMode,CVWTWMode,,,4080,7,,,UIR,0=off;1=on,,
 r,Excellent300,UnbalanceMode,UnbalanceMode,,,4050,8,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,"min/max/step" fields of this enum message omitted
+w,Excellent300,UnbalanceMode,UnbalanceMode,,,4080,8,,,UIR,0=Not Permitted;1=Permitted,,
 r,Excellent300,UnbalanceFlow,UnbalanceFlow,,,4050,9,,,SIR,,m³/h,,Max,,SIR,,m³/h,,Min,,SIR,,m³/h,,Step,,SIR,,m³/h,,Default,,SIR,,m³/h,
+w,Excellent300,UnbalanceFlow,UnbalanceFlow,,,4080,9,,,SIR,,m³/h,
 r,Excellent300,ExtraHeaterType,ExtraHeaterType,,,4050,10,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+w,Excellent300,ExtraHeaterType,ExtraHeaterType,,,4080,10,,,UIR,,,
 r,Excellent300,PostheaterTemp,PostheaterTemp,,,4050,11,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+w,Excellent300,PostheaterTemp,PostheaterTemp,,,4080,11,,,SIR,10,°C,
 r,Excellent300,Input1Mode,Input1Mode,,,4050,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:3,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,"min/max/step" fields of this enum message omitted
+w,Excellent300,Input1Mode,Input1Mode,,,4080,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,
 r,Excellent300,Input1VMin,Input1VMin,,,4050,13,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+w,Excellent300,Input1VMin,Input1VMin,,,4080,13,,,SIR,10,V,
 r,Excellent300,Input1VMax,Input1VMax,,,4050,14,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+w,Excellent300,Input1VMax,Input1VMax,,,4080,14,,,SIR,10,V,
 r,Excellent300,CN1Coupling,CN1Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:3,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN1Coupling,CN1Coupling,,,4080,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,
 r,Excellent300,CN1Inlet,CN1Inlet,,,4050,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN1Inlet,CN1Inlet,,,4080,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,
 r,Excellent300,CN1Exhaust,CN1Exhaust,,,4050,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN1Exhaust,CN1Exhaust,,,4080,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,
 r,Excellent300,Input2Mode,Input2Mode,,,4050,18,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:3,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,"min/max/step" fields of this enum message omitted
+w,Excellent300,Input2Mode,Input2Mode,,,4080,18,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,
 r,Excellent300,Input2VMin,Input2VMin,,,4050,19,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+w,Excellent300,Input2VMin,Input2VMin,,,4080,19,,,SIR,10,V,
 r,Excellent300,Input2VMax,Input2VMax,,,4050,20,,,SIR,10,V,,Max,,SIR,,V,,Min,,SIR,,V,,Step,,SIR,,V,,Default,,SIR,,V,
+w,Excellent300,Input2VMax,Input2VMax,,,4080,20,,,SIR,10,V,
 r,Excellent300,CN2Coupling,CN2Coupling,,,4050,21,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:3,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN2Coupling,CN2Coupling,,,4080,21,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,
 r,Excellent300,CN2Inlet,CN2Inlet,,,4050,22,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN2Inlet,CN2Inlet,,,4080,22,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,
 r,Excellent300,CN2Exhaust,CN2Exhaust,,,4050,23,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:3,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CN2Exhaust,CN2Exhaust,,,4080,23,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,
 r,Excellent300,EWTMode,EWTMode,,,4050,24,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,"min/max/step" fields of this enum message omitted
+w,Excellent300,EWTMode,EWTMode,,,4080,24,,,UIR,0=off;1=on,,
 r,Excellent300,EWTTempMin,EWTTempMin,,,4050,25,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+w,Excellent300,EWTTempMin,EWTTempMin,,,4080,25,,,SIR,10,°C,
 r,Excellent300,EWTTempMax,EWTTempMax,,,4050,26,,,SIR,10,°C,,Max,,SIR,,°C,,Min,,SIR,,°C,,Step,,SIR,,°C,,Default,,SIR,,°C,
+w,Excellent300,EWTTempMax,EWTTempMax,,,4080,26,,,SIR,10,°C,
 r,Excellent300,RHTSensorPresent,RHTSensorPresent,,,4050,50,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+w,Excellent300,RHTSensorPresent,RHTSensorPresent,,,4080,50,,,UIR,,,
 r,Excellent300,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,51,,,SIR,,,,Max,,SIR,,,,Min,,SIR,,,,Step,,SIR,,,,Default,,SIR,,,
+w,Excellent300,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,51,,,SIR,,,
 r,Excellent300,BacklightLevel,BacklightLevel,,,4050,29,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
+w,Excellent300,BacklightLevel,BacklightLevel,,,4080,29,,,UIR,,%,
 r,Excellent300,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4050,52,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4080,52,,,UIR,,ppm,
 r,Excellent300,CO2Sensor1UpperLimit,CO2Sensor1UpperLimit,,,4050,53,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor1UpperLimit,CO2Sensor1UpperLimit,,,4080,53,,,UIR,,ppm,
 r,Excellent300,CO2Sensor2LowerLimit,CO2Sensor2LowerLimit,,,4050,54,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor2LowerLimit,CO2Sensor2LowerLimit,,,4080,54,,,UIR,,ppm,
 r,Excellent300,CO2Sensor2UpperLimit,CO2Sensor2UpperLimit,,,4050,55,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor2UpperLimit,CO2Sensor2UpperLimit,,,4080,55,,,UIR,,ppm,
 r,Excellent300,CO2Sensor3LowerLimit,CO2Sensor3LowerLimit,,,4050,56,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor3LowerLimit,CO2Sensor3LowerLimit,,,4080,56,,,UIR,,ppm,
 r,Excellent300,CO2Sensor3UpperLimit,CO2Sensor3UpperLimit,,,4050,57,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor3UpperLimit,CO2Sensor3UpperLimit,,,4080,57,,,UIR,,ppm,
 r,Excellent300,CO2Sensor4LowerLimit,CO2Sensor4LowerLimit,,,4050,58,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor4LowerLimit,CO2Sensor4LowerLimit,,,4080,58,,,UIR,,ppm,
 r,Excellent300,CO2Sensor4UpperLimit,CO2Sensor4UpperLimit,,,4050,59,,,UIR,,ppm,,Max,,UIR,,ppm,,Min,,UIR,,ppm,,Step,,UIR,,ppm,,Default,,UIR,,ppm,
+w,Excellent300,CO2Sensor4UpperLimit,CO2Sensor4UpperLimit,,,4080,59,,,UIR,,ppm,
 r,Excellent300,CO2SensorsActivated,CO2SensorsActivated,,,4050,60,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,"min/max/step" fields of this enum message omitted
+w,Excellent300,CO2SensorsActivated,CO2SensorsActivated,,,4080,60,,,UIR,0=no;1=yes,,
 r,Excellent300,FlowCorrection,FlowCorrection,,,4050,63,,,UIR,,%,,Max,,UIR,,%,,Min,,UIR,,%,,Step,,UIR,,%,,Default,,UIR,,%,
+w,Excellent300,FlowCorrection,FlowCorrection,,,4080,63,,,UIR,,%,
 r,Excellent300,SwitchDefaultPos,SwitchDefaultPos,,,4050,64,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,"min/max/step" fields of this enum message omitted
+w,Excellent300,SwitchDefaultPos,SwitchDefaultPos,,,4080,64,,,UIR,0=off;1=on,,
 r,Excellent300,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4050,69,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+w,Excellent300,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4080,69,,,UIR,,,
 r,Excellent300,ModbusInterface,ModbusInterface,,,4050,65,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+w,Excellent300,ModbusInterface,ModbusInterface,,,4080,65,,,UIR,,,
 r,Excellent300,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,66,,,UIR,,,,Max,,UIR,,,,Min,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
+w,Excellent300,ModbusSlaveAddress,ModbusSlaveAddress,,,4080,66,,,UIR,,,
 r,Excellent300,ModbusSpeed,ModbusSpeed,,,4050,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:3,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,"min/max/step" fields of this enum message omitted
+w,Excellent300,ModbusSpeed,ModbusSpeed,,,4080,67,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,
 r,Excellent300,ModbusParity,ModbusParity,,,4050,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:3,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,"min/max/step" fields of this enum message omitted
+w,Excellent300,ModbusParity,ModbusParity,,,4080,68,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,
