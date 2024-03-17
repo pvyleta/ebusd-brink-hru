@@ -79,7 +79,6 @@ class Fields:
         return str(self)
 
 
-# TODO Try matching a command, so that datatype and length can be double checked, use types as Int16, Uint16, Int32, UInt32
 class Parameter:
     def __init__(self, device_name: str, first_version: int, last_version: int, is_plus_only: bool, id: int, name: str, unit: str, multiplier: float, is_signed: bool, is_read_only: bool, fields: Fields):
         self.device_name = device_name

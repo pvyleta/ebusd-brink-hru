@@ -125,10 +125,13 @@ class Sensor:
                 pass
             elif re.search('Elan|MultiRoomCtrl|Valve', self.device_name) and self.converter.length == 2 and self.cmd.read_len == 1:
                 # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
-                self.converter.length = 1
-                self.converter.type = "UCH"
+                self.converter = converters_map['ConverterUCharToNumber']
             else:
                 print(f'Length Mismatch: device: {self.device_name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
+        
+        # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
+        if "FilterStatus" in self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
+            self.converter = converters_map['ConverterUInt16ToFilterState']
 
 
 search_list_sensor = [
@@ -137,7 +140,11 @@ search_list_sensor = [
 ]
 
 
-def get_dict_devices_sensor(device_to_name_current_to_name_param_dict, cmd_dict, cmd_bytes_dict) -> dict[Device, list[Sensor]]:
+def get_dict_devices_sensor(
+        device_to_name_param_to_converter: dict[DeviceView, dict[str, Converter]],
+        device_to_name_current_to_name_param_dict: dict[Device, dict[str, str]],
+        cmd_dict: dict[str, CommandEBus],
+        cmd_bytes_dict: dict[str, CommandEBus]) -> dict[Device, list[Sensor]]:
 
     dict_devices_sensor: dict[Device, list[Sensor]] = {}
     missing_commands_set: set[str] = set()
@@ -222,7 +229,6 @@ def get_dict_devices_sensor(device_to_name_current_to_name_param_dict, cmd_dict,
 
     print("Info: missing_commands_set: " + str(missing_commands_set))
 
-    device_to_name_param_to_converter = find_converters()
     device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
 
     device_to_current_param = get_device_to_current_param()

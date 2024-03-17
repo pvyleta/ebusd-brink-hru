@@ -49,7 +49,7 @@ def csv_line_param_write(param: Parameter) -> str:
         values = multiplier_to_divider(param.multiplier)
     return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
 
-# TODO add length checks from CMDs
+
 def datatype_from_sign(is_signed: bool) -> str:
     if is_signed:
         return "SIR"

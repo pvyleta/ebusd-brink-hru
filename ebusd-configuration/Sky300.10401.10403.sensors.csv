@@ -24,7 +24,7 @@ r,Sky300,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow;2=Con
 r,Sky300,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,,°C,
 r,Sky300,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,,°C,
 r,Sky300,OptionTemperature,OptionTemperature,,,4022,1A,,,SIR,,°C,
-r,Sky300,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,Sky300,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,Sky300,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,,Pa,
 r,Sky300,PressureExhaust,ActualExhaustPressure,,,4022,15,,,UIR,,Pa,
 r,Sky300,EBusSyncGenErrorCount,EBusSyncGenErrors,,,4022,64,,,UIR,,,

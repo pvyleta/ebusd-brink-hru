@@ -23,7 +23,7 @@ r,Vitovent200W,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow
 r,Vitovent200W,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,,°C,
 r,Vitovent200W,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,,°C,
 r,Vitovent200W,OptionTemperature,OptionTemperature,,,4022,1A,,,SIR,,°C,
-r,Vitovent200W,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,Vitovent200W,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,Vitovent200W,RelativeHumidity,RelativeHumidity,,,4022,20,,,SIR,,%,
 r,Vitovent200W,HumidityBoostState,HumidityBoostState,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,,
 r,Vitovent200W,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,,Pa,

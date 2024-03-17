@@ -24,7 +24,7 @@ r,CWLF250,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow;2=Co
 r,CWLF250,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,,°C,
 r,CWLF250,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,,°C,
 r,CWLF250,OptionTemperature,OptionTemperature,,,4022,1A,,,SIR,,°C,
-r,CWLF250,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,CWLF250,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,CWLF250,RelativeHumidity,RelativeHumidity,,,4022,20,,,SIR,,%,
 r,CWLF250,HumidityBoostState,HumidityBoostState,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,Pa,
 r,CWLF250,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,,Pa,

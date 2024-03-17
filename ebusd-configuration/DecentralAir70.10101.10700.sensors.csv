@@ -14,7 +14,7 @@ r,DecentralAir70,PreheaterStatus,PreheaterStatus,,,4022,0F,,,UIR,0=Initializing;
 r,DecentralAir70,PreheaterPower,PreheaterPower,,,4022,10,,,UIR,,%,
 r,DecentralAir70,FrostStatus,FrostStatus,,,4022,16,,,UIR,0=Initializing;1=NoFrost;17=NoFrost;2=DefrostWait;3=Preheater;18=Preheater;255=Error;5=VeluHeater;6=VeluFanCtrl;7=TableFanCtrl;19=TableFanCtrl;8=Sky150Heater;9=FanCtrlFanOff;10=FanCtrlFanRestart;11=FanCtrlCurve1;12=FanCtrlCurve2;13=FanCtrlCurve3;14=FanCtrlCurve4;15=HeaterCoolDown;16=Blocked,,
 r,DecentralAir70,EBusPowerStatus,EBusPowerState,,,4022,17,,,UIR,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,,
-r,DecentralAir70,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,DecentralAir70,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,DecentralAir70,UIFButtons,Buttons,,,4022,19,,,UIR,,,
 r,DecentralAir70,ExternalContact1,ExternalContact,,,4022,1B,,,UIR,0=Off;1=On,,
 r,DecentralAir70,RHSensorValue,RelativeHumidity,,,4022,20,,,SIR,,%,

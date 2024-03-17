@@ -24,7 +24,7 @@ r,Sky200,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow;2=Con
 r,Sky200,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,,°C,
 r,Sky200,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,,°C,
 r,Sky200,OptionTemperature,OptionTemperature,,,4022,1A,,,SIR,,°C,
-r,Sky200,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,Sky200,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,Sky200,RelativeHumidity,RelativeHumidity,,,4022,20,,,SIR,,%,
 r,Sky200,HumidityBoostState,HumidityBoostState,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,,
 r,Sky200,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,,Pa,

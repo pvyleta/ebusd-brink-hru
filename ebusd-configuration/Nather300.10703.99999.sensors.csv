@@ -17,7 +17,7 @@ r,Nather300,FrostStatus,FrostStatus,,,4022,16,,,UIR,0=Initializing;1=NoFrost;17=
 r,Nather300,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow;2=ConstantPWM;3=Off;4=Error;5=MassBalance;6=Standby;7=ConstantRPM,,
 r,Nather300,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,,°C,
 r,Nather300,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,,°C,
-r,Nather300,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Off;1=On,,
+r,Nather300,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,Nather300,RelativeHumidity,RelativeHumidity,,,4022,20,,,SIR,,%,
 r,Nather300,HumidityBoostState,HumidityBoostState,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,Pa,
 r,Nather300,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,,Pa,

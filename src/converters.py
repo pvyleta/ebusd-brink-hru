@@ -182,11 +182,9 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToElanStatus": Converter("ConverterUInt16ToElanStatus", "UIR", 1, 2, "0=NotInitialized;1=UnknownError;2=PowerUp;3=ModeLow;4=ModeHigh;5=ModeNormal;6=ModeOffNormal;7=ModeCooling;8=ModeOutSideHigh;9=ErrorMinFlow;10=ErrorNoFlow"),
     "ConverterUInt16ToFanCtrlTypeOldFlair": Converter("ConverterUInt16ToFanCtrlTypeOldFlair", "UIR", 1, 2, "0=MassBalance;1=ConstantFlow;2=ConstantPWM"),
 
-    # TODO filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame
     "ConverterUInt16ToFilterState": Converter("ConverterUInt16ToOnOff", "UIR", 1, 2, "0=Clean;1=Dirty"),
     "ConverterUInt16ToFlairFrostStatus": Converter("ConverterUInt16ToFlairFrostStatus", "UIR", 1, 2, "0=Initializing;1=Initializing;2=NoFrost;3=NoFrostDelay;4=FrostCtrlStartDelay;5=WaitForIcing;6=IceDetectedDelay;7=Preheater;8=HeaterCoolDown;9=FanCtrlStartDelay;10=FanCtrlWait;11=FanCtrl;12=FanCtrlFanOffDelay;13=FanCtrlFanOff;14=FanCtrlFanRestart;15=Error;16=TestMode"),
     "ConverterUInt16ToHeaterStatusOldFlair": Converter("ConverterUInt16ToHeaterStatusOldFlair", "UIR", 1, 2, "0=Off;1=On;2=LockedValue;3=LockedValueMaximum"),
-    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1, 2, ""),
     "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus", "UIR", 1, 2, ""),
     "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode", "UIR", 1, 2, ""),
 
@@ -202,6 +200,9 @@ converters_map: dict[str, Converter] = {
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
     "ConverterUCharToNumber": Converter("ConverterUCharToNumber", "UCH", 1, 1, ""),
     "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 0.001, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
+
+    # Unused Converters - though we keep them here so that we do not have to make some exceptions in code when parsing files
+    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1, 2, ""),
 }
 
 # For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them
