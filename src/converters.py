@@ -149,60 +149,60 @@ class Converter:
 
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
 converters_map: dict[str, Converter] = {
-    "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 10, 2, ""),
-    "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10", "SIR", 10, 2, ""),
-    "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10", "SIR", 10, 2, ""),
-    "ConverterUInt16ToBypassStatus": Converter("ConverterUInt16ToBypassStatus", "UIR", 1, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"),
-    "ConverterUInt16ToCO2SensorStatus": Converter("ConverterUInt16ToCO2SensorStatus", "UIR", 1, 2, "0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest"),
-    "ConverterUInt16ToContact": Converter("ConverterUInt16ToContact", "UIR", 1, 2, "0=Open;1=Closed"),
-    "ConverterUInt16ToEBusPowerState": Converter("ConverterUInt16ToEBusPowerState", "UIR", 1, 2, "0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error"),
-    "ConverterUInt16ToEWTStatus": Converter("ConverterUInt16ToEWTStatus", "UIR", 1, 2, "0=OpenLow;1=Closed;2=OpenHigh"),
-    "ConverterUInt16ToFanMode": Converter("ConverterUInt16ToFanMode", "UIR", 1, 2, "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"),
-    "ConverterUInt16ToFanStatus": Converter("ConverterUInt16ToFanStatus", "UIR", 1, 2, "0=Initializing;1=ConstantFlow;2=ConstantPWM;3=Off;4=Error;5=MassBalance;6=Standby;7=ConstantRPM"),
-    "ConverterUInt16ToFanSwitch": Converter("ConverterUInt16ToFanSwitch", "UIR", 1, 2, "0=Position_0;1=Position_1;2=Position_2;3=Position_3;"),
-    "ConverterUInt16ToFrostStatus": Converter("ConverterUInt16ToFrostStatus", "UIR", 1, 2, "0=Initializing;1=NoFrost;17=NoFrost;2=DefrostWait;3=Preheater;18=Preheater;255=Error;5=VeluHeater;6=VeluFanCtrl;7=TableFanCtrl;19=TableFanCtrl;8=Sky150Heater;9=FanCtrlFanOff;10=FanCtrlFanRestart;11=FanCtrlCurve1;12=FanCtrlCurve2;13=FanCtrlCurve3;14=FanCtrlCurve4;15=HeaterCoolDown;16=Blocked"),
-    "ConverterUInt16ToHeaterStatus": Converter("ConverterUInt16ToHeaterStatus", "UIR", 1, 2, "0=Initializing;1=Off;2=On"),
-    "ConverterUInt16ToHumidityBoostState": Converter("ConverterUInt16ToHumidityBoostState", "UIR", 1, 2, "0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable"),
-    "ConverterUInt16ToMRCStatus": Converter("ConverterUInt16ToMRCStatus", "UIR", 1, 2, "0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running"),
+    "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 10.0, 2, ""),
+    "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10", "SIR", 10.0, 2, ""),
+    "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10", "SIR", 10.0, 2, ""),
+    "ConverterUInt16ToBypassStatus": Converter("ConverterUInt16ToBypassStatus", "UIR", 1.0, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"),
+    "ConverterUInt16ToCO2SensorStatus": Converter("ConverterUInt16ToCO2SensorStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest"),
+    "ConverterUInt16ToContact": Converter("ConverterUInt16ToContact", "UIR", 1.0, 2, "0=Open;1=Closed"),
+    "ConverterUInt16ToEBusPowerState": Converter("ConverterUInt16ToEBusPowerState", "UIR", 1.0, 2, "0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error"),
+    "ConverterUInt16ToEWTStatus": Converter("ConverterUInt16ToEWTStatus", "UIR", 1.0, 2, "0=OpenLow;1=Closed;2=OpenHigh"),
+    "ConverterUInt16ToFanMode": Converter("ConverterUInt16ToFanMode", "UIR", 1.0, 2, "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"),
+    "ConverterUInt16ToFanStatus": Converter("ConverterUInt16ToFanStatus", "UIR", 1.0, 2, "0=Initializing;1=ConstantFlow;2=ConstantPWM;3=Off;4=Error;5=MassBalance;6=Standby;7=ConstantRPM"),
+    "ConverterUInt16ToFanSwitch": Converter("ConverterUInt16ToFanSwitch", "UIR", 1.0, 2, "0=Position_0;1=Position_1;2=Position_2;3=Position_3;"),
+    "ConverterUInt16ToFrostStatus": Converter("ConverterUInt16ToFrostStatus", "UIR", 1.0, 2, "0=Initializing;1=NoFrost;17=NoFrost;2=DefrostWait;3=Preheater;18=Preheater;255=Error;5=VeluHeater;6=VeluFanCtrl;7=TableFanCtrl;19=TableFanCtrl;8=Sky150Heater;9=FanCtrlFanOff;10=FanCtrlFanRestart;11=FanCtrlCurve1;12=FanCtrlCurve2;13=FanCtrlCurve3;14=FanCtrlCurve4;15=HeaterCoolDown;16=Blocked"),
+    "ConverterUInt16ToHeaterStatus": Converter("ConverterUInt16ToHeaterStatus", "UIR", 1.0, 2, "0=Initializing;1=Off;2=On"),
+    "ConverterUInt16ToHumidityBoostState": Converter("ConverterUInt16ToHumidityBoostState", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable"),
+    "ConverterUInt16ToMRCStatus": Converter("ConverterUInt16ToMRCStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running"),
     "ConverterUInt16ToModbusFanStatus": Converter("ConverterUInt16ToModbusFanStatus", "UIR", 1, 2, "0=NotInitialized;2=NoCommunication;3=Idle;4=Running;5=Blocked;6=Error"),
-    "ConverterUInt16ToOnOff": Converter("ConverterUInt16ToOnOff", "UIR", 1, 2, "0=Off;1=On"),
-    "ConverterUInt16ToPercentage": Converter("ConverterUInt16ToPercentage", "UIR", 1, 2, ""),
-    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 1, 2, ""),
-    "ConverterUInt16ToRotateDirection": Converter("ConverterUInt16ToRotateDirection", "UIR", 1, 2, "0=CW;1=CCW"),
-    "ConverterUInt16ToUNumber": Converter("ConverterUInt16ToUNumber", "UIR", 1, 2, ""),
-    "ConverterUInt16ToValveStatus": Converter("ConverterUInt16ToValveStatus", "UIR", 1, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
-    "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction", "UIR", 1, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
-    "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber", "ULR", 1, 4, ""),
+    "ConverterUInt16ToOnOff": Converter("ConverterUInt16ToOnOff", "UIR", 1.0, 2, "0=Off;1=On"),
+    "ConverterUInt16ToPercentage": Converter("ConverterUInt16ToPercentage", "UIR", 1.0, 2, ""),
+    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 1.0, 2, ""),
+    "ConverterUInt16ToRotateDirection": Converter("ConverterUInt16ToRotateDirection", "UIR", 1.0, 2, "0=CW;1=CCW"),
+    "ConverterUInt16ToUNumber": Converter("ConverterUInt16ToUNumber", "UIR", 1.0, 2, ""),
+    "ConverterUInt16ToValveStatus": Converter("ConverterUInt16ToValveStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
+    "ConverterUInt16ToWTWFunction": Converter("ConverterUInt16ToWTWFunction", "UIR", 1.0, 2, "0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal"),
+    "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber", "ULR", 1.0, 4, ""),
 
-    "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus", "UIR", 1, 2, "0=Off;1=On;2=Blocked;255=Error"),
-    "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02", "UIR", 1, 2, "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode"),
-    "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02", "UIR", 1, 2, "0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off"),
-    "ConverterUInt16ToElanFanStatus": Converter("ConverterUInt16ToElanFanStatus", "UIR", 1, 2, "0=NotInitialized;1=Initializing;2=Stopped;3=Running;4=Error"),
-    "ConverterUInt16ToElanFrostStatus": Converter("ConverterUInt16ToElanFrostStatus", "UIR", 1, 2, "0=NoFrost;1=FrostLevel_1;2=FrostLevel_2"),
-    "ConverterUInt16ToElanStatus": Converter("ConverterUInt16ToElanStatus", "UIR", 1, 2, "0=NotInitialized;1=UnknownError;2=PowerUp;3=ModeLow;4=ModeHigh;5=ModeNormal;6=ModeOffNormal;7=ModeCooling;8=ModeOutSideHigh;9=ErrorMinFlow;10=ErrorNoFlow"),
-    "ConverterUInt16ToFanCtrlTypeOldFlair": Converter("ConverterUInt16ToFanCtrlTypeOldFlair", "UIR", 1, 2, "0=MassBalance;1=ConstantFlow;2=ConstantPWM"),
+    "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus", "UIR", 1.0, 2, "0=Off;1=On;2=Blocked;255=Error"),
+    "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02", "UIR", 1.0, 2, "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode"),
+    "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02", "UIR", 1.0, 2, "0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off"),
+    "ConverterUInt16ToElanFanStatus": Converter("ConverterUInt16ToElanFanStatus", "UIR", 1.0, 2, "0=NotInitialized;1=Initializing;2=Stopped;3=Running;4=Error"),
+    "ConverterUInt16ToElanFrostStatus": Converter("ConverterUInt16ToElanFrostStatus", "UIR", 1.0, 2, "0=NoFrost;1=FrostLevel_1;2=FrostLevel_2"),
+    "ConverterUInt16ToElanStatus": Converter("ConverterUInt16ToElanStatus", "UIR", 1.0, 2, "0=NotInitialized;1=UnknownError;2=PowerUp;3=ModeLow;4=ModeHigh;5=ModeNormal;6=ModeOffNormal;7=ModeCooling;8=ModeOutSideHigh;9=ErrorMinFlow;10=ErrorNoFlow"),
+    "ConverterUInt16ToFanCtrlTypeOldFlair": Converter("ConverterUInt16ToFanCtrlTypeOldFlair", "UIR", 1.0, 2, "0=MassBalance;1=ConstantFlow;2=ConstantPWM"),
 
-    "ConverterUInt16ToFilterState": Converter("ConverterUInt16ToOnOff", "UIR", 1, 2, "0=Clean;1=Dirty"),
-    "ConverterUInt16ToFlairFrostStatus": Converter("ConverterUInt16ToFlairFrostStatus", "UIR", 1, 2, "0=Initializing;1=Initializing;2=NoFrost;3=NoFrostDelay;4=FrostCtrlStartDelay;5=WaitForIcing;6=IceDetectedDelay;7=Preheater;8=HeaterCoolDown;9=FanCtrlStartDelay;10=FanCtrlWait;11=FanCtrl;12=FanCtrlFanOffDelay;13=FanCtrlFanOff;14=FanCtrlFanRestart;15=Error;16=TestMode"),
-    "ConverterUInt16ToHeaterStatusOldFlair": Converter("ConverterUInt16ToHeaterStatusOldFlair", "UIR", 1, 2, "0=Off;1=On;2=LockedValue;3=LockedValueMaximum"),
-    "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus", "UIR", 1, 2, ""),
-    "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode", "UIR", 1, 2, ""),
+    "ConverterUInt16ToFilterState": Converter("ConverterUInt16ToOnOff", "UIR", 1.0, 2, "0=Clean;1=Dirty"),
+    "ConverterUInt16ToFlairFrostStatus": Converter("ConverterUInt16ToFlairFrostStatus", "UIR", 1.0, 2, "0=Initializing;1=Initializing;2=NoFrost;3=NoFrostDelay;4=FrostCtrlStartDelay;5=WaitForIcing;6=IceDetectedDelay;7=Preheater;8=HeaterCoolDown;9=FanCtrlStartDelay;10=FanCtrlWait;11=FanCtrl;12=FanCtrlFanOffDelay;13=FanCtrlFanOff;14=FanCtrlFanRestart;15=Error;16=TestMode"),
+    "ConverterUInt16ToHeaterStatusOldFlair": Converter("ConverterUInt16ToHeaterStatusOldFlair", "UIR", 1.0, 2, "0=Off;1=On;2=LockedValue;3=LockedValueMaximum"),
+    "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus", "UIR", 1.0, 2, ""),
+    "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode", "UIR", 1.0, 2, ""),
 
     # Following block of converters is manually created; these converters do not exist otherwise in code
-    "ConverterByteArrayToSoftwareVersion": Converter("ConverterByteArrayToSoftwareVersion", "STR:13", 1, 13, ""),  # length based on appropriate CommandEBus CmdReadActualSoftwareVersion
-    "ConverterByteArrayToSerialNumber": Converter("ConverterByteArrayToSerialNumber", "STR:12", 1, 12, ""),  # length based on appropriate CommandEBus CmdReadActualSerialNumber
-    "ConverterByteArrayToHardwareVersion": Converter("ConverterByteArrayToHardwareVersion", "STR:4", 1, 4, ""),  # length based on appropriate CommandEBus CmdReadActualHardwareVersionBase
-    "ConverterUInt16ToVirtualDipswitch": Converter("ConverterUInt16ToVirtualDipswitch", "UIR", 1, 2, ""),  # length based on HandleReadVirtualDipswitchResponse; I am far from confident I got the length and offset in the message correct
-    "ConverterUInt32ToDeviceID": Converter("ConverterUInt32ToDeviceID", "ULR", 1, 4, ""),  # length based on CmdReadParameterDeviceID for flair units
-    "ConverterUInt16ToDeviceType": Converter("ConverterUInt16ToDeviceType", "UIR", 1, 2, ""),  # length based on CmdReadParameterDeviceType
-    "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus", "UIR", 1, 2, ""),  # length based on CmdReadActualUIFButtons
-    "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing", "ULR", 1, 4, ""),  # length based on CmdReadActualEBusAddressing
-    "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
+    "ConverterByteArrayToSoftwareVersion": Converter("ConverterByteArrayToSoftwareVersion", "STR:13", 1.0, 13, ""),  # length based on appropriate CommandEBus CmdReadActualSoftwareVersion
+    "ConverterByteArrayToSerialNumber": Converter("ConverterByteArrayToSerialNumber", "STR:12", 1.0, 12, ""),  # length based on appropriate CommandEBus CmdReadActualSerialNumber
+    "ConverterByteArrayToHardwareVersion": Converter("ConverterByteArrayToHardwareVersion", "STR:4", 1.0, 4, ""),  # length based on appropriate CommandEBus CmdReadActualHardwareVersionBase
+    "ConverterUInt16ToVirtualDipswitch": Converter("ConverterUInt16ToVirtualDipswitch", "UIR", 1.0, 2, ""),  # length based on HandleReadVirtualDipswitchResponse; I am far from confident I got the length and offset in the message correct
+    "ConverterUInt32ToDeviceID": Converter("ConverterUInt32ToDeviceID", "ULR", 1.0, 4, ""),  # length based on CmdReadParameterDeviceID for flair units
+    "ConverterUInt16ToDeviceType": Converter("ConverterUInt16ToDeviceType", "UIR", 1.0, 2, ""),  # length based on CmdReadParameterDeviceType
+    "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus", "UIR", 1.0, 2, ""),  # length based on CmdReadActualUIFButtons
+    "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing", "ULR", 1.0, 4, ""),  # length based on CmdReadActualEBusAddressing
+    "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1.0, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
     "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 0.001, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
-    "ConverterUInt16DipswitchValue": Converter("ConverterUInt16DipswitchValue", "UIR", 1, 2, get_ebusd_values_string()), # based on installation manual; only applicable for certain models
+    "ConverterUInt16DipswitchValue": Converter("ConverterUInt16DipswitchValue", "UIR", 1.0, 2, get_ebusd_values_string()), # based on installation manual; only applicable for certain models
 
     # Unused Converters - though we keep them here so that we do not have to make some exceptions in code when parsing files
-    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1, 2, "0=NotInConfig;1=NotFound;2=Error;3=OK"),
+    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1.0, 2, "0=NotInConfig;1=NotFound;2=Error;3=OK"),
 }
 
 # For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them

@@ -7,6 +7,7 @@ import jsonpickle # type: ignore
 from dev import Device
 from config_data import Parameter, DeviceParameters
 from sensor_data import Sensor
+from params import INT16, UINT16
 
 
 OUTPUT_DIR = "ebusd-configuration"
@@ -33,7 +34,7 @@ def csv_line_sensor(sensor: Sensor) -> str:
 
 def csv_line_param_read(param: Parameter) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    datatype = datatype_from_sign(param.is_signed)
+    datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
         return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
@@ -44,17 +45,19 @@ def csv_line_param_read(param: Parameter) -> str:
 
 def csv_line_param_write(param: Parameter) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-    datatype = datatype_from_sign(param.is_signed)
+    datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
     return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
 
 
-def datatype_from_sign(is_signed: bool) -> str:
-    if is_signed:
+def convert_to_ebus_datatype(datatype: str) -> str:
+    if datatype == INT16:
         return "SIR"
-    else:
+    elif datatype == UINT16:
         return "UIR"
+    else:
+        raise RuntimeError(f'unexpected datatype {datatype}')
 
 
 def csv_from_sensors(sensors):
@@ -72,6 +75,41 @@ def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
             if not param.is_read_only:
                 file_str += csv_line_param_write(param)
     return file_str
+
+
+def dump_sensor(sensor: Sensor) -> dict[str, str]:
+    dump_sensor_dict: dict[str, str] = {}
+    dump_sensor_dict['device_name'] = sensor.device_name
+    dump_sensor_dict['first_version'] = str(sensor.first_version)
+    dump_sensor_dict['last_version'] = str(sensor.last_version)
+    dump_sensor_dict['name'] = sensor.name_current
+    dump_sensor_dict['id'] = '0x' + sensor.id
+    dump_sensor_dict['unit'] = sensor.unit
+    dump_sensor_dict['datatype'] = sensor.datatype
+    dump_sensor_dict['multiplier'] = str(sensor.converter.multiplier) if sensor.converter else "null"
+    dump_sensor_dict['values'] = sensor.converter.values if sensor.converter else "null"
+    dump_sensor_dict['length'] = str(sensor.converter.length) if sensor.converter else "null"
+    return dump_sensor_dict
+
+
+def dump_param(param: Parameter) -> dict[str, str]:
+    dump_param_dict: dict[str, str] = {}
+    dump_param_dict['device_name'] = param.device_name
+    dump_param_dict['first_version'] = str(param.first_version)
+    dump_param_dict['last_version'] = str(param.last_version)
+    dump_param_dict['name'] = param.name
+    dump_param_dict['id'] = '0x' + f'{param.id:02x}'
+    dump_param_dict['unit'] = param.unit
+    dump_param_dict['datatype'] = param.datatype
+    dump_param_dict['multiplier'] = str(param.multiplier)
+    dump_param_dict['values'] = param.values 
+    dump_param_dict['length'] = '2'
+    dump_param_dict['field_current'] = str(param.field_current)
+    dump_param_dict['field_min'] = str(param.field_min)
+    dump_param_dict['field_max'] = str(param.field_max)
+    dump_param_dict['field_step'] = str(param.field_step)
+    dump_param_dict['field_default'] = str(param.field_default)
+    return dump_param_dict
 
 
 # Contents of output_dir are always cleaned before writing
@@ -103,23 +141,30 @@ def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_p
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
     sensors_all.sort()
-    with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8") as text_file:
-        text_file.write(jsonpickle.dumps(sensors_all, text_file))
-  
     params_all.sort()
-    with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8") as text_file:
-        text_file.write(jsonpickle.dumps(params_all, text_file))
+    sensors_dump = [dump_sensor(sensor) for sensor in sensors_all]
+    params_dump = [dump_param(param) for param in params_all]
 
+    with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8") as text_file:
+        text_file.write(jsonpickle.dumps(sensors_dump))
+        print(f'JSON Dump Sensors example: {jsonpickle.dumps(sensors_dump[0], text_file)}')
+  
+    with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8") as text_file:
+        text_file.write(jsonpickle.dumps(params_dump))
+        print(f'JSON Dump Params example: {jsonpickle.dumps(params_dump[0], text_file)}')
+  
     with open(os.path.join(DUMP_DIR, 'sensors.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
-        keys = sensors_all[0].__dict__.keys()
+        keys = sensors_dump[0].keys()
+        print(f'CSV Dump Sensor keys: {keys}')
         csv_writer.writerow(keys)
-        for sensor in sensors_all:
-            csv_writer.writerow([getattr(sensor, key) for key in keys])
+        for sensor in sensors_dump:
+            csv_writer.writerow(sensor.values())
 
     with open(os.path.join(DUMP_DIR, 'params.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
-        keys = params_all[0].__dict__.keys()
+        keys = params_dump[0].keys()
+        print(f'CSV Dump Params keys: {keys}')
         csv_writer.writerow(keys)
-        for param in params_all:
-            csv_writer.writerow([getattr(param, key) for key in keys])
+        for param in params_dump:
+            csv_writer.writerow(param.values())

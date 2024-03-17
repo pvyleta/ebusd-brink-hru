@@ -2,6 +2,8 @@ import glob
 import re
 
 from dev import Device
+from params import UINT16, INT16
+
 
 value_type_dict_config = {
     'NoUnit': "",
@@ -80,7 +82,7 @@ class Fields:
 
 
 class Parameter:
-    def __init__(self, device_name: str, first_version: int, last_version: int, is_plus_only: bool, id: int, name: str, unit: str, multiplier: float, is_signed: bool, is_read_only: bool, fields: Fields):
+    def __init__(self, device_name: str, first_version: int, last_version: int, is_plus_only: bool, id: int, name: str, unit: str, multiplier: float, datatype: str, is_read_only: bool, fields: Fields):
         self.device_name = device_name
         self.first_version = first_version
         self.last_version = last_version
@@ -89,7 +91,7 @@ class Parameter:
         self.name = name
         self.unit = unit
         self.multiplier = multiplier
-        self.is_signed = is_signed
+        self.datatype = datatype
         self.is_read_only = is_read_only
         self.field_current = fields.current
         self.field_min = fields.min
@@ -108,7 +110,7 @@ class Parameter:
                 return None
             elif param_enum.max != self.field_max:
                 return None
-            elif self.is_signed:
+            elif self.datatype != UINT16:
                 return None
             elif self.field_step != 1:
                 return None
@@ -191,7 +193,9 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
                 is_plus_only = params_basic_int < 1
                 params_basic_int -= 1
                 fields = Fields(int(m.group('current')), int(m.group('min')), int(m.group('max')), int(m.group('step')), int(m.group('default')))
-                param = Parameter(name, first_version, last_version, is_plus_only, int(m.group('id')), m.group('name'), value_type_dict_config[m.group('unit')], float(m.group('multiplier')), bool(m.group('is_signed') == 'true'), bool(m.group('is_read_only') == 'true'), fields)
+                datatype = INT16 if m.group('is_signed') == 'true' else UINT16
+                is_read_only = bool(m.group('is_read_only') == 'true')
+                param = Parameter(name, first_version, last_version, is_plus_only, int(m.group('id')), m.group('name'), value_type_dict_config[m.group('unit')], float(m.group('multiplier')), datatype, is_read_only, fields)
                 params.append(param)
 
             device_parameters[device] = params
