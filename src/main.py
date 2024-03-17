@@ -5,7 +5,9 @@ from parameter import get_device_parameters
 from command_ebus import get_commands_dict
 
 # TODO add special instructions and special handling - e.g. factory reset, errors reset, filter reset...
-# TODO add default slave address for the known devices
+# TODO fabricate output for ebusd by using includes and default addresses - make them as separate files to the ones we have, add optional slave address string
+# TODO Simplify output to less files by removing redundanc and extending parameter ranges
+# TODO consider making some conditionals
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
