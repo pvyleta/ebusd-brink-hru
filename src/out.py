@@ -23,32 +23,32 @@ def multiplier_to_divider(multiplier: float) -> str:
         return ""
 
 
-def csv_line_sensor(sensor: Sensor) -> str:
+def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     assert sensor.converter
     values = sensor.converter.values
     type = sensor.converter.type
 
-    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
+    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
-def csv_line_param_read(param: Parameter) -> str:
+def csv_line_param_read(param: Parameter, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
+        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,,4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
+        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
 
 
-def csv_line_param_write(param: Parameter) -> str:
+def csv_line_param_write(param: Parameter, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,,4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
+    return f'w,{param.device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
 
 
 def convert_to_ebus_datatype(datatype: str) -> str:
@@ -60,20 +60,20 @@ def convert_to_ebus_datatype(datatype: str) -> str:
         raise RuntimeError(f'unexpected datatype {datatype}')
 
 
-def csv_from_sensors(sensors):
+def csv_from_sensors(sensors, slave_address = ''):
     file_str = CSV_HEADER
     for sensor in sensors:
-        file_str += csv_line_sensor(sensor)
+        file_str += csv_line_sensor(sensor, slave_address)
     return file_str
 
 
-def csv_from_device_param(parameters: list[Parameter], is_plus: bool):
+def csv_from_device_param(parameters: list[Parameter], is_plus: bool, slave_address = ''):
     file_str = CSV_HEADER
     for param in parameters:
         if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
-            file_str += csv_line_param_read(param)
+            file_str += csv_line_param_read(param, slave_address)
             if not param.is_read_only:
-                file_str += csv_line_param_write(param)
+                file_str += csv_line_param_write(param, slave_address)
     return file_str
 
 
