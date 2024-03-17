@@ -82,7 +82,7 @@ def dump_sensor(sensor: Sensor) -> dict[str, str]:
     dump_sensor_dict['device_name'] = sensor.device_name
     dump_sensor_dict['first_version'] = str(sensor.first_version)
     dump_sensor_dict['last_version'] = str(sensor.last_version)
-    dump_sensor_dict['name'] = sensor.name_current
+    dump_sensor_dict['name'] = sensor.name_current.removeprefix('Current')
     dump_sensor_dict['id'] = '0x' + sensor.id
     dump_sensor_dict['unit'] = sensor.unit
     dump_sensor_dict['datatype'] = sensor.datatype
@@ -147,11 +147,9 @@ def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_p
 
     with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(sensors_dump))
-        print(f'JSON Dump Sensors example: {jsonpickle.dumps(sensors_dump[0], text_file)}')
   
     with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8") as text_file:
         text_file.write(jsonpickle.dumps(params_dump))
-        print(f'JSON Dump Params example: {jsonpickle.dumps(params_dump[0], text_file)}')
   
     with open(os.path.join(DUMP_DIR, 'sensors.csv'), "w", encoding="utf-8") as text_file:
         csv_writer = csv.writer(text_file)
