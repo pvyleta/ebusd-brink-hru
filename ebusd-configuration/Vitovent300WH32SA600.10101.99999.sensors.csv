@@ -74,4 +74,3 @@ r,Vitovent300WH32SA600,LanguageVersionUIFModule,LanguageVersion,,,4022,F4,,,STR:
 r,Vitovent300WH32SA600,ImageVersionUIFModule,ImageVersion,,,4022,F5,,,STR:13,,,
 r,Vitovent300WH32SA600,SoftwareVersionExtensionModule,SoftwareVersion,,,4022,F6,,,STR:13,,,
 r,Vitovent300WH32SA600,HardwareVersionExtensionModule,HardwareVersion,,,4022,F7,,,STR:4,,,
-r,Vitovent300WH32SA600,VirtualDipswitch,VirtualDipswitch,,,4022,00,,,UIR,,,

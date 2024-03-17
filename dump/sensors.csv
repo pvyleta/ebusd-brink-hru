@@ -646,7 +646,6 @@ Flair200,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair200,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair200,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair200,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair200,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair200,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair200,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair225,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -721,7 +720,6 @@ Flair225,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair225,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair225,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair225,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair225,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair225,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair225,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair300,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -796,7 +794,6 @@ Flair300,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair300,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair300,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair300,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair300,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair300,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair300,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair325,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -871,7 +868,6 @@ Flair325,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair325,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair325,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair325,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair325,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair325,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair325,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair400,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -946,7 +942,6 @@ Flair400,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair400,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair400,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair400,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair400,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair400,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair400,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair450,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -1022,7 +1017,6 @@ Flair450,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair450,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair450,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair450,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair450,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair450,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair450,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair600,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -1098,7 +1092,6 @@ Flair600,10101,99999,SoftwareVersionUIFModule,0xF2,,string,1.0,,13
 Flair600,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Flair600,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Flair600,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Flair600,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Flair600,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair600,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 MultiRoomCtrlT01,0,10101,DeviceID,0x80,,ushort,1.0,,1
@@ -1653,7 +1646,6 @@ Vitovent300WH32SA225,10101,99999,SoftwareVersionUIFModule,0xF2,,,1.0,,13
 Vitovent300WH32SA225,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Vitovent300WH32SA225,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Vitovent300WH32SA225,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Vitovent300WH32SA225,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Vitovent300WH32SA225,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SA225,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SA600,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -1729,7 +1721,6 @@ Vitovent300WH32SA600,10101,99999,SoftwareVersionUIFModule,0xF2,,,1.0,,13
 Vitovent300WH32SA600,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Vitovent300WH32SA600,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Vitovent300WH32SA600,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Vitovent300WH32SA600,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Vitovent300WH32SA600,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SA600,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SC325,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -1804,7 +1795,6 @@ Vitovent300WH32SC325,10101,99999,SoftwareVersionUIFModule,0xF2,,,1.0,,13
 Vitovent300WH32SC325,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Vitovent300WH32SC325,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Vitovent300WH32SC325,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Vitovent300WH32SC325,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Vitovent300WH32SC325,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SC325,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SC400,10101,99999,BypassSenseLevel,0x0D,m³/h,ushort,1.0,,2
@@ -1879,6 +1869,5 @@ Vitovent300WH32SC400,10101,99999,SoftwareVersionUIFModule,0xF2,,,1.0,,13
 Vitovent300WH32SC400,10101,99999,TotalFlowIn1000M3,0x3E,,ushort,1.0,,2
 Vitovent300WH32SC400,10101,99999,UIFButtonsStatus,0x19,,,1.0,,2
 Vitovent300WH32SC400,10101,99999,VentilationMode,0x01,,ushort,1.0,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,2
-Vitovent300WH32SC400,10101,99999,VirtualDipswitch,0x00,,string,1.0,,2
 Vitovent300WH32SC400,10101,99999,WTWActiveFunction,0x25,Pa,ushort,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SC400,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2

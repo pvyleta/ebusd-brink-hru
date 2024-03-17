@@ -198,8 +198,9 @@ def get_dict_devices_sensor(
                     missing_commands_set.add(command_bytes)
                 
                 # Sanity check
-                if command:
-                    assert command.pbsb == '4022'
+                if command and command.pbsb != '4022':
+                    print(f'Command {command.cmd} pbsb {command.pbsb} - skipping')
+                    continue
 
                 sensors.append(Sensor(device.name, device.first_version, device.last_version, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
@@ -222,7 +223,9 @@ def get_dict_devices_sensor(
                 if not name_param:
                     missing_params_count += 1
                     if DEBUG:
+                        # TODO This happens only for FlairEBusCommands.CmdReadParameterDeviceType. figure out a way to include this 'param' here in 'sensors'
                         print(f'Missing named param for {device.name} sensor {name_current}')
+                        continue
 
                 command = cmd_dict[m.group('cmd')]
 
@@ -232,8 +235,9 @@ def get_dict_devices_sensor(
 
                 # Sanity check
                 if command and command.pbsb != '4022':
-                    print(f'Command {command.cmd} pbsb {command.pbsb}')
-                    # assert command.pbsb == '4022'
+                    print(f'Command {command.cmd} pbsb {command.pbsb} - skipping')
+                    continue
+                
 
                 sensors.append(Sensor(device.name, device.first_version, device.last_version, command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 

@@ -7764,18 +7764,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Flair200",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Flair200",
         "first_version": "10101",
@@ -8664,18 +8652,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Flair225",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Flair225",
         "first_version": "10101",
@@ -9562,18 +9538,6 @@
         "name": "VentilationMode",
         "unit": "",
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
-    },
-    {
-        "datatype": "string",
-        "device_name": "Flair300",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
     },
     {
         "datatype": "ushort",
@@ -10464,18 +10428,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Flair325",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Flair325",
         "first_version": "10101",
@@ -11362,18 +11314,6 @@
         "name": "VentilationMode",
         "unit": "",
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
-    },
-    {
-        "datatype": "string",
-        "device_name": "Flair400",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
     },
     {
         "datatype": "ushort",
@@ -12276,18 +12216,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Flair450",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Flair450",
         "first_version": "10101",
@@ -13186,18 +13114,6 @@
         "name": "VentilationMode",
         "unit": "",
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
-    },
-    {
-        "datatype": "string",
-        "device_name": "Flair600",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
     },
     {
         "datatype": "ushort",
@@ -19848,18 +19764,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Vitovent300WH32SA225",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Vitovent300WH32SA225",
         "first_version": "10101",
@@ -20760,18 +20664,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Vitovent300WH32SA600",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Vitovent300WH32SA600",
         "first_version": "10101",
@@ -21660,18 +21552,6 @@
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
     },
     {
-        "datatype": "string",
-        "device_name": "Vitovent300WH32SC325",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
-    },
-    {
         "datatype": "ushort",
         "device_name": "Vitovent300WH32SC325",
         "first_version": "10101",
@@ -22558,18 +22438,6 @@
         "name": "VentilationMode",
         "unit": "",
         "values": "0=Holiday;1=Reduced;2=Normal;3=High;4=Auto"
-    },
-    {
-        "datatype": "string",
-        "device_name": "Vitovent300WH32SC400",
-        "first_version": "10101",
-        "id": "0x00",
-        "last_version": "99999",
-        "length": "2",
-        "multiplier": "1.0",
-        "name": "VirtualDipswitch",
-        "unit": "",
-        "values": ""
     },
     {
         "datatype": "ushort",
