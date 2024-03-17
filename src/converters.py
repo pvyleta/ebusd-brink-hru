@@ -3,6 +3,7 @@ import re
 import copy
 
 from dev import Device, DeviceView
+from dipswitch import get_ebusd_values_string
 
 # All converters from BCSServiceTool/Converters
 list_converters = [
@@ -198,9 +199,10 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing", "ULR", 1, 4, ""),  # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
     "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 0.001, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
+    "ConverterUInt16DipswitchValue": Converter("ConverterUInt16DipswitchValue", "UIR", 1, 2, get_ebusd_values_string()), # based on installation manual; only applicable for certain models
 
     # Unused Converters - though we keep them here so that we do not have to make some exceptions in code when parsing files
-    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1, 2, ""),
+    "ConverterUInt16ToMRCDeviceStatus": Converter("ConverterUInt16ToMRCDeviceStatus", "UIR", 1, 2, "0=NotInConfig;1=NotFound;2=Error;3=OK"),
 }
 
 # For byte-arrays (strings) there are no convertors defined, however, for us it is useful to define them so that we can associate length for them

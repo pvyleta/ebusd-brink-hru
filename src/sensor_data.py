@@ -7,6 +7,7 @@ from converters import Converter, find_converters, converters_map
 from dev import Device, DeviceView
 from current_param import get_device_to_current_param
 from command_ebus import CommandEBus
+from dipswitch import dipswitch_dict
 
 
 def substitute_flair_name(device: Device) -> Device:
@@ -131,9 +132,11 @@ class Sensor:
                 print(f'Length Mismatch: device: {self.device_name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
         
         # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
-        if "FilterStatus" in self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
+        if "CurrentFilterStatus" == self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
             # TODO this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
             self.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
+        elif "CurrentDipswitchValue" == self.name_current and (self.device_name + "Basic" in dipswitch_dict or self.device_name + "Plus" in dipswitch_dict):
+            self.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
 
 
 search_list_sensor = [

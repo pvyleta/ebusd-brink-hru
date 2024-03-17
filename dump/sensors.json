@@ -8373,14 +8373,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -8398,14 +8398,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -10127,14 +10127,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -10152,14 +10152,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -11981,14 +11981,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -12006,14 +12006,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -12031,14 +12031,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -14262,14 +14262,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -27865,14 +27865,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -28942,14 +28942,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -28967,14 +28967,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -30589,14 +30589,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -31759,14 +31759,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -31784,14 +31784,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",
@@ -31809,14 +31809,14 @@
     {
         "cmd": null,
         "converter": {
-            "converter_str": "UInt16ToUNumberConverter",
+            "converter_str": "",
             "length": 2,
             "multiplier": 1,
-            "name": "ConverterUInt16ToUNumber",
-            "name_actual": "ActualDipSwitch",
+            "name": "ConverterUInt16DipswitchValue",
+            "name_actual": "",
             "py/object": "converters.Converter",
             "type": "UIR",
-            "values": ""
+            "values": "31=Excellent180Basic;30=Excellent180Plus;7=Excellent300Basic;6=Excellent300Plus;5=Excellent400Basic;4=Excellent400Plus;27=Excellent450Basic;26=Excellent450Plus;3=RenoventElan300Basic;2=RenoventElan300Plus;19=Sky150Basic;18=Sky150Plus;9=Sky200Basic;8=Sky200Plus;21=Sky300Basic;20=Sky300Plus"
         },
         "converter_match": "from_code",
         "datatype": "ushort",

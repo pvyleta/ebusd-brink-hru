@@ -6,8 +6,8 @@ from command_ebus import get_commands_dict
 
 # TODO add special instructions and special handling - e.g. factory reset, errors reset, filter reset...
 # TODO add default slave address for the known devices
-# TODO fill in dipswitch values for known devices
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
+# TODO strip unnecessary fields from dump
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
