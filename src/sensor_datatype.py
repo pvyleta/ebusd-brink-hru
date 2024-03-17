@@ -5,7 +5,7 @@ from dev import Device
 from params import UINT16, INT16, UINT32, STRING
 
 
-class CurrentParam:
+class SensorDatatype:
     def __init__(self, name_current: str, datatype: str):
         self.name_current = name_current
         self.datatype = datatype
@@ -23,7 +23,7 @@ class CurrentParam:
         return str(self)
 
 
-def datatype_out_to_datatype(datatype_out: str) -> str:
+def __datatype_out_to_datatype(datatype_out: str) -> str:
     if datatype_out == 'ushort':
         return UINT16
     elif datatype_out == 'short':
@@ -36,8 +36,8 @@ def datatype_out_to_datatype(datatype_out: str) -> str:
         raise RuntimeError(f'unknown datatype {datatype_out}')
 
 
-def get_device_to_current_param() -> dict[Device, dict[str, CurrentParam]]:
-    device_to_current_param: dict[Device, dict[str, CurrentParam]] = {}
+def get_sensor_datatypes() -> dict[Device, dict[str, SensorDatatype]]:
+    device_to_sensor_datatype: dict[Device, dict[str, SensorDatatype]] = {}
     files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
     for file in files_view_model:
         with open(file) as f:
@@ -49,12 +49,12 @@ def get_device_to_current_param() -> dict[Device, dict[str, CurrentParam]]:
             assert match1 and match2 and match3
 
             device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
-            device_to_current_param.setdefault(device, {})
+            device_to_sensor_datatype.setdefault(device, {})
             matches = re.finditer(r'public (?P<datatype_out>\w*) (?P<name_actual>\w*)\n *\{\n *get => this\.\w*\.(?P<name_current>\w*)\.(?P<datatype_in>\w*)Value;', file_str)
             for m in matches:
-                datatype = datatype_out_to_datatype(m.group('datatype_out'))
-                current_param = CurrentParam(m.group('name_current'), datatype)
-                assert not (current_param_in_dict := device_to_current_param[device].get(m.group('name_current'))) or current_param_in_dict == current_param
-                device_to_current_param[device][m.group('name_current')] = current_param
+                datatype = __datatype_out_to_datatype(m.group('datatype_out'))
+                sensor_datatype = SensorDatatype(m.group('name_current'), datatype)
+                assert not (sensor_datatype_in_dict := device_to_sensor_datatype[device].get(m.group('name_current'))) or sensor_datatype_in_dict == sensor_datatype
+                device_to_sensor_datatype[device][m.group('name_current')] = sensor_datatype
 
-    return device_to_current_param
+    return device_to_sensor_datatype

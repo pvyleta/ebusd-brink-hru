@@ -5,8 +5,8 @@ import csv
 import jsonpickle # type: ignore
 
 from dev import Device
-from config_data import Parameter, DeviceParameters
-from sensor_data import Sensor
+from parameter import Parameter, DeviceParameters
+from sensor import Sensor
 from params import INT16, UINT16
 
 

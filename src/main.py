@@ -1,7 +1,7 @@
 from out import write_output
 from converters import find_converters, device_to_name_current_to_name_param, converters_map
-from sensor_data import get_dict_devices_sensor
-from config_data import get_device_parameters
+from sensor import get_dict_devices_sensor
+from parameter import get_device_parameters
 from command_ebus import get_commands_dict
 
 # TODO add special instructions and special handling - e.g. factory reset, errors reset, filter reset...

@@ -5,7 +5,7 @@ import copy
 from params import DEBUG
 from converters import Converter, find_converters, converters_map
 from dev import Device, DeviceView
-from current_param import get_device_to_current_param
+from sensor_datatype import get_sensor_datatypes
 from command_ebus import CommandEBus
 from dipswitch import dipswitch_dict
 
@@ -84,7 +84,6 @@ manual_current_to_converter = {
 manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
-# TODO rename Sensor to State?
 class Sensor:
     def __init__(self, device_name: str, first_version: int, last_version: int, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.device_name = device_name
@@ -245,7 +244,7 @@ def get_dict_devices_sensor(
 
     device_to_name_param_to_converter_unused = copy.deepcopy(device_to_name_param_to_converter)
 
-    device_to_current_param = get_device_to_current_param()
+    device_to_sensor_datatype = get_sensor_datatypes()
     sensors_without_datatypes = 0
     sensor_datatypes_set = set()
 
@@ -256,8 +255,8 @@ def get_dict_devices_sensor(
         for sensor in sensors:
 
             # Get datatype for sensors
-            if curr_param := device_to_current_param[d_copy].get(sensor.name_current):
-                sensor.datatype = curr_param.datatype
+            if sensor_datatype := device_to_sensor_datatype[d_copy].get(sensor.name_current):
+                sensor.datatype = sensor_datatype.datatype
                 sensor_datatypes_set.add(sensor.datatype)
             else:
                 sensors_without_datatypes += 1
