@@ -120,7 +120,7 @@ class Sensor:
     def check_converter(self):
         if self.cmd and self.cmd.read_len != self.converter.length:
             if self.name_current == 'CurrentVirtualDipswitch':
-                # TODO it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
+                # NOTE it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
                 pass
             elif re.search('Elan|MultiRoomCtrl|Valve', self.device_name) and self.converter.length == 2 and self.cmd.read_len == 1:
                 # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
@@ -132,7 +132,7 @@ class Sensor:
         
         # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
         if "CurrentFilterStatus" == self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
-            # TODO this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
+            # NOTE this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
             self.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
             self.converter_match = "patched"
         elif "CurrentDipswitchValue" == self.name_current and (self.device_name + "Basic" in dipswitch_dict or self.device_name + "Plus" in dipswitch_dict):
@@ -220,7 +220,7 @@ def get_dict_devices_sensor(
                 if not name_param:
                     missing_params_count += 1
                     if DEBUG:
-                        # TODO This happens only for FlairEBusCommands.CmdReadParameterDeviceType. figure out a way to include this 'param' here in 'sensors'
+                        # NOTE This happens only for FlairEBusCommands.CmdReadParameterDeviceType. figure out a way to include this 'param' here in 'sensors'
                         print(f'Missing named param for {device.name} sensor {name_current}')
                         continue
 

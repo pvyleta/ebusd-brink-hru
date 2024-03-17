@@ -6,7 +6,7 @@ class Dipswitch:
         self.value = value
         self.type = type
 
-# TODO can we make this in ebusd as two fields, one 4bit, the other 1bit? LSB marks plus/basic
+# NOTE can we make this in ebusd as two fields, one 4bit, the other 1bit? LSB marks plus/basic
 dipswitch_dict = {
     'Excellent180Basic'   : Dipswitch(False, 0b11111),
     'Excellent180Plus'    : Dipswitch(True,  0b11110),
