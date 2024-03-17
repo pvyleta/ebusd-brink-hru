@@ -29,7 +29,7 @@ def csv_line_sensor(sensor: Sensor) -> str:
     values = sensor.converter.values
     type = sensor.converter.type
 
-    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id},,,{type},{values},{sensor.unit},\n'
+    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,,4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
 def csv_line_param_read(param: Parameter) -> str:
@@ -83,7 +83,7 @@ def dump_sensor(sensor: Sensor) -> dict[str, str]:
     dump_sensor_dict['first_version'] = str(sensor.first_version)
     dump_sensor_dict['last_version'] = str(sensor.last_version)
     dump_sensor_dict['name'] = sensor.name_current.removeprefix('Current')
-    dump_sensor_dict['id'] = '0x' + sensor.id
+    dump_sensor_dict['id'] = f'0x{sensor.id:02x}'
     dump_sensor_dict['unit'] = sensor.unit
     dump_sensor_dict['datatype'] = sensor.datatype
     dump_sensor_dict['multiplier'] = str(sensor.converter.multiplier) if sensor.converter else "null"
@@ -98,7 +98,7 @@ def dump_param(param: Parameter) -> dict[str, str]:
     dump_param_dict['first_version'] = str(param.first_version)
     dump_param_dict['last_version'] = str(param.last_version)
     dump_param_dict['name'] = param.name
-    dump_param_dict['id'] = '0x' + f'{param.id:02x}'
+    dump_param_dict['id'] = f'0x{param.id:02x}'
     dump_param_dict['unit'] = param.unit
     dump_param_dict['datatype'] = param.datatype
     dump_param_dict['multiplier'] = str(param.multiplier)

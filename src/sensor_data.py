@@ -85,9 +85,8 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 # TODO rename Sensor to State?
-# TODO consider using f-strings with :x to reresent hexa numbers
 class Sensor:
-    def __init__(self, device_name: str, first_version: int, last_version: int, id: str, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
+    def __init__(self, device_name: str, first_version: int, last_version: int, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.device_name = device_name
         self.first_version = first_version
         self.last_version = last_version
@@ -201,7 +200,7 @@ def get_dict_devices_sensor(
                     print(f'Command {command.cmd} pbsb {command.pbsb} - skipping')
                     continue
 
-                sensors.append(Sensor(device.name, device.first_version, device.last_version, m.group('id'), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version, int(m.group('id'), 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
@@ -238,7 +237,7 @@ def get_dict_devices_sensor(
                     continue
                 
 
-                sensors.append(Sensor(device.name, device.first_version, device.last_version, command.id, m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(Sensor(device.name, device.first_version, device.last_version, int(command.id, 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             dict_devices_sensor[device] = sensors
 
