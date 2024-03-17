@@ -142,7 +142,6 @@ class Sensor:
             self.converter_match = "patched"
 
 
-    # TODO fix datatype to match param
 def get_dict_devices_sensor(
         device_to_name_param_to_converter: dict[DeviceView, dict[str, Converter]],
         device_to_name_current_to_name_param_dict: dict[Device, dict[str, str]],

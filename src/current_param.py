@@ -2,6 +2,7 @@ import re
 import glob
 
 from dev import Device
+from params import UINT16, INT16, UINT32, STRING
 
 
 class CurrentParam:
@@ -22,6 +23,19 @@ class CurrentParam:
         return str(self)
 
 
+def datatype_out_to_datatype(datatype_out: str) -> str:
+    if datatype_out == 'ushort':
+        return UINT16
+    elif datatype_out == 'short':
+        return INT16
+    elif datatype_out == 'uint':
+        return UINT32
+    elif datatype_out == 'string':
+        return STRING
+    else:
+        raise RuntimeError(f'unknown datatype {datatype_out}')
+
+
 def get_device_to_current_param() -> dict[Device, dict[str, CurrentParam]]:
     device_to_current_param: dict[Device, dict[str, CurrentParam]] = {}
     files_view_model = glob.glob('./BCSServiceTool/ViewModel/Devices/**/*ActualState*ViewModel_*.cs', recursive=True)
@@ -38,7 +52,8 @@ def get_device_to_current_param() -> dict[Device, dict[str, CurrentParam]]:
             device_to_current_param.setdefault(device, {})
             matches = re.finditer(r'public (?P<datatype_out>\w*) (?P<name_actual>\w*)\n *\{\n *get => this\.\w*\.(?P<name_current>\w*)\.(?P<datatype_in>\w*)Value;', file_str)
             for m in matches:
-                current_param = CurrentParam(m.group('name_current'), m.group('datatype_out'))
+                datatype = datatype_out_to_datatype(m.group('datatype_out'))
+                current_param = CurrentParam(m.group('name_current'), datatype)
                 assert not (current_param_in_dict := device_to_current_param[device].get(m.group('name_current'))) or current_param_in_dict == current_param
                 device_to_current_param[device][m.group('name_current')] = current_param
 
