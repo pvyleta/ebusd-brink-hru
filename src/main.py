@@ -33,9 +33,6 @@ converters_set: set[str] = {c for c in converters_map.keys()}
 unused_converters_set = converters_set - used_converters_set
 
 print("unused_converters_set: " + str(unused_converters_set))
-
-# TODO move some of the checks from sensor to here
-
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
 write_output(dict_devices_sensor, device_parameters)

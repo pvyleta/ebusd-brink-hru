@@ -146,7 +146,6 @@ class Converter:
         return str(self)
 
 
-# TODO figure out if all of these converters are used - and if not, why?
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
 converters_map: dict[str, Converter] = {
     "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 10, 2, ""),
@@ -198,7 +197,6 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus", "UIR", 1, 2, ""),  # length based on CmdReadActualUIFButtons
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing", "ULR", 1, 4, ""),  # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
-    "ConverterUCharToNumber": Converter("ConverterUCharToNumber", "UCH", 1, 1, ""),
     "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 0.001, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
 
     # Unused Converters - though we keep them here so that we do not have to make some exceptions in code when parsing files

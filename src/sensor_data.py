@@ -125,13 +125,15 @@ class Sensor:
                 pass
             elif re.search('Elan|MultiRoomCtrl|Valve', self.device_name) and self.converter.length == 2 and self.cmd.read_len == 1:
                 # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
-                self.converter = converters_map['ConverterUCharToNumber']
+                self.converter.length = 1
+                self.converter.type = "UCH"
             else:
                 print(f'Length Mismatch: device: {self.device_name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
         
         # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
         if "FilterStatus" in self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
-            self.converter = converters_map['ConverterUInt16ToFilterState']
+            # TODO this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
+            self.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
 
 
 search_list_sensor = [
