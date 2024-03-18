@@ -7,31 +7,31 @@ r,Flair400,FlowMode2,FlowMode2,,,4050,02,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],
 w,Flair400,FlowMode2,FlowMode2,,,4080,02,,,SIR,,m³/h,[min:50;max:400;step:5;default:200]
 r,Flair400,FlowMode3,FlowMode3,,,4050,03,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:400],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:300]
 w,Flair400,FlowMode3,FlowMode3,,,4080,03,,,SIR,,m³/h,[min:50;max:400;step:5;default:300]
-r,Flair400,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+r,Flair400,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
 w,Flair400,UnbalanceMode,UnbalanceMode,,,4080,08,,,UIR,0=Not Permitted;1=Permitted,,[min:0;max:1;step:1;default:1]
-r,Flair400,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,UIR,10,%,,Min,,UIR,,%,[min:0],Max,,UIR,,%,[max:200],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:0]
+r,Flair400,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,UIR,10,%,,Min,,UIR,10,%,[min:0],Max,,UIR,10,%,[max:200],Step,,UIR,10,%,[step:1],Default,,UIR,10,%,[default:0]
 w,Flair400,UnbalanceFlow,UnbalanceFlow,,,4080,09,,,UIR,10,%,[min:0;max:200;step:1;default:0]
-r,Flair400,FlowOffsetInlet,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,Min,,SIR,,%,[min:-150],Max,,SIR,,%,[max:150],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:0]
+r,Flair400,FlowOffsetInlet,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
 w,Flair400,FlowOffsetInlet,FlowOffsetInlet,,,4080,4a,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,Flair400,FlowOffsetExhaust,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,Min,,SIR,,%,[min:-150],Max,,SIR,,%,[max:150],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:0]
+r,Flair400,FlowOffsetExhaust,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
 w,Flair400,FlowOffsetExhaust,FlowOffsetExhaust,,,4080,4b,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,Flair400,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+r,Flair400,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
 w,Flair400,SwitchDefaultPos,SwitchDefaultPos,,,4080,40,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:1]
-r,Flair400,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,BypassMode,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
-r,Flair400,BypassTempFromInside,BypassTempFromInside,,,4050,04,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:350],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:220]
+r,Flair400,BypassTempFromInside,BypassTempFromInside,,,4050,04,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:220]
 w,Flair400,BypassTempFromInside,BypassTempFromInside,,,4080,04,,,SIR,10,°C,[min:150;max:350;step:5;default:220]
-r,Flair400,BypassTempFromOutside,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,Min,,SIR,,°C,[min:70],Max,,SIR,,°C,[max:150],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:100]
+r,Flair400,BypassTempFromOutside,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:150],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:100]
 w,Flair400,BypassTempFromOutside,BypassTempFromOutside,,,4080,05,,,SIR,10,°C,[min:70;max:150;step:5;default:100]
-r,Flair400,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,,°C,[min:0],Max,,SIR,,°C,[max:50],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:20]
+r,Flair400,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
 w,Flair400,BypassTempHyst,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
 r,Flair400,BypassBoostMode,BypassBoostMode,,,4050,4c,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,BypassBoostMode,BypassBoostMode,,,4080,4c,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Flair400,BypassBoostFlowPreset,BypassBoostFlowPreset,,,4050,4d,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:3]
 w,Flair400,BypassBoostFlowPreset,BypassBoostFlowPreset,,,4080,4d,,,UIR,,,[min:0;max:3;step:1;default:3]
-r,Flair400,FrostStartTemperature,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,Min,,SIR,,°C,[min:-15],Max,,SIR,,°C,[max:15],Step,,SIR,,°C,[step:1],Default,,SIR,,°C,[default:0]
+r,Flair400,FrostStartTemperature,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,Min,,SIR,10,°C,[min:-15],Max,,SIR,10,°C,[max:15],Step,,SIR,10,°C,[step:1],Default,,SIR,10,°C,[default:0]
 w,Flair400,FrostStartTemperature,FrostStartTemperature,,,4080,4e,,,SIR,10,°C,[min:-15;max:15;step:1;default:0]
-r,Flair400,FrostMinInletTemperature,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,Min,,SIR,,°C,[min:70],Max,,SIR,,°C,[max:220],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:100]
+r,Flair400,FrostMinInletTemperature,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:220],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:100]
 w,Flair400,FrostMinInletTemperature,FrostMinInletTemperature,,,4080,62,,,SIR,10,°C,[min:70;max:220;step:5;default:100]
 r,Flair400,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4050,4f,,,UIR,,Day,,Min,,UIR,,Day,[min:1],Max,,UIR,,Day,[max:365],Step,,UIR,,Day,[step:1],Default,,UIR,,Day,[default:90]
 w,Flair400,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4080,4f,,,UIR,,Day,[min:1;max:365;step:1;default:90]
@@ -39,9 +39,9 @@ r,Flair400,ExternalPreHeaterMode,ExternalPreHeaterMode,,,4050,0a,,,UIR,,,,Min,,U
 w,Flair400,ExternalPreHeaterMode,ExternalPreHeaterMode,,,4080,0a,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Flair400,ExternalPostHeaterMode,ExternalPostHeaterMode,,,4050,1e,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,ExternalPostHeaterMode,ExternalPostHeaterMode,,,4080,1e,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Flair400,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:300],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:210]
+r,Flair400,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:300],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:210]
 w,Flair400,PostheaterTemp,PostheaterTemp,,,4080,0b,,,SIR,10,°C,[min:150;max:300;step:5;default:210]
-r,Flair400,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,CO2SensorsActivated,CO2SensorsActivated,,,4080,3c,,,UIR,0=no;1=yes,,[min:0;max:1;step:1;default:0]
 r,Flair400,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Flair400,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4080,34,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
@@ -63,13 +63,13 @@ r,Flair400,RHTSensorPresent,RHTSensorPresent,,,4050,32,,,UIR,,,,Min,,UIR,,,[min:
 w,Flair400,RHTSensorPresent,RHTSensorPresent,,,4080,32,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Flair400,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
 w,Flair400,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2;max:2;step:1;default:0]
-r,Flair400,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,CVWTWMode,CVWTWMode,,,4080,07,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
 r,Flair400,RS485Mode,RS485Mode,,,4050,80,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:2],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
 w,Flair400,RS485Mode,RS485Mode,,,4080,80,,,UIR,,,[min:0;max:2;step:1;default:1]
 r,Flair400,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,41,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:247],Step,,UIR,,,[step:1],Default,,UIR,,,[default:20]
 w,Flair400,ModbusSlaveAddress,ModbusSlaveAddress,,,4080,41,,,UIR,,,[min:1;max:247;step:1;default:20]
-r,Flair400,ModbusSpeed,ModbusSpeed,,,4050,42,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:3,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:4] - min/max/step fields of enum message omitted
+r,Flair400,ModbusSpeed,ModbusSpeed,,,4050,42,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:6,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:4] - min/max/step fields of enum message omitted
 w,Flair400,ModbusSpeed,ModbusSpeed,,,4080,42,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[min:0;max:7;step:1;default:4]
 r,Flair400,ModbusParity,ModbusParity,,,4050,43,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:2],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
 w,Flair400,ModbusParity,ModbusParity,,,4080,43,,,UIR,,,[min:0;max:2;step:1;default:1]
@@ -77,7 +77,7 @@ r,Flair400,SignalOutputMode,SignalOutputMode,,,4050,61,,,UIR,,,,Min,,UIR,,,[min:
 w,Flair400,SignalOutputMode,SignalOutputMode,,,4080,61,,,UIR,,,[min:0;max:3;step:1;default:0]
 r,Flair400,Input1Mode,Input1Mode,,,4050,0c,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,Input1Mode,Input1Mode,,,4080,0c,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Flair400,CN1Coupling,CN1Coupling,,,4050,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:3,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,CN1Coupling,CN1Coupling,,,4050,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,CN1Coupling,CN1Coupling,,,4080,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[min:0;max:4;step:1;default:0]
 r,Flair400,CN1Inlet,CN1Inlet,,,4050,10,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,CN1Inlet,CN1Inlet,,,4080,10,,,UIR,,,[min:0;max:8;step:1;default:0]
@@ -85,7 +85,7 @@ r,Flair400,CN1Exhaust,CN1Exhaust,,,4050,11,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,
 w,Flair400,CN1Exhaust,CN1Exhaust,,,4080,11,,,UIR,,,[min:0;max:8;step:1;default:0]
 r,Flair400,Input2Mode,Input2Mode,,,4050,12,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,Input2Mode,Input2Mode,,,4080,12,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Flair400,CN2Coupling,CN2Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:3,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,CN2Coupling,CN2Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,CN2Coupling,CN2Coupling,,,4080,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[min:0;max:4;step:1;default:0]
 r,Flair400,CN2Inlet,CN2Inlet,,,4050,16,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,CN2Inlet,CN2Inlet,,,4080,16,,,UIR,,,[min:0;max:8;step:1;default:0]
@@ -95,19 +95,19 @@ r,Flair400,AnaInput1Mode,AnaInput1Mode,,,4050,70,,,UIR,,,,Min,,UIR,,,[min:0],Max
 w,Flair400,AnaInput1Mode,AnaInput1Mode,,,4080,70,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Flair400,AnaInput2Mode,AnaInput2Mode,,,4050,71,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,AnaInput2Mode,AnaInput2Mode,,,4080,71,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Flair400,Input1VMin,Input1VMin,,,4050,0d,,,SIR,10,V,,Min,,SIR,,V,[min:0],Max,,SIR,,V,[max:100],Step,,SIR,,V,[step:5],Default,,SIR,,V,[default:0]
+r,Flair400,Input1VMin,Input1VMin,,,4050,0d,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
 w,Flair400,Input1VMin,Input1VMin,,,4080,0d,,,SIR,10,V,[min:0;max:100;step:5;default:0]
-r,Flair400,Input1VMax,Input1VMax,,,4050,0e,,,SIR,10,V,,Min,,SIR,,V,[min:0],Max,,SIR,,V,[max:100],Step,,SIR,,V,[step:5],Default,,SIR,,V,[default:100]
+r,Flair400,Input1VMax,Input1VMax,,,4050,0e,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
 w,Flair400,Input1VMax,Input1VMax,,,4080,0e,,,SIR,10,V,[min:0;max:100;step:5;default:100]
-r,Flair400,Input2VMin,Input2VMin,,,4050,13,,,SIR,10,V,,Min,,SIR,,V,[min:0],Max,,SIR,,V,[max:100],Step,,SIR,,V,[step:5],Default,,SIR,,V,[default:0]
+r,Flair400,Input2VMin,Input2VMin,,,4050,13,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
 w,Flair400,Input2VMin,Input2VMin,,,4080,13,,,SIR,10,V,[min:0;max:100;step:5;default:0]
-r,Flair400,Input2VMax,Input2VMax,,,4050,14,,,SIR,10,V,,Min,,SIR,,V,[min:0],Max,,SIR,,V,[max:100],Step,,SIR,,V,[step:5],Default,,SIR,,V,[default:100]
+r,Flair400,Input2VMax,Input2VMax,,,4050,14,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
 w,Flair400,Input2VMax,Input2VMax,,,4080,14,,,SIR,10,V,[min:0;max:100;step:5;default:100]
-r,Flair400,EWTMode,EWTMode,,,4050,18,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,Flair400,EWTMode,EWTMode,,,4050,18,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,Flair400,EWTMode,EWTMode,,,4080,18,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
-r,Flair400,EWTTempMin,EWTTempMin,,,4050,19,,,SIR,10,°C,,Min,,SIR,,°C,[min:0],Max,,SIR,,°C,[max:100],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:50]
+r,Flair400,EWTTempMin,EWTTempMin,,,4050,19,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:100],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:50]
 w,Flair400,EWTTempMin,EWTTempMin,,,4080,19,,,SIR,10,°C,[min:0;max:100;step:5;default:50]
-r,Flair400,EWTTempMax,EWTTempMax,,,4050,1a,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:400],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:250]
+r,Flair400,EWTTempMax,EWTTempMax,,,4050,1a,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:400],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:250]
 w,Flair400,EWTTempMax,EWTTempMax,,,4080,1a,,,SIR,10,°C,[min:150;max:400;step:5;default:250]
 r,Flair400,EWTValveDefaultPos,EWTValveDefaultPos,,,4050,73,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Flair400,EWTValveDefaultPos,EWTValveDefaultPos,,,4080,73,,,UIR,,,[min:0;max:1;step:1;default:0]

@@ -15,11 +15,11 @@ r,Vitovent200W,RpmInletMode3,RpmInletMode3,,,4050,07,,,SIR,,%,,Min,,SIR,,%,[min:
 w,Vitovent200W,RpmInletMode3,RpmInletMode3,,,4080,07,,,SIR,,%,[min:10;max:100;step:1;default:75]
 r,Vitovent200W,RpmExhaustMode3,RpmExhaustMode3,,,4050,08,,,SIR,,%,,Min,,SIR,,%,[min:10],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:75]
 w,Vitovent200W,RpmExhaustMode3,RpmExhaustMode3,,,4080,08,,,SIR,,%,[min:10;max:100;step:1;default:75]
-r,Vitovent200W,BypassTemp,BypassTemp,,,4050,0a,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:350],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:220]
+r,Vitovent200W,BypassTemp,BypassTemp,,,4050,0a,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:220]
 w,Vitovent200W,BypassTemp,BypassTemp,,,4080,0a,,,SIR,10,°C,[min:150;max:350;step:5;default:220]
-r,Vitovent200W,BypassTempHyst,BypassTempHyst,,,4050,0b,,,SIR,10,°C,,Min,,SIR,,°C,[min:0],Max,,SIR,,°C,[max:50],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:20]
+r,Vitovent200W,BypassTempHyst,BypassTempHyst,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
 w,Vitovent200W,BypassTempHyst,BypassTempHyst,,,4080,0b,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
-r,Vitovent200W,BypassMode,BypassMode,,,4050,09,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+r,Vitovent200W,BypassMode,BypassMode,,,4050,09,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,Vitovent200W,BypassMode,BypassMode,,,4080,09,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
 r,Vitovent200W,ExtraPreheater,ExtraPreheater,,,4050,0d,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Vitovent200W,ExtraPreheater,ExtraPreheater,,,4080,0d,,,UIR,,,[min:0;max:1;step:1;default:0]
@@ -27,9 +27,9 @@ r,Vitovent200W,RHTSensorPresent,RHTSensorPresent,,,4050,0e,,,UIR,,,,Min,,UIR,,,[
 w,Vitovent200W,RHTSensorPresent,RHTSensorPresent,,,4080,0e,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Vitovent200W,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,0f,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
 w,Vitovent200W,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,0f,,,SIR,,,[min:-2;max:2;step:1;default:0]
-r,Vitovent200W,SwitchDefaultPos,SwitchDefaultPos,,,4050,10,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+r,Vitovent200W,SwitchDefaultPos,SwitchDefaultPos,,,4050,10,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
 w,Vitovent200W,SwitchDefaultPos,SwitchDefaultPos,,,4080,10,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:1]
 r,Vitovent200W,DispSwitchActive,DispSwitchActive,,,4050,2a,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Vitovent200W,DispSwitchActive,DispSwitchActive,,,4080,2a,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Vitovent200W,UnbalanceMode,UnbalanceMode,,,4050,2b,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+r,Vitovent200W,UnbalanceMode,UnbalanceMode,,,4050,2b,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
 w,Vitovent200W,UnbalanceMode,UnbalanceMode,,,4080,2b,,,UIR,0=Not Permitted;1=Permitted,,[min:0;max:1;step:1;default:1]

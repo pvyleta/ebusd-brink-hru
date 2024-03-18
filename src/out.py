@@ -40,10 +40,10 @@ def csv_line_parameters_read(param: Parameter, slave_address: str) -> str:
     datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
-        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:3,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
+        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:6,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
+        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},{values},{param.unit},[min:{param.field_min}],Max,,{datatype},{values},{param.unit},[max:{param.field_max}],Step,,{datatype},{values},{param.unit},[step:{param.field_step}],Default,,{datatype},{values},{param.unit},[default:{param.field_default}]\n'
 
 
 def csv_line_parameters_write(param: Parameter, slave_address: str) -> str:

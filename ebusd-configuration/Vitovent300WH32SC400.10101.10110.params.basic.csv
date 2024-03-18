@@ -7,29 +7,29 @@ r,Vitovent300WH32SC400,FlowMode2,FlowMode2,,,4050,02,,,SIR,,m³/h,,Min,,SIR,,m³
 w,Vitovent300WH32SC400,FlowMode2,FlowMode2,,,4080,02,,,SIR,,m³/h,[min:50;max:400;step:5;default:200]
 r,Vitovent300WH32SC400,FlowMode3,FlowMode3,,,4050,03,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:400],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:300]
 w,Vitovent300WH32SC400,FlowMode3,FlowMode3,,,4080,03,,,SIR,,m³/h,[min:50;max:400;step:5;default:300]
-r,Vitovent300WH32SC400,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:3,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+r,Vitovent300WH32SC400,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
 w,Vitovent300WH32SC400,UnbalanceMode,UnbalanceMode,,,4080,08,,,UIR,0=Not Permitted;1=Permitted,,[min:0;max:1;step:1;default:1]
-r,Vitovent300WH32SC400,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,UIR,10,%,,Min,,UIR,,%,[min:0],Max,,UIR,,%,[max:200],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:0]
+r,Vitovent300WH32SC400,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,UIR,10,%,,Min,,UIR,10,%,[min:0],Max,,UIR,10,%,[max:200],Step,,UIR,10,%,[step:1],Default,,UIR,10,%,[default:0]
 w,Vitovent300WH32SC400,UnbalanceFlow,UnbalanceFlow,,,4080,09,,,UIR,10,%,[min:0;max:200;step:1;default:0]
-r,Vitovent300WH32SC400,FlowOffsetInlet,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,Min,,SIR,,%,[min:-150],Max,,SIR,,%,[max:150],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:0]
+r,Vitovent300WH32SC400,FlowOffsetInlet,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
 w,Vitovent300WH32SC400,FlowOffsetInlet,FlowOffsetInlet,,,4080,4a,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,Vitovent300WH32SC400,FlowOffsetExhaust,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,Min,,SIR,,%,[min:-150],Max,,SIR,,%,[max:150],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:0]
+r,Vitovent300WH32SC400,FlowOffsetExhaust,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
 w,Vitovent300WH32SC400,FlowOffsetExhaust,FlowOffsetExhaust,,,4080,4b,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,Vitovent300WH32SC400,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+r,Vitovent300WH32SC400,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
 w,Vitovent300WH32SC400,SwitchDefaultPos,SwitchDefaultPos,,,4080,40,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:1]
-r,Vitovent300WH32SC400,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:3,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+r,Vitovent300WH32SC400,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,Vitovent300WH32SC400,BypassMode,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
-r,Vitovent300WH32SC400,BypassTempFromOutside,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,Min,,SIR,,°C,[min:70],Max,,SIR,,°C,[max:150],Step,,SIR,,°C,[step:1],Default,,SIR,,°C,[default:100]
+r,Vitovent300WH32SC400,BypassTempFromOutside,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:150],Step,,SIR,10,°C,[step:1],Default,,SIR,10,°C,[default:100]
 w,Vitovent300WH32SC400,BypassTempFromOutside,BypassTempFromOutside,,,4080,05,,,SIR,10,°C,[min:70;max:150;step:1;default:100]
-r,Vitovent300WH32SC400,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,,°C,[min:0],Max,,SIR,,°C,[max:50],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:20]
+r,Vitovent300WH32SC400,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
 w,Vitovent300WH32SC400,BypassTempHyst,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
 r,Vitovent300WH32SC400,BypassBoostMode,BypassBoostMode,,,4050,4c,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Vitovent300WH32SC400,BypassBoostMode,BypassBoostMode,,,4080,4c,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Vitovent300WH32SC400,BypassBoostFlowPreset,BypassBoostFlowPreset,,,4050,4d,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:3]
 w,Vitovent300WH32SC400,BypassBoostFlowPreset,BypassBoostFlowPreset,,,4080,4d,,,UIR,,,[min:0;max:3;step:1;default:3]
-r,Vitovent300WH32SC400,FrostStartTemperature,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,Min,,SIR,,°C,[min:-15],Max,,SIR,,°C,[max:15],Step,,SIR,,°C,[step:1],Default,,SIR,,°C,[default:0]
+r,Vitovent300WH32SC400,FrostStartTemperature,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,Min,,SIR,10,°C,[min:-15],Max,,SIR,10,°C,[max:15],Step,,SIR,10,°C,[step:1],Default,,SIR,10,°C,[default:0]
 w,Vitovent300WH32SC400,FrostStartTemperature,FrostStartTemperature,,,4080,4e,,,SIR,10,°C,[min:-15;max:15;step:1;default:0]
-r,Vitovent300WH32SC400,FrostMinInletTemperature,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,Min,,SIR,,°C,[min:70],Max,,SIR,,°C,[max:220],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:100]
+r,Vitovent300WH32SC400,FrostMinInletTemperature,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:220],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:100]
 w,Vitovent300WH32SC400,FrostMinInletTemperature,FrostMinInletTemperature,,,4080,62,,,SIR,10,°C,[min:70;max:220;step:5;default:100]
 r,Vitovent300WH32SC400,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4050,4f,,,UIR,,Day,,Min,,UIR,,Day,[min:1],Max,,UIR,,Day,[max:365],Step,,UIR,,Day,[step:1],Default,,UIR,,Day,[default:365]
 w,Vitovent300WH32SC400,FilterDaysBeforeWarning,FilterDaysBeforeWarning,,,4080,4f,,,UIR,,Day,[min:1;max:365;step:1;default:365]
@@ -37,9 +37,9 @@ r,Vitovent300WH32SC400,ExternalPreHeaterMode,ExternalPreHeaterMode,,,4050,0a,,,U
 w,Vitovent300WH32SC400,ExternalPreHeaterMode,ExternalPreHeaterMode,,,4080,0a,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Vitovent300WH32SC400,ExternalPostHeaterMode,ExternalPostHeaterMode,,,4050,1e,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Vitovent300WH32SC400,ExternalPostHeaterMode,ExternalPostHeaterMode,,,4080,1e,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Vitovent300WH32SC400,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,,°C,[min:150],Max,,SIR,,°C,[max:300],Step,,SIR,,°C,[step:5],Default,,SIR,,°C,[default:210]
+r,Vitovent300WH32SC400,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:300],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:210]
 w,Vitovent300WH32SC400,PostheaterTemp,PostheaterTemp,,,4080,0b,,,SIR,10,°C,[min:150;max:300;step:5;default:210]
-r,Vitovent300WH32SC400,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:3,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
+r,Vitovent300WH32SC400,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
 w,Vitovent300WH32SC400,CO2SensorsActivated,CO2SensorsActivated,,,4080,3c,,,UIR,0=no;1=yes,,[min:0;max:1;step:1;default:0]
 r,Vitovent300WH32SC400,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Vitovent300WH32SC400,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4080,34,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
@@ -61,7 +61,7 @@ r,Vitovent300WH32SC400,RHTSensorPresent,RHTSensorPresent,,,4050,32,,,UIR,,,,Min,
 w,Vitovent300WH32SC400,RHTSensorPresent,RHTSensorPresent,,,4080,32,,,UIR,,,[min:0;max:1;step:1;default:0]
 r,Vitovent300WH32SC400,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
 w,Vitovent300WH32SC400,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2;max:2;step:1;default:0]
-r,Vitovent300WH32SC400,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:3,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,Vitovent300WH32SC400,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,Vitovent300WH32SC400,CVWTWMode,CVWTWMode,,,4080,07,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
 r,Vitovent300WH32SC400,SignalOutputMode,SignalOutputMode,,,4050,61,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Vitovent300WH32SC400,SignalOutputMode,SignalOutputMode,,,4080,61,,,UIR,,,[min:0;max:3;step:1;default:0]
