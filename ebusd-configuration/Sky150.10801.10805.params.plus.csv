@@ -1,89 +1,89 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-r,Sky150,FlowMode0,FlowMode0,,,4050,21,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:0],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:30],Default,,SIR,,m³/h,[default:30]
 w,Sky150,FlowMode0,FlowMode0,,,4080,21,,,SIR,,m³/h,[min:0;max:50;step:30;default:30]
-r,Sky150,FlowMode1,FlowMode1,,,4050,01,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:75]
+r,Sky150,FlowMode0,FlowMode0,,,4050,21,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:0],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:30],Default,,SIR,,m³/h,[default:30]
 w,Sky150,FlowMode1,FlowMode1,,,4080,01,,,SIR,,m³/h,[min:30;max:150;step:5;default:75]
-r,Sky150,FlowMode2,FlowMode2,,,4050,02,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:100]
+r,Sky150,FlowMode1,FlowMode1,,,4050,01,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:75]
 w,Sky150,FlowMode2,FlowMode2,,,4080,02,,,SIR,,m³/h,[min:30;max:150;step:5;default:100]
-r,Sky150,FlowMode3,FlowMode3,,,4050,03,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:125]
+r,Sky150,FlowMode2,FlowMode2,,,4050,02,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:100]
 w,Sky150,FlowMode3,FlowMode3,,,4080,03,,,SIR,,m³/h,[min:30;max:150;step:5;default:125]
-r,Sky150,BypassTemp,BypassTemp,,,4050,04,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:240]
+r,Sky150,FlowMode3,FlowMode3,,,4050,03,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:30],Max,,SIR,,m³/h,[max:150],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:125]
 w,Sky150,BypassTemp,BypassTemp,,,4080,04,,,SIR,10,°C,[min:150;max:350;step:5;default:240]
-r,Sky150,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
+r,Sky150,BypassTemp,BypassTemp,,,4050,04,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:240]
 w,Sky150,BypassTempHyst,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
-r,Sky150,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,BypassTempHyst,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
 w,Sky150,BypassMode,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
-r,Sky150,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,BypassMode,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,CVWTWMode,CVWTWMode,,,4080,07,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
-r,Sky150,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+r,Sky150,CVWTWMode,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,UnbalanceMode,UnbalanceMode,,,4080,08,,,UIR,0=Not Permitted;1=Permitted,,[min:0;max:1;step:1;default:1]
-r,Sky150,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:-50],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:1],Default,,SIR,,m³/h,[default:0]
+r,Sky150,UnbalanceMode,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
 w,Sky150,UnbalanceFlow,UnbalanceFlow,,,4080,09,,,SIR,,m³/h,[min:-50;max:50;step:1;default:0]
-r,Sky150,ExtraHeaterType,ExtraHeaterType,,,4050,0a,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:2],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,Sky150,UnbalanceFlow,UnbalanceFlow,,,4050,09,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:-50],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:1],Default,,SIR,,m³/h,[default:0]
 w,Sky150,ExtraHeaterType,ExtraHeaterType,,,4080,0a,,,UIR,,,[min:0;max:2;step:1;default:0]
-r,Sky150,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:300],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:210]
+r,Sky150,ExtraHeaterType,ExtraHeaterType,,,4050,0a,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:2],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Sky150,PostheaterTemp,PostheaterTemp,,,4080,0b,,,SIR,10,°C,[min:150;max:300;step:5;default:210]
-r,Sky150,Input1Mode,Input1Mode,,,4050,0c,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:6,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,PostheaterTemp,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:300],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:210]
 w,Sky150,Input1Mode,Input1Mode,,,4080,0c,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[min:0;max:4;step:1;default:0]
-r,Sky150,Input1VMin,Input1VMin,,,4050,0d,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
+r,Sky150,Input1Mode,Input1Mode,,,4050,0c,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:6,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,Input1VMin,Input1VMin,,,4080,0d,,,SIR,10,V,[min:0;max:100;step:5;default:0]
-r,Sky150,Input1VMax,Input1VMax,,,4050,0e,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
+r,Sky150,Input1VMin,Input1VMin,,,4050,0d,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
 w,Sky150,Input1VMax,Input1VMax,,,4080,0e,,,SIR,10,V,[min:0;max:100;step:5;default:100]
-r,Sky150,CN1Coupling,CN1Coupling,,,4050,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,Input1VMax,Input1VMax,,,4050,0e,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
 w,Sky150,CN1Coupling,CN1Coupling,,,4080,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[min:0;max:4;step:1;default:0]
-r,Sky150,CN1Inlet,CN1Inlet,,,4050,10,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
+r,Sky150,CN1Coupling,CN1Coupling,,,4050,0f,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,CN1Inlet,CN1Inlet,,,4080,10,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[min:0;max:7;step:1;default:5]
-r,Sky150,CN1Exhaust,CN1Exhaust,,,4050,11,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
+r,Sky150,CN1Inlet,CN1Inlet,,,4050,10,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
 w,Sky150,CN1Exhaust,CN1Exhaust,,,4080,11,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[min:0;max:7;step:1;default:5]
-r,Sky150,Input2Mode,Input2Mode,,,4050,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:6,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[default:1] - min/max/step fields of enum message omitted
+r,Sky150,CN1Exhaust,CN1Exhaust,,,4050,11,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
 w,Sky150,Input2Mode,Input2Mode,,,4080,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[min:0;max:4;step:1;default:1]
-r,Sky150,Input2VMin,Input2VMin,,,4050,13,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
+r,Sky150,Input2Mode,Input2Mode,,,4050,12,,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,,,,IGN:6,,,,Default,,UIR,0=Normally Closed;1=0-10V input;2=Normally Open;3=12V Bypass Open/0V Bypass Closed;4=0V Bypass Open/12V Bypass Closed,,[default:1] - min/max/step fields of enum message omitted
 w,Sky150,Input2VMin,Input2VMin,,,4080,13,,,SIR,10,V,[min:0;max:100;step:5;default:0]
-r,Sky150,Input2VMax,Input2VMax,,,4050,14,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
+r,Sky150,Input2VMin,Input2VMin,,,4050,13,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:0]
 w,Sky150,Input2VMax,Input2VMax,,,4080,14,,,SIR,10,V,[min:0;max:100;step:5;default:100]
-r,Sky150,CN2Coupling,CN2Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,Input2VMax,Input2VMax,,,4050,14,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:5],Default,,SIR,10,V,[default:100]
 w,Sky150,CN2Coupling,CN2Coupling,,,4080,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[min:0;max:4;step:1;default:0]
-r,Sky150,CN2Inlet,CN2Inlet,,,4050,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
+r,Sky150,CN2Coupling,CN2Coupling,,,4050,15,,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,,,,IGN:6,,,,Default,,UIR,0=off;1=on;2=on if bypass open condition satisfied;3=bypass control;4=Bedroom valve,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,CN2Inlet,CN2Inlet,,,4080,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[min:0;max:7;step:1;default:5]
-r,Sky150,CN2Exhaust,CN2Exhaust,,,4050,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
+r,Sky150,CN2Inlet,CN2Inlet,,,4050,16,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
 w,Sky150,CN2Exhaust,CN2Exhaust,,,4080,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[min:0;max:7;step:1;default:5]
-r,Sky150,EWTMode,EWTMode,,,4050,18,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,CN2Exhaust,CN2Exhaust,,,4050,17,,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,,,,IGN:6,,,,Default,,UIR,0=FanOff;1=Minimal flow 50m³/h;2=FanMode1;3=FanMode2;4=FanMode3;5=ManualSwitch;6=MaximalFlow;7=FanNotActive,,[default:5] - min/max/step fields of enum message omitted
 w,Sky150,EWTMode,EWTMode,,,4080,18,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
-r,Sky150,EWTTempMin,EWTTempMin,,,4050,19,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:100],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:50]
+r,Sky150,EWTMode,EWTMode,,,4050,18,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,EWTTempMin,EWTTempMin,,,4080,19,,,SIR,10,°C,[min:0;max:100;step:5;default:50]
-r,Sky150,EWTTempMax,EWTTempMax,,,4050,1a,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:400],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:250]
+r,Sky150,EWTTempMin,EWTTempMin,,,4050,19,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:100],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:50]
 w,Sky150,EWTTempMax,EWTTempMax,,,4080,1a,,,SIR,10,°C,[min:150;max:400;step:5;default:250]
-r,Sky150,RHTSensorPresent,RHTSensorPresent,,,4050,32,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,Sky150,EWTTempMax,EWTTempMax,,,4050,1a,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:400],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:250]
 w,Sky150,RHTSensorPresent,RHTSensorPresent,,,4080,32,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,Sky150,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
+r,Sky150,RHTSensorPresent,RHTSensorPresent,,,4050,32,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
 w,Sky150,RHTSensorSensitivity,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2;max:2;step:1;default:0]
-r,Sky150,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,Sky150,RHTSensorSensitivity,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
 w,Sky150,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4080,34,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,Sky150,CO2Sensor1UpperLimit,CO2Sensor1UpperLimit,,,4050,35,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,Sky150,CO2Sensor1LowerLimit,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Sky150,CO2Sensor1UpperLimit,CO2Sensor1UpperLimit,,,4080,35,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,Sky150,CO2Sensor2LowerLimit,CO2Sensor2LowerLimit,,,4050,36,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,Sky150,CO2Sensor1UpperLimit,CO2Sensor1UpperLimit,,,4050,35,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
 w,Sky150,CO2Sensor2LowerLimit,CO2Sensor2LowerLimit,,,4080,36,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,Sky150,CO2Sensor2UpperLimit,CO2Sensor2UpperLimit,,,4050,37,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,Sky150,CO2Sensor2LowerLimit,CO2Sensor2LowerLimit,,,4050,36,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Sky150,CO2Sensor2UpperLimit,CO2Sensor2UpperLimit,,,4080,37,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,Sky150,CO2Sensor3LowerLimit,CO2Sensor3LowerLimit,,,4050,38,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,Sky150,CO2Sensor2UpperLimit,CO2Sensor2UpperLimit,,,4050,37,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
 w,Sky150,CO2Sensor3LowerLimit,CO2Sensor3LowerLimit,,,4080,38,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,Sky150,CO2Sensor3UpperLimit,CO2Sensor3UpperLimit,,,4050,39,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,Sky150,CO2Sensor3LowerLimit,CO2Sensor3LowerLimit,,,4050,38,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Sky150,CO2Sensor3UpperLimit,CO2Sensor3UpperLimit,,,4080,39,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,Sky150,CO2Sensor4LowerLimit,CO2Sensor4LowerLimit,,,4050,3a,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,Sky150,CO2Sensor3UpperLimit,CO2Sensor3UpperLimit,,,4050,39,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
 w,Sky150,CO2Sensor4LowerLimit,CO2Sensor4LowerLimit,,,4080,3a,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,Sky150,CO2Sensor4UpperLimit,CO2Sensor4UpperLimit,,,4050,3b,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,Sky150,CO2Sensor4LowerLimit,CO2Sensor4LowerLimit,,,4050,3a,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
 w,Sky150,CO2Sensor4UpperLimit,CO2Sensor4UpperLimit,,,4080,3b,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,Sky150,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
+r,Sky150,CO2Sensor4UpperLimit,CO2Sensor4UpperLimit,,,4050,3b,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
 w,Sky150,CO2SensorsActivated,CO2SensorsActivated,,,4080,3c,,,UIR,0=no;1=yes,,[min:0;max:1;step:1;default:0]
-r,Sky150,FlowCorrection,FlowCorrection,,,4050,3f,,,UIR,,%,,Min,,UIR,,%,[min:90],Max,,UIR,,%,[max:110],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
+r,Sky150,CO2SensorsActivated,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
 w,Sky150,FlowCorrection,FlowCorrection,,,4080,3f,,,UIR,,%,[min:90;max:110;step:1;default:100]
-r,Sky150,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+r,Sky150,FlowCorrection,FlowCorrection,,,4050,3f,,,UIR,,%,,Min,,UIR,,%,[min:90],Max,,UIR,,%,[max:110],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
 w,Sky150,SwitchDefaultPos,SwitchDefaultPos,,,4080,40,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:1]
-r,Sky150,ModbusInterface,ModbusInterface,,,4050,41,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:2],Default,,UIR,,,[default:1]
+r,Sky150,SwitchDefaultPos,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
 w,Sky150,ModbusInterface,ModbusInterface,,,4080,41,,,UIR,,,[min:0;max:3;step:2;default:1]
-r,Sky150,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,42,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:247],Step,,UIR,,,[step:1],Default,,UIR,,,[default:11]
+r,Sky150,ModbusInterface,ModbusInterface,,,4050,41,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:2],Default,,UIR,,,[default:1]
 w,Sky150,ModbusSlaveAddress,ModbusSlaveAddress,,,4080,42,,,UIR,,,[min:1;max:247;step:1;default:11]
-r,Sky150,ModbusSpeed,ModbusSpeed,,,4050,43,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:6,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:3] - min/max/step fields of enum message omitted
+r,Sky150,ModbusSlaveAddress,ModbusSlaveAddress,,,4050,42,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:247],Step,,UIR,,,[step:1],Default,,UIR,,,[default:11]
 w,Sky150,ModbusSpeed,ModbusSpeed,,,4080,43,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[min:0;max:7;step:1;default:3]
-r,Sky150,ModbusParity,ModbusParity,,,4050,44,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:6,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[default:1] - min/max/step fields of enum message omitted
+r,Sky150,ModbusSpeed,ModbusSpeed,,,4050,43,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:6,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:3] - min/max/step fields of enum message omitted
 w,Sky150,ModbusParity,ModbusParity,,,4080,44,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[min:0;max:3;step:1;default:1]
+r,Sky150,ModbusParity,ModbusParity,,,4050,44,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:6,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[default:1] - min/max/step fields of enum message omitted

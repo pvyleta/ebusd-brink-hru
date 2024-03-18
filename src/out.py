@@ -74,9 +74,9 @@ def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_addres
     file_str = ""
     for param in parameters:
         if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
-            file_str += csv_line_parameters_read(param, slave_address)
             if not param.is_read_only:
                 file_str += csv_line_parameters_write(param, slave_address)
+            file_str += csv_line_parameters_read(param, slave_address)
     return file_str
 
 # TODO add conditionals for plus
