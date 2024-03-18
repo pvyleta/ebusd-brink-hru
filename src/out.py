@@ -8,10 +8,13 @@ from dev import Device
 from parameter import Parameter, DeviceParameters
 from sensor import Sensor
 from params import INT16, UINT16
+from known_devices import known_devices
 
 
 OUTPUT_DIR = "ebusd-configuration"
 DUMP_DIR = "dump"
+KNOWN_DEVICES_EN_DIR = "ebusd-configuration-en"
+KNOWN_DEVICES_DE_DIR = "ebusd-configuration-de"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 def multiplier_to_divider(multiplier: float) -> str:
@@ -32,7 +35,7 @@ def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
     return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
-def csv_line_param_read(param: Parameter, slave_address: str) -> str:
+def csv_line_parameters_read(param: Parameter, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
@@ -43,7 +46,7 @@ def csv_line_param_read(param: Parameter, slave_address: str) -> str:
         return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},,{param.unit},[min:{param.field_min}],Max,,{datatype},,{param.unit},[max:{param.field_max}],Step,,{datatype},,{param.unit},[step:{param.field_step}],Default,,{datatype},,{param.unit},[default:{param.field_default}]\n'
 
 
-def csv_line_param_write(param: Parameter, slave_address: str) -> str:
+def csv_line_parameters_write(param: Parameter, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
@@ -60,20 +63,28 @@ def convert_to_ebus_datatype(datatype: str) -> str:
         raise RuntimeError(f'unexpected datatype {datatype}')
 
 
-def csv_from_sensors(sensors, slave_address = ''):
-    file_str = CSV_HEADER
+def csv_from_sensors(sensors: list[Sensor], slave_address = ''):
+    file_str = ""
     for sensor in sensors:
         file_str += csv_line_sensor(sensor, slave_address)
     return file_str
 
 
-def csv_from_device_param(parameters: list[Parameter], is_plus: bool, slave_address = ''):
-    file_str = CSV_HEADER
+def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_address: str = ''):
+    file_str = ""
     for param in parameters:
         if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
-            file_str += csv_line_param_read(param, slave_address)
+            file_str += csv_line_parameters_read(param, slave_address)
             if not param.is_read_only:
-                file_str += csv_line_param_write(param, slave_address)
+                file_str += csv_line_parameters_write(param, slave_address)
+    return file_str
+
+# TODO add conditionals for plus
+# TODO add conditionals for dipswitch value
+def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
+    file_str = ""
+    file_str += csv_from_sensors(sensors, slave_address)
+    file_str += csv_from_parameters(parameters, True, slave_address)
     return file_str
 
 
@@ -111,6 +122,11 @@ def dump_param(param: Parameter) -> dict[str, str]:
     dump_param_dict['field_default'] = str(param.field_default)
     return dump_param_dict
 
+def get_latest_sw_for_device(device_name: str, devices: list[Device]):
+    for device in devices:
+        if device.name == device_name and device.last_version == 99999:
+            return device
+    return None
 
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
@@ -124,15 +140,30 @@ def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_p
     for device, sensors in dict_devices_sensor.items():
         sensors_all.extend(sensors)
         with open(os.path.join(OUTPUT_DIR, f'{device.name}.{device.first_version}.{device.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
+            text_file.write(CSV_HEADER)
             text_file.write(csv_from_sensors(sensors))
 
     for device_param, parameters in dict_devices_parameter.items():
         params_all.extend(parameters)
         with open(os.path.join(OUTPUT_DIR, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(parameters, False))
+            text_file.write(CSV_HEADER)
+            text_file.write(csv_from_parameters(parameters, False))
 
         with open(os.path.join(OUTPUT_DIR, f'{device_param.name}.{device_param.first_version}.{device_param.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(csv_from_device_param(parameters, True))
+            text_file.write(CSV_HEADER)
+            text_file.write(csv_from_parameters(parameters, True))
+
+    # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
+    if os.path.exists(KNOWN_DEVICES_EN_DIR):
+        shutil.rmtree(KNOWN_DEVICES_EN_DIR)
+    os.mkdir(KNOWN_DEVICES_EN_DIR)
+    for known_device in known_devices:
+        with open(os.path.join(KNOWN_DEVICES_EN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
+            latest_device_sensors = get_latest_sw_for_device(known_device.device_name, list(dict_devices_sensor.keys()))
+            latest_device_params = get_latest_sw_for_device(known_device.device_name, list(dict_devices_parameter.keys()))
+            text_file.write(CSV_HEADER)
+            text_file.write(csv_known_device(dict_devices_sensor[latest_device_sensors], dict_devices_parameter[latest_device_params], True, f'{known_device.slave_address:02x}'))
+
 
     if os.path.exists(DUMP_DIR):
         shutil.rmtree(DUMP_DIR)
