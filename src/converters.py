@@ -167,7 +167,7 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToModbusFanStatus": Converter("ConverterUInt16ToModbusFanStatus", "UIR", 1, 2, "0=NotInitialized;2=NoCommunication;3=Idle;4=Running;5=Blocked;6=Error"),
     "ConverterUInt16ToOnOff": Converter("ConverterUInt16ToOnOff", "UIR", 1.0, 2, "0=Off;1=On"),
     "ConverterUInt16ToPercentage": Converter("ConverterUInt16ToPercentage", "UIR", 1.0, 2, ""),
-    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 1.0, 2, ""),
+    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 10.0, 2, ""),
     "ConverterUInt16ToRotateDirection": Converter("ConverterUInt16ToRotateDirection", "UIR", 1.0, 2, "0=CW;1=CCW"),
     "ConverterUInt16ToUNumber": Converter("ConverterUInt16ToUNumber", "UIR", 1.0, 2, ""),
     "ConverterUInt16ToValveStatus": Converter("ConverterUInt16ToValveStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
