@@ -31,6 +31,9 @@ def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
     assert sensor.converter
     values = sensor.converter.values
     type = sensor.converter.type
+    
+    if not (values := sensor.converter.values):
+        values = multiplier_to_divider(sensor.converter.multiplier)
 
     return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 

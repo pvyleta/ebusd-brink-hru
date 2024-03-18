@@ -149,9 +149,9 @@ class Converter:
 
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
 converters_map: dict[str, Converter] = {
-    "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 10.0, 2, ""),
-    "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10", "SIR", 10.0, 2, ""),
-    "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10", "SIR", 10.0, 2, ""),
+    "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 0.1, 2, ""),
+    "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10", "SIR", 0.1, 2, ""),
+    "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10", "SIR", 0.1, 2, ""),
     "ConverterUInt16ToBypassStatus": Converter("ConverterUInt16ToBypassStatus", "UIR", 1.0, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"),
     "ConverterUInt16ToCO2SensorStatus": Converter("ConverterUInt16ToCO2SensorStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest"),
     "ConverterUInt16ToContact": Converter("ConverterUInt16ToContact", "UIR", 1.0, 2, "0=Open;1=Closed"),
@@ -167,7 +167,7 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToModbusFanStatus": Converter("ConverterUInt16ToModbusFanStatus", "UIR", 1, 2, "0=NotInitialized;2=NoCommunication;3=Idle;4=Running;5=Blocked;6=Error"),
     "ConverterUInt16ToOnOff": Converter("ConverterUInt16ToOnOff", "UIR", 1.0, 2, "0=Off;1=On"),
     "ConverterUInt16ToPercentage": Converter("ConverterUInt16ToPercentage", "UIR", 1.0, 2, ""),
-    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 10.0, 2, ""),
+    "ConverterUInt16ToPressure": Converter("ConverterUInt16ToPressure", "UIR", 0.1, 2, ""),
     "ConverterUInt16ToRotateDirection": Converter("ConverterUInt16ToRotateDirection", "UIR", 1.0, 2, "0=CW;1=CCW"),
     "ConverterUInt16ToUNumber": Converter("ConverterUInt16ToUNumber", "UIR", 1.0, 2, ""),
     "ConverterUInt16ToValveStatus": Converter("ConverterUInt16ToValveStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating"),
@@ -198,7 +198,7 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToUIFButtonsStatus": Converter("ConverterUInt16ToUIFButtonsStatus", "UIR", 1.0, 2, ""),  # length based on CmdReadActualUIFButtons
     "ConverterUInt32ToEBusAddressing": Converter("ConverterUInt32ToEBusAddressing", "ULR", 1.0, 4, ""),  # length based on CmdReadActualEBusAddressing
     "ConverterByteArrayToMRCConfigurationStatus": Converter("ConverterByteArrayToMRCConfigurationStatus", "HEX:9", 1.0, 9, ""),  # length based on ReadActualMRCConfigurationStatus_HandleResponse; seems only first 7 bytes is used
-    "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 0.001, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
+    "ConverterUInt16ToVolumeFact1000": Converter("ConverterUInt16ToVolumeFact1000", "UIR", 1000, 2, ""),  # length based on CmdReadActualFiltersUsedIn1000M3
     "ConverterUInt16DipswitchValue": Converter("ConverterUInt16DipswitchValue", "UIR", 1.0, 2, get_ebusd_values_string()), # based on installation manual; only applicable for certain models
 
     # Unused Converters - though we keep them here so that we do not have to make some exceptions in code when parsing files

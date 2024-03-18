@@ -294,7 +294,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -306,7 +306,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -318,7 +318,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -390,7 +390,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -402,7 +402,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -414,7 +414,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -762,7 +762,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -774,7 +774,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -786,7 +786,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -858,7 +858,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -870,7 +870,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -882,7 +882,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -1422,7 +1422,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1434,7 +1434,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1446,7 +1446,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1458,7 +1458,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1470,7 +1470,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1482,7 +1482,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1590,7 +1590,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -1602,7 +1602,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -1614,7 +1614,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -1626,7 +1626,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -1638,7 +1638,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -1650,7 +1650,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -1950,7 +1950,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1962,7 +1962,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -1974,7 +1974,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -2046,7 +2046,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -2058,7 +2058,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -2070,7 +2070,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -2394,7 +2394,7 @@
         "id": "0x3d",
         "last_version": "10700",
         "length": "2",
-        "multiplier": "0.001",
+        "multiplier": "1000",
         "name": "FilterUsedIn1000M3",
         "unit": "m\u00b3",
         "values": ""
@@ -2406,7 +2406,7 @@
         "id": "0x3d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "0.001",
+        "multiplier": "1000",
         "name": "FilterUsedIn1000M3",
         "unit": "m\u00b3",
         "values": ""
@@ -2706,7 +2706,7 @@
         "id": "0x20",
         "last_version": "10700",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RHSensorValue",
         "unit": "%",
         "values": ""
@@ -2718,7 +2718,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RHSensorValue",
         "unit": "%",
         "values": ""
@@ -2826,7 +2826,7 @@
         "id": "0x07",
         "last_version": "10700",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "TemperatureInside",
         "unit": "\u00b0C",
         "values": ""
@@ -2838,7 +2838,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "TemperatureInside",
         "unit": "\u00b0C",
         "values": ""
@@ -2850,7 +2850,7 @@
         "id": "0x08",
         "last_version": "10700",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "TemperatureOutside",
         "unit": "\u00b0C",
         "values": ""
@@ -2862,7 +2862,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "TemperatureOutside",
         "unit": "\u00b0C",
         "values": ""
@@ -2874,7 +2874,7 @@
         "id": "0x3e",
         "last_version": "10700",
         "length": "2",
-        "multiplier": "0.001",
+        "multiplier": "1000",
         "name": "TotalFlowIn1000M3",
         "unit": "m\u00b3",
         "values": ""
@@ -2886,7 +2886,7 @@
         "id": "0x3e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "0.001",
+        "multiplier": "1000",
         "name": "TotalFlowIn1000M3",
         "unit": "m\u00b3",
         "values": ""
@@ -2982,7 +2982,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "CoilTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -3066,7 +3066,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -3342,7 +3342,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "CoilTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -3426,7 +3426,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4050,7 +4050,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4062,7 +4062,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4074,7 +4074,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4086,7 +4086,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4098,7 +4098,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4110,7 +4110,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4242,7 +4242,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -4254,7 +4254,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -4266,7 +4266,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -4278,7 +4278,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -4290,7 +4290,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -4302,7 +4302,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -4890,7 +4890,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4902,7 +4902,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4914,7 +4914,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4926,7 +4926,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4938,7 +4938,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -4950,7 +4950,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5082,7 +5082,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -5094,7 +5094,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -5106,7 +5106,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -5118,7 +5118,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -5130,7 +5130,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -5142,7 +5142,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -5910,7 +5910,7 @@
         "id": "0x07",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5922,7 +5922,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5934,7 +5934,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5946,7 +5946,7 @@
         "id": "0x1a",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5958,7 +5958,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5970,7 +5970,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5982,7 +5982,7 @@
         "id": "0x08",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -5994,7 +5994,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -6006,7 +6006,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -6198,7 +6198,7 @@
         "id": "0x15",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -6210,7 +6210,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -6222,7 +6222,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -6234,7 +6234,7 @@
         "id": "0x14",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -6246,7 +6246,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -6258,7 +6258,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -6270,7 +6270,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -6282,7 +6282,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -6726,7 +6726,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -6738,7 +6738,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -6750,7 +6750,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -6822,7 +6822,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -6834,7 +6834,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -6846,7 +6846,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -7122,7 +7122,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -7134,7 +7134,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -7182,7 +7182,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -7194,7 +7194,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -7206,7 +7206,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -7218,7 +7218,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -7230,7 +7230,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -7314,7 +7314,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -7482,7 +7482,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -7494,7 +7494,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -7542,7 +7542,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -7590,7 +7590,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -7626,7 +7626,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -8010,7 +8010,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -8022,7 +8022,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -8070,7 +8070,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -8082,7 +8082,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -8094,7 +8094,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -8106,7 +8106,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -8118,7 +8118,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -8202,7 +8202,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -8370,7 +8370,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -8382,7 +8382,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -8430,7 +8430,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -8478,7 +8478,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -8514,7 +8514,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -8898,7 +8898,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -8910,7 +8910,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -8958,7 +8958,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -8970,7 +8970,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -8982,7 +8982,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -8994,7 +8994,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -9006,7 +9006,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -9090,7 +9090,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -9258,7 +9258,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -9270,7 +9270,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -9318,7 +9318,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -9366,7 +9366,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -9402,7 +9402,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -9786,7 +9786,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -9798,7 +9798,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -9846,7 +9846,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -9858,7 +9858,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -9870,7 +9870,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -9882,7 +9882,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -9894,7 +9894,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -9978,7 +9978,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -10146,7 +10146,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -10158,7 +10158,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -10206,7 +10206,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -10254,7 +10254,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -10290,7 +10290,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -10674,7 +10674,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -10686,7 +10686,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -10734,7 +10734,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -10746,7 +10746,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -10758,7 +10758,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -10770,7 +10770,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -10782,7 +10782,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -10866,7 +10866,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11034,7 +11034,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -11046,7 +11046,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11094,7 +11094,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -11142,7 +11142,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11178,7 +11178,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -11562,7 +11562,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -11574,7 +11574,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11622,7 +11622,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -11634,7 +11634,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -11646,7 +11646,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -11658,7 +11658,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -11670,7 +11670,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -11754,7 +11754,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11922,7 +11922,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -11934,7 +11934,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -11982,7 +11982,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -11994,7 +11994,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12042,7 +12042,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12078,7 +12078,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -12462,7 +12462,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -12474,7 +12474,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12522,7 +12522,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -12534,7 +12534,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -12546,7 +12546,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -12558,7 +12558,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -12570,7 +12570,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -12654,7 +12654,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12822,7 +12822,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -12834,7 +12834,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12882,7 +12882,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -12894,7 +12894,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12942,7 +12942,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -12978,7 +12978,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -13554,7 +13554,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -13566,7 +13566,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -13602,7 +13602,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -13614,7 +13614,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -13626,7 +13626,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -13962,7 +13962,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -13974,7 +13974,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -13986,7 +13986,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14058,7 +14058,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -14070,7 +14070,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -14082,7 +14082,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -14622,7 +14622,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14634,7 +14634,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14646,7 +14646,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14658,7 +14658,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14670,7 +14670,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14682,7 +14682,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -14814,7 +14814,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -14826,7 +14826,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -14838,7 +14838,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -14850,7 +14850,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -14862,7 +14862,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -14874,7 +14874,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -15270,7 +15270,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -15282,7 +15282,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -15294,7 +15294,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -15366,7 +15366,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -15378,7 +15378,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -15390,7 +15390,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -16110,7 +16110,7 @@
         "id": "0x07",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16122,7 +16122,7 @@
         "id": "0x07",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16134,7 +16134,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16146,7 +16146,7 @@
         "id": "0x1a",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16158,7 +16158,7 @@
         "id": "0x1a",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16170,7 +16170,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16182,7 +16182,7 @@
         "id": "0x08",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16194,7 +16194,7 @@
         "id": "0x08",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16206,7 +16206,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -16398,7 +16398,7 @@
         "id": "0x15",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -16410,7 +16410,7 @@
         "id": "0x15",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -16422,7 +16422,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -16434,7 +16434,7 @@
         "id": "0x14",
         "last_version": "10403",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -16446,7 +16446,7 @@
         "id": "0x14",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -16458,7 +16458,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -16470,7 +16470,7 @@
         "id": "0x20",
         "last_version": "10603",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -16482,7 +16482,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -17166,7 +17166,7 @@
         "id": "0x07",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17178,7 +17178,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17190,7 +17190,7 @@
         "id": "0x1a",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17202,7 +17202,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17214,7 +17214,7 @@
         "id": "0x08",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17226,7 +17226,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17334,7 +17334,7 @@
         "id": "0x15",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -17346,7 +17346,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -17358,7 +17358,7 @@
         "id": "0x14",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -17370,7 +17370,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -17382,7 +17382,7 @@
         "id": "0x20",
         "last_version": "10104",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -17394,7 +17394,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -17790,7 +17790,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17802,7 +17802,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17814,7 +17814,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -17886,7 +17886,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -17898,7 +17898,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -17910,7 +17910,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -18258,7 +18258,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18270,7 +18270,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18282,7 +18282,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18354,7 +18354,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -18366,7 +18366,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -18378,7 +18378,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -18726,7 +18726,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18738,7 +18738,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OptionTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18750,7 +18750,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -18822,7 +18822,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureExhaust",
         "unit": "Pa",
         "values": ""
@@ -18834,7 +18834,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "PressureInlet",
         "unit": "Pa",
         "values": ""
@@ -18846,7 +18846,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -19122,7 +19122,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -19134,7 +19134,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -19182,7 +19182,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -19194,7 +19194,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -19206,7 +19206,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -19218,7 +19218,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -19230,7 +19230,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -19314,7 +19314,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -19482,7 +19482,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -19494,7 +19494,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -19542,7 +19542,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -19590,7 +19590,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -19626,7 +19626,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -20010,7 +20010,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -20022,7 +20022,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20070,7 +20070,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -20082,7 +20082,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -20094,7 +20094,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -20106,7 +20106,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -20118,7 +20118,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -20202,7 +20202,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20370,7 +20370,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -20382,7 +20382,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20430,7 +20430,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -20442,7 +20442,7 @@
         "id": "0x08",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20490,7 +20490,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20526,7 +20526,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -20910,7 +20910,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -20922,7 +20922,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -20970,7 +20970,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -20982,7 +20982,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -20994,7 +20994,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -21006,7 +21006,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -21018,7 +21018,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -21102,7 +21102,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -21270,7 +21270,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -21282,7 +21282,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -21330,7 +21330,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -21378,7 +21378,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -21414,7 +21414,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
@@ -21798,7 +21798,7 @@
         "id": "0x48",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -21810,7 +21810,7 @@
         "id": "0x47",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -21858,7 +21858,7 @@
         "id": "0x15",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExhaustPressure",
         "unit": "Pa",
         "values": ""
@@ -21870,7 +21870,7 @@
         "id": "0x4c",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_01",
         "unit": "V",
         "values": ""
@@ -21882,7 +21882,7 @@
         "id": "0x4d",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueInput_02",
         "unit": "V",
         "values": ""
@@ -21894,7 +21894,7 @@
         "id": "0x4e",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_01",
         "unit": "V",
         "values": ""
@@ -21906,7 +21906,7 @@
         "id": "0x4f",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtAnaloqueOutput_02",
         "unit": "V",
         "values": ""
@@ -21990,7 +21990,7 @@
         "id": "0x1a",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "ExtTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -22158,7 +22158,7 @@
         "id": "0x46",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorHumidity",
         "unit": "%",
         "values": ""
@@ -22170,7 +22170,7 @@
         "id": "0x45",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletFanSensorTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -22218,7 +22218,7 @@
         "id": "0x14",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "InletPressure",
         "unit": "Pa",
         "values": ""
@@ -22266,7 +22266,7 @@
         "id": "0x07",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "OutsideTemperature",
         "unit": "\u00b0C",
         "values": ""
@@ -22302,7 +22302,7 @@
         "id": "0x20",
         "last_version": "99999",
         "length": "2",
-        "multiplier": "10.0",
+        "multiplier": "0.1",
         "name": "RelativeHumidity",
         "unit": "%",
         "values": ""
