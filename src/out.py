@@ -51,7 +51,7 @@ def csv_line_parameters_write(param: Parameter, slave_address: str) -> str:
     datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min},max:{param.field_max},step:{param.field_step},default:{param.field_default}]\n'
+    return f'w,{param.device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min};max:{param.field_max};step:{param.field_step};default:{param.field_default}]\n'
 
 
 def convert_to_ebus_datatype(datatype: str) -> str:
