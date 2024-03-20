@@ -104,7 +104,7 @@ class BrinkConfigEbusMessage(EbusMessage):
 brink_wtw_commands_list: list[EbusMessage] = [
     EbusMessage('ResetNotifications', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter', '')]),
     EbusMessage('RequestErrorList', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
-    EbusMessage('FanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Min;0x00010001=Low;0x00020002=Medium;0x00030003=High', '')]),
+    EbusMessage('FanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
     # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was nto able to decode the meaning.
     # EbusMessage('FanMode', 0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
     # This one look like not present on Sky300
