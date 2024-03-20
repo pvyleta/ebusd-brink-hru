@@ -152,7 +152,7 @@ converters_map: dict[str, Converter] = {
     "ConverterInt16ToPercentageFact10": Converter("ConverterInt16ToPercentageFact10", "SIR", 0.1, 2, ""),
     "ConverterInt16ToTemperatureFact10": Converter("ConverterInt16ToTemperatureFact10", "SIR", 0.1, 2, ""),
     "ConverterInt16ToVoltageFact10": Converter("ConverterInt16ToVoltageFact10", "SIR", 0.1, 2, ""),
-    "ConverterUInt16ToBypassStatus": Converter("ConverterUInt16ToBypassStatus", "UIR", 1.0, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"),
+    "ConverterUInt16ToBypassStatus": Converter("ConverterUInt16ToBypassStatus", "UIR", 1.0, 2, "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"),
     "ConverterUInt16ToCO2SensorStatus": Converter("ConverterUInt16ToCO2SensorStatus", "UIR", 1.0, 2, "0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest"),
     "ConverterUInt16ToContact": Converter("ConverterUInt16ToContact", "UIR", 1.0, 2, "0=Open;1=Closed"),
     "ConverterUInt16ToEBusPowerState": Converter("ConverterUInt16ToEBusPowerState", "UIR", 1.0, 2, "0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error"),

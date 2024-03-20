@@ -21,7 +21,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -489,7 +489,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -969,7 +969,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -981,7 +981,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -1773,7 +1773,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": null,
@@ -2133,7 +2133,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -2145,7 +2145,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "Int16",
@@ -3597,7 +3597,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -3609,7 +3609,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -4437,7 +4437,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -4449,7 +4449,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -5289,7 +5289,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -5301,7 +5301,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -5313,7 +5313,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -6453,7 +6453,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -6921,7 +6921,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -7809,7 +7809,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -8697,7 +8697,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -9585,7 +9585,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -10473,7 +10473,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -11361,7 +11361,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -12261,7 +12261,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -13413,7 +13413,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -13689,7 +13689,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -14169,7 +14169,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -14181,7 +14181,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -14997,7 +14997,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -15489,7 +15489,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -15501,7 +15501,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -15513,7 +15513,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -16797,7 +16797,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -16809,7 +16809,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": null,
@@ -17517,7 +17517,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -17985,7 +17985,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -18453,7 +18453,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -18921,7 +18921,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -19809,7 +19809,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -20709,7 +20709,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",
@@ -21597,7 +21597,7 @@
         "multiplier": "1.0",
         "name": "BypassStatus",
         "unit": "m\u00b3/h",
-        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error"
+        "values": "0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error"
     },
     {
         "datatype": "UInt16",

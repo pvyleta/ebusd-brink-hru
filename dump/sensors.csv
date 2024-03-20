@@ -1,6 +1,6 @@
 device_name,first_version,last_version,name,id,unit,datatype,multiplier,values,length
 CWLF250,10809,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-CWLF250,10809,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+CWLF250,10809,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 CWLF250,10809,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 CWLF250,10809,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 CWLF250,10809,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -39,7 +39,7 @@ CWLF250,10809,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 CWLF250,10809,99999,SoftwareVersion,0x00,,String,1.0,,13
 CWLF250,10809,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 CWLF350,10809,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-CWLF350,10809,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+CWLF350,10809,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 CWLF350,10809,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 CWLF350,10809,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 CWLF350,10809,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -79,8 +79,8 @@ CWLF350,10809,99999,SoftwareVersion,0x00,,String,1.0,,13
 CWLF350,10809,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 CWLTower300,10603,10603,BypassCurrent,0x0d,,UInt16,1.0,,2
 CWLTower300,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-CWLTower300,10603,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-CWLTower300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+CWLTower300,10603,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+CWLTower300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 CWLTower300,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 CWLTower300,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 CWLTower300,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -146,7 +146,7 @@ CWLTower300,10604,99999,SoftwareVersion,0x00,,String,1.0,,13
 CWLTower300,10603,10603,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 CWLTower300,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 ConstantRPM400,10505,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-ConstantRPM400,10505,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+ConstantRPM400,10505,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 ConstantRPM400,10505,99999,Contact1Position,0x1b,,,1.0,0=Off;1=On,2
 ConstantRPM400,10505,99999,Contact2Position,0x1c,,,1.0,0=Off;1=On,2
 ConstantRPM400,10505,99999,DipswitchValue,0x04,,UInt16,1.0,,2
@@ -176,8 +176,8 @@ ConstantRPM400,10505,99999,SettingExhaustFlow,0x0a,%,UInt16,1.0,,2
 ConstantRPM400,10505,99999,SettingInletFlow,0x09,%,UInt16,1.0,,2
 ConstantRPM400,10505,99999,SoftwareVersion,0x00,,String,1.0,,13
 ConstantRPM400,10505,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
-DecentralAir70,10101,10700,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-DecentralAir70,10701,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+DecentralAir70,10101,10700,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+DecentralAir70,10701,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 DecentralAir70,10101,10700,BypassStepPosition,0x43,,Int16,1.0,,4
 DecentralAir70,10701,99999,BypassStepPosition,0x43,,Int16,1.0,,4
 DecentralAir70,10101,10700,CO2SensorStatus,0x38,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -298,8 +298,8 @@ Elan4,10104,99999,OutputFrostProtection,0x25,,UInt16,1.0,0=Off;1=On,1
 Elan4,10104,99999,SerialNumber,0x51,,String,1.0,,12
 Elan4,10104,99999,SoftwareVersion,0x00,,String,1.0,,13
 Elan4,10104,99999,SwitchPosition,0x03,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,1
-Excellent180,10503,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Excellent180,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Excellent180,10503,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Excellent180,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Excellent180,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Excellent180,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Excellent180,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -368,8 +368,8 @@ Excellent180,10503,10603,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position
 Excellent180,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Excellent300,10502,10603,BypassCurrent,0x0d,,UInt16,1.0,,2
 Excellent300,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Excellent300,10502,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Excellent300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Excellent300,10502,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Excellent300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Excellent300,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Excellent300,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Excellent300,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -439,9 +439,9 @@ Excellent300,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position
 Excellent400,10401,10403,BypassCurrent,0x0d,,UInt16,1.0,,2
 Excellent400,10502,10603,BypassCurrent,0x0d,,UInt16,1.0,,2
 Excellent400,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Excellent400,10401,10403,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Excellent400,10502,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Excellent400,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Excellent400,10401,10403,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Excellent400,10502,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Excellent400,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Excellent400,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Excellent400,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Excellent400,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -536,7 +536,7 @@ Excellent400,10401,10403,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position
 Excellent400,10502,10603,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Excellent400,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Excellent450,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Excellent450,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Excellent450,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Excellent450,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Excellent450,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Excellent450,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -575,7 +575,7 @@ Excellent450,10604,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 Excellent450,10604,99999,SoftwareVersion,0x00,,String,1.0,,13
 Excellent450,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Flair200,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair200,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair200,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair200,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair200,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair200,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -649,7 +649,7 @@ Flair200,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair200,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair200,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair225,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair225,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair225,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair225,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair225,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair225,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -723,7 +723,7 @@ Flair225,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair225,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair225,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair300,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair300,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair300,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair300,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair300,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair300,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -797,7 +797,7 @@ Flair300,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair300,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair300,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair325,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair325,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair325,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair325,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair325,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair325,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -871,7 +871,7 @@ Flair325,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair325,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair325,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair400,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair400,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair400,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair400,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair400,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair400,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -945,7 +945,7 @@ Flair400,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair400,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair400,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair450,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair450,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair450,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair450,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair450,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair450,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -1020,7 +1020,7 @@ Flair450,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Reduced;2=Norm
 Flair450,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Flair450,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Flair600,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Flair600,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Flair600,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Flair600,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Flair600,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Flair600,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -1116,7 +1116,7 @@ MultiRoomCtrlT01,0,10101,SoftwareVersion,0x00,,String,1.0,,13
 MultiRoomCtrlT01,10102,10102,SoftwareVersion,0x00,,String,1.0,,13
 MultiRoomCtrlT01,10103,99999,SoftwareVersion,0x00,,String,1.0,,13
 Nather300,10703,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Nather300,10703,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Nather300,10703,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Nather300,10703,99999,DipswitchValue,0x04,,UInt16,1.0,,2
 Nather300,10703,99999,EBusSyncGenErrorCount,0x64,,UInt16,1.0,,2
 Nather300,10703,99999,ExhaustFanSpeed,0x03,rpm,UInt16,1.0,,2
@@ -1139,7 +1139,7 @@ Nather300,10703,99999,SettingExhaustFlow,0x0a,m³/h,UInt16,1.0,,2
 Nather300,10703,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 Nather300,10703,99999,SoftwareVersion,0x00,,String,1.0,,13
 Nather300,10703,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
-RenoventElan300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+RenoventElan300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 RenoventElan300,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 RenoventElan300,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 RenoventElan300,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1179,8 +1179,8 @@ RenoventElan300,10604,99999,SoftwareVersion,0x00,,String,1.0,,13
 RenoventElan300,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Sky150,10504,10603,BypassCurrent,0x0d,,UInt16,1.0,,2
 Sky150,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Sky150,10504,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Sky150,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Sky150,10504,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Sky150,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Sky150,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Sky150,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Sky150,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1248,7 +1248,7 @@ Sky150,10604,99999,SoftwareVersion,0x00,,String,1.0,,13
 Sky150,10504,10603,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Sky150,10604,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Sky200,10702,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Sky200,10702,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Sky200,10702,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Sky200,10702,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Sky200,10702,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Sky200,10702,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1289,9 +1289,9 @@ Sky200,10702,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=P
 Sky300,10401,10403,BypassCurrent,0x0d,,UInt16,1.0,,2
 Sky300,10502,10603,BypassCurrent,0x0d,,UInt16,1.0,,2
 Sky300,10604,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Sky300,10401,10403,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Sky300,10502,10603,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Sky300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Sky300,10401,10403,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Sky300,10502,10603,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Sky300,10604,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Sky300,10604,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Sky300,10604,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Sky300,10604,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1398,8 +1398,8 @@ ValveT01,0,99999,ValvePosition,0x81,,UInt16,1.0,,2
 ValveT01,0,99999,ValveStatus,0x82,,UInt16,1.0,0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating,2
 Vitovent200W,10104,10104,BypassCurrent,0x0d,,UInt16,1.0,,2
 Vitovent200W,10105,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Vitovent200W,10104,10104,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
-Vitovent200W,10105,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent200W,10104,10104,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
+Vitovent200W,10105,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent200W,10104,10104,Contact1Position,0x1b,,,1.0,0=Off;1=On,2
 Vitovent200W,10105,99999,Contact1Position,0x1b,,,1.0,0=Off;1=On,2
 Vitovent200W,10104,10104,Contact2Position,0x1c,,,1.0,0=Off;1=On,2
@@ -1458,7 +1458,7 @@ Vitovent200W,10105,99999,SoftwareVersion,0x00,,String,1.0,,13
 Vitovent200W,10104,10104,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Vitovent200W,10105,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Vitovent300C,10101,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Vitovent300C,10101,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300C,10101,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300C,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300C,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Vitovent300C,10101,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1497,7 +1497,7 @@ Vitovent300C,10101,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 Vitovent300C,10101,99999,SoftwareVersion,0x00,,String,1.0,,13
 Vitovent300C,10101,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Vitovent300W300,10101,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Vitovent300W300,10101,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300W300,10101,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300W300,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300W300,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Vitovent300W300,10101,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1536,7 +1536,7 @@ Vitovent300W300,10101,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 Vitovent300W300,10101,99999,SoftwareVersion,0x00,,String,1.0,,13
 Vitovent300W300,10101,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Vitovent300W400,10101,99999,BypassCurrent,0x0d,,UInt16,1.0,,2
-Vitovent300W400,10101,99999,BypassStatus,0x0e,,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300W400,10101,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300W400,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300W400,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
 Vitovent300W400,10101,99999,CO2Sensor2Status,0x2a,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
@@ -1575,7 +1575,7 @@ Vitovent300W400,10101,99999,SettingInletFlow,0x09,m³/h,UInt16,1.0,,2
 Vitovent300W400,10101,99999,SoftwareVersion,0x00,,String,1.0,,13
 Vitovent300W400,10101,99999,SwitchPosition,0x06,,UInt16,1.0,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,2
 Vitovent300WH32SA225,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Vitovent300WH32SA225,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300WH32SA225,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300WH32SA225,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Vitovent300WH32SA225,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300WH32SA225,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -1649,7 +1649,7 @@ Vitovent300WH32SA225,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Re
 Vitovent300WH32SA225,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SA225,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SA600,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Vitovent300WH32SA600,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300WH32SA600,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300WH32SA600,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Vitovent300WH32SA600,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300WH32SA600,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -1724,7 +1724,7 @@ Vitovent300WH32SA600,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Re
 Vitovent300WH32SA600,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SA600,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SC325,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Vitovent300WH32SC325,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300WH32SC325,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300WH32SC325,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Vitovent300WH32SC325,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300WH32SC325,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2
@@ -1798,7 +1798,7 @@ Vitovent300WH32SC325,10101,99999,VentilationMode,0x01,,UInt16,1.0,0=Holiday;1=Re
 Vitovent300WH32SC325,10101,99999,WTWActiveFunction,0x25,Pa,UInt16,1.0,0=Standby;1=Bootloader;2=NonBlockingError;3=BlockingError;4=MAnual;5=Holiday;6=NightVentilation;7=Party;8=BypassBoost;9=NormalBoost;10=AutoCO2;11=AutoEBus;12=AutoModbus;13=AutoLanWLanPortal;14=AutoLanWLanLocal,2
 Vitovent300WH32SC325,10101,99999,eBusPowerStatus,0x17,,,1.0,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,2
 Vitovent300WH32SC400,10101,99999,BypassSenseLevel,0x0d,m³/h,UInt16,1.0,,2
-Vitovent300WH32SC400,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,"0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error",2
+Vitovent300WH32SC400,10101,99999,BypassStatus,0x0e,m³/h,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 Vitovent300WH32SC400,10101,99999,BypassStepPosition,0x43,,UInt16,1.0,,2
 Vitovent300WH32SC400,10101,99999,CO2Sensor1Status,0x28,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2
 Vitovent300WH32SC400,10101,99999,CO2Sensor1Value,0x29,ppm,UInt16,1.0,,2

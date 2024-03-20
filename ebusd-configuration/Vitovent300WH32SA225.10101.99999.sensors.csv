@@ -11,7 +11,7 @@ r,Vitovent300WH32SA225,SettingExhaustFlow,ExhaustFlowSetting,,,4022,0a,,,UIR,,m�
 r,Vitovent300WH32SA225,InletFlow,ActualInletFlow,,,4022,0b,,,UIR,,m³/h,
 r,Vitovent300WH32SA225,ExhaustFlow,ActualExhaustFlow,,,4022,0c,,,UIR,,m³/h,
 r,Vitovent300WH32SA225,BypassSenseLevel,BypassSenseLevel,,,4022,0d,,,UIR,,m³/h,
-r,Vitovent300WH32SA225,BypassStatus,BypassStatus,,,4022,0e,,,UIR,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error,6=Calibrating;255=Error,m³/h,
+r,Vitovent300WH32SA225,BypassStatus,BypassStatus,,,4022,0e,,,UIR,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,m³/h,
 r,Vitovent300WH32SA225,PreheaterStatus,PreheaterStatus,,,4022,0f,,,UIR,0=Off;1=On;2=LockedValue;3=LockedValueMaximum,,
 r,Vitovent300WH32SA225,PreheaterPower,PreheaterPower,,,4022,10,,,UIR,,%,
 r,Vitovent300WH32SA225,FanControlType,FanControlType,,,4022,11,,,UIR,0=MassBalance;1=ConstantFlow;2=ConstantPWM,,
