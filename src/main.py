@@ -8,6 +8,8 @@ from command_ebus import get_commands_dict
 # TODO add shared commands from WTWCommands.py; figure out if they are applicable for all units, eg flair, valve...
 # TODO Simplify output to less files by removing redundanc and extending parameter ranges
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
+# TODO add comments to split sections in out
+# TODO add sensible mqtt config file sample
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 

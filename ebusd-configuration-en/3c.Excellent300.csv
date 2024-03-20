@@ -1,4 +1,13 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## This file is based on plus version in latest SW version - basic version and older SW versions might not have all the parameters implemented.
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 180 Datasheet: https://www.rosain.cz/dokumenty/Technicky-list-Renovent-Excellent-180.pdf
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs)
 w,Excellent300,ResetNotifications,,,3c,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
 r,Excellent300,RequestErrorList,,,3c,4090,,,,HEX:18,,,
 w,Excellent300,FanMode,,,3c,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
@@ -7,6 +16,8 @@ r,Excellent300,TotalFilterDays,,,3c,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UI
 r,Excellent300,TotalFilterFlow,,,3c,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 r,Excellent300,TotalOperatingHours,,,3c,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
 r,Excellent300,TotalFlow,,,3c,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+
+## Curent state and sensors ##
 r,Excellent300,FanMode,FanMode,,3c,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,
 r,Excellent300,SettingInletFlow,InletFlowSetting,,3c,4022,09,,,UIR,,m³/h,
 r,Excellent300,SettingExhaustFlow,ExhaustFlowSetting,,3c,4022,0a,,,UIR,,m³/h,
@@ -46,6 +57,8 @@ r,Excellent300,CO2Sensor3Status,CO2Sensor3Status,,3c,4022,2c,,,UIR,0=Error;1=Not
 r,Excellent300,CO2Sensor3Value,CO2Sensor3Value,,3c,4022,2d,,,UIR,,ppm,
 r,Excellent300,CO2Sensor4Status,CO2Sensor4Status,,3c,4022,2e,,,UIR,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,,
 r,Excellent300,CO2Sensor4Value,CO2Sensor4Value,,3c,4022,2f,,,UIR,,ppm,
+
+## Configuration parameters ##
 w,Excellent300,FlowMode0,FlowMode0,,3c,4080,21,,,SIR,,m³/h,[min:0;max:50;step:50;default:50]
 r,Excellent300,FlowMode0,FlowMode0,,3c,4050,21,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:0],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:50],Default,,SIR,,m³/h,[default:50]
 w,Excellent300,FlowMode1,FlowMode1,,3c,4080,01,,,SIR,,m³/h,[min:50;max:300;step:5;default:100]

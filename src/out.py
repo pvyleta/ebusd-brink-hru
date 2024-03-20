@@ -78,10 +78,25 @@ def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_addres
 # TODO add conditionals for dipswitch value
 # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
 def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
-    file_str = ""
+    file_str = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## This file is based on plus version in latest SW version - basic version and older SW versions might not have all the parameters implemented.
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 180 Datasheet: https://www.rosain.cz/dokumenty/Technicky-list-Renovent-Excellent-180.pdf
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs)
+'''
     for msg in brink_wtw_commands_list:
         file_str += msg.dump(sensors[0].device_name, slave_address)
+    file_str += '''
+## Curent state and sensors ##
+'''
     file_str += csv_from_sensors(sensors, slave_address)
+    file_str += '''
+## Configuration parameters ##
+'''
     file_str += csv_from_parameters(parameters, True, slave_address)
     return file_str
 

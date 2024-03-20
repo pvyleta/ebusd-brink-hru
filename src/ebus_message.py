@@ -100,7 +100,6 @@ class BrinkConfigEbusMessage(EbusMessage):
 #ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,,
 #w,,ResetNotifications,409103FFFFFF,,,4091,3c,,,UIR,0x0001=Errors;0x0100=Filter,,
 
-# TODO Check if the fields are writable - especially the filter threshhold
 brink_wtw_commands_list: list[EbusMessage] = [
     EbusMessage('ResetNotifications', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter', '')]),
     EbusMessage('RequestErrorList', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
