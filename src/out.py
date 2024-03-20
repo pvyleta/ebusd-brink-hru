@@ -9,6 +9,7 @@ from parameter import Parameter, DeviceParameters
 from sensor import Sensor
 from params import INT16, UINT16
 from known_devices import known_devices
+from ebus_message import multiplier_to_divider, brink_wtw_commands_list
 
 
 OUTPUT_DIR = "ebusd-configuration"
@@ -16,15 +17,6 @@ DUMP_DIR = "dump"
 KNOWN_DEVICES_EN_DIR = "ebusd-configuration-en"
 KNOWN_DEVICES_DE_DIR = "ebusd-configuration-de"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
-
-def multiplier_to_divider(multiplier: float) -> str:
-    if multiplier < 1.0:
-        return str(int(1 / multiplier))
-    elif multiplier > 1.0:
-        return str(-int(multiplier))
-    else:
-        return ""
-
 
 def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
@@ -84,8 +76,11 @@ def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_addres
 
 # TODO add conditionals for plus
 # TODO add conditionals for dipswitch value
+# TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
 def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
     file_str = ""
+    for msg in brink_wtw_commands_list:
+        file_str += msg.dump(sensors[0].device_name, slave_address)
     file_str += csv_from_sensors(sensors, slave_address)
     file_str += csv_from_parameters(parameters, True, slave_address)
     return file_str
@@ -156,7 +151,6 @@ def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_p
             text_file.write(CSV_HEADER)
             text_file.write(csv_from_parameters(parameters, True))
 
-    # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
     if os.path.exists(KNOWN_DEVICES_EN_DIR):
         shutil.rmtree(KNOWN_DEVICES_EN_DIR)
     os.mkdir(KNOWN_DEVICES_EN_DIR)

@@ -1,4 +1,12 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+w,Excellent400,ResetNotifications,,,7c,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+r,Excellent400,RequestErrorList,,,7c,4090,,,,HEX:18,,,
+w,Excellent400,FanMode,,,7c,40a1,,,,ULR,0x0=Min;0x00010001=Low;0x00020002=Medium;0x00030003=High,,
+r,Excellent400,FilterNotificationFlow,,,7c,4050,1c,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,Excellent400,TotalFilterDays,,,7c,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
+r,Excellent400,TotalFilterFlow,,,7c,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,Excellent400,TotalOperatingHours,,,7c,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
+r,Excellent400,TotalFlow,,,7c,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 r,Excellent400,FanMode,FanMode,,7c,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,
 r,Excellent400,SettingInletFlow,InletFlowSetting,,7c,4022,09,,,UIR,,m³/h,
 r,Excellent400,SettingExhaustFlow,ExhaustFlowSetting,,7c,4022,0a,,,UIR,,m³/h,

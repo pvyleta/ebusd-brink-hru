@@ -1,4 +1,12 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+w,Sky300,ResetNotifications,,,3c,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+r,Sky300,RequestErrorList,,,3c,4090,,,,HEX:18,,,
+w,Sky300,FanMode,,,3c,40a1,,,,ULR,0x0=Min;0x00010001=Low;0x00020002=Medium;0x00030003=High,,
+r,Sky300,FilterNotificationFlow,,,3c,4050,1c,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,Sky300,TotalFilterDays,,,3c,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
+r,Sky300,TotalFilterFlow,,,3c,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,Sky300,TotalOperatingHours,,,3c,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
+r,Sky300,TotalFlow,,,3c,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 r,Sky300,FanMode,FanMode,,3c,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,
 r,Sky300,SettingInletFlow,InletFlowSetting,,3c,4022,09,,,UIR,,m³/h,
 r,Sky300,SettingExhaustFlow,ExhaustFlowSetting,,3c,4022,0a,,,UIR,,m³/h,
