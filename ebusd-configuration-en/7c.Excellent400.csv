@@ -8,6 +8,7 @@
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
 
 ## COMMON HRU COMMANDS ## (WTWCommands.cs)
+w,Excellent400,FactoryReset,,,7c,40ff,466163746f72795265736574
 w,Excellent400,ResetNotifications,,,7c,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
 r,Excellent400,RequestErrorList,,,7c,4090,,,,HEX:18,,,
 w,Excellent400,FanMode,,,7c,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
