@@ -6,7 +6,7 @@ import jsonpickle # type: ignore
 
 from dev import Device
 from parameter import Parameter, DeviceParameters
-from sensor import Sensor
+from sensor import DeviceSensor
 from params import INT16, UINT16
 from known_devices import known_devices
 from ebus_message import multiplier_to_divider, brink_wtw_commands_list
@@ -18,7 +18,7 @@ KNOWN_DEVICES_EN_DIR = "ebusd-configuration-en"
 KNOWN_DEVICES_DE_DIR = "ebusd-configuration-de"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
-def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
+def csv_line_sensor(sensor: DeviceSensor, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     assert sensor.converter
     values = sensor.converter.values
@@ -27,7 +27,7 @@ def csv_line_sensor(sensor: Sensor, slave_address: str) -> str:
     if not (values := sensor.converter.values):
         values = multiplier_to_divider(sensor.converter.multiplier)
 
-    return f'r,{sensor.device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
+    return f'r,{sensor.name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
 def csv_line_parameters_read(param: Parameter, slave_address: str) -> str:
@@ -58,7 +58,7 @@ def convert_to_ebus_datatype(datatype: str) -> str:
         raise RuntimeError(f'unexpected datatype {datatype}')
 
 
-def csv_from_sensors(sensors: list[Sensor], slave_address = ''):
+def csv_from_sensors(sensors: list[DeviceSensor], slave_address = ''):
     file_str = ""
     for sensor in sensors:
         file_str += csv_line_sensor(sensor, slave_address)
@@ -77,7 +77,7 @@ def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_addres
 # TODO add conditionals for plus
 # TODO add conditionals for dipswitch value
 # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
-def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
+def csv_known_device(sensors: list[DeviceSensor], parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
     file_str = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
 ## This file is based on plus version in latest SW version - basic version and older SW versions might not have all the parameters implemented.
 ## sources:
@@ -89,7 +89,7 @@ def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus
 ## COMMON HRU COMMANDS ## (WTWCommands.cs)
 '''
     for msg in brink_wtw_commands_list:
-        file_str += msg.dump(sensors[0].device_name, slave_address)
+        file_str += msg.dump(sensors[0].name, slave_address)
     file_str += '''
 ## Curent state and sensors ##
 '''
@@ -101,9 +101,9 @@ def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], is_plus
     return file_str
 
 
-def dump_sensor(sensor: Sensor) -> dict[str, str]:
+def dump_sensor(sensor: DeviceSensor) -> dict[str, str]:
     dump_sensor_dict: dict[str, str] = {}
-    dump_sensor_dict['device_name'] = sensor.device_name
+    dump_sensor_dict['device_name'] = sensor.name
     dump_sensor_dict['first_version'] = str(sensor.first_version)
     dump_sensor_dict['last_version'] = str(sensor.last_version)
     dump_sensor_dict['name'] = sensor.name_current.removeprefix('Current')
@@ -143,12 +143,12 @@ def get_latest_sw_for_device(device_name: str, devices: list[Device]):
 
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
-def write_output(dict_devices_sensor: dict[Device, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+def write_output(dict_devices_sensor: dict[Device, list[DeviceSensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
     if os.path.exists(OUTPUT_DIR):
         shutil.rmtree(OUTPUT_DIR)
     os.mkdir(OUTPUT_DIR)
 
-    sensors_all: list[Sensor] = []
+    sensors_all: list[DeviceSensor] = []
     params_all: list[Parameter] = []
     for device, sensors in dict_devices_sensor.items():
         sensors_all.extend(sensors)

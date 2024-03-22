@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 import glob
 import copy
@@ -85,10 +87,7 @@ manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
 
 class Sensor:
-    def __init__(self, device_name: str, first_version: int, last_version: int, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
-        self.device_name = device_name
-        self.first_version = first_version
-        self.last_version = last_version
+    def __init__(self, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
         self.id = id
         self.name_description = name_description
         self.name_current = name_current
@@ -104,8 +103,25 @@ class Sensor:
     def __eq__(self, other):
         return str(self) == str(other)
     
+    def __str__(self):
+        return str([vars(self)[key] for key in sorted(vars(self).keys())])
+
+    def __hash__(self):
+        return hash(str(self))
+
+    def __repr__(self):
+        return str(self)
+
+class DeviceSensor(Sensor, Device):
+    def __init__(self, device_name: str, view_no: int, first_version: int, last_version: int, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
+        Device.__init__(self, device_name, view_no, first_version, last_version)
+        Sensor.__init__(self, id, name_description, name_current, name_param, unit, update_rate, cmd, datatype)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+    
     def __lt__(self, other):
-        return self.device_name + self.name_current + str(self.first_version) + str(self.last_version) < other.device_name + other.name_current + str(other.first_version) + str(other.last_version)
+        return self.name + self.name_current + str(self.first_version) + str(self.last_version) < other.name + other.name_current + str(other.first_version) + str(other.last_version)
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
@@ -115,38 +131,37 @@ class Sensor:
 
     def __repr__(self):
         return str(self)
-    
+
     # Ensures that the CMD read length matches the converters. Turns out, we found few bugs in our and Brink code as well this way.
     def check_converter(self):
         if self.cmd and self.cmd.read_len != self.converter.length:
             if self.name_current == 'CurrentVirtualDipswitch':
                 # NOTE it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
                 pass
-            elif re.search('Elan|MultiRoomCtrl|Valve', self.device_name) and self.converter.length == 2 and self.cmd.read_len == 1:
+            elif re.search('Elan|MultiRoomCtrl|Valve', self.name) and self.converter.length == 2 and self.cmd.read_len == 1:
                 # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
                 self.converter.length = 1
                 self.converter.type = "UCH"
                 self.converter_match = "patched"
             else:
-                print(f'Length Mismatch: device: {self.device_name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
+                print(f'Length Mismatch: device: {self.name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
         
         # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
         if "CurrentFilterStatus" == self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
             # NOTE this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
             self.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
             self.converter_match = "patched"
-        elif "CurrentDipswitchValue" == self.name_current and (self.device_name + "Basic" in dipswitch_dict or self.device_name + "Plus" in dipswitch_dict):
+        elif "CurrentDipswitchValue" == self.name_current and (self.name + "Basic" in dipswitch_dict or self.name + "Plus" in dipswitch_dict):
             self.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
             self.converter_match = "patched"
-
 
 def get_dict_devices_sensor(
         device_to_name_param_to_converter: dict[DeviceView, dict[str, Converter]],
         device_to_name_current_to_name_param_dict: dict[Device, dict[str, str]],
         cmd_dict: dict[str, CommandEBus],
-        cmd_bytes_dict: dict[str, CommandEBus]) -> dict[Device, list[Sensor]]:
+        cmd_bytes_dict: dict[str, CommandEBus]) -> dict[Device, list[DeviceSensor]]:
 
-    dict_devices_sensor: dict[Device, list[Sensor]] = {}
+    dict_devices_sensor: dict[Device, list[DeviceSensor]] = {}
     missing_commands_set: set[str] = set()
     missing_params_count = 0
 
@@ -165,7 +180,7 @@ def get_dict_devices_sensor(
             assert match1 and match2 and match3
 
             device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
-            sensors: list[Sensor] = []
+            sensors: list[DeviceSensor] = []
 
             # Then there is a line with sensor definition
             # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
@@ -199,7 +214,7 @@ def get_dict_devices_sensor(
                     print(f'Command {command.cmd} pbsb {command.pbsb} - skipping')
                     continue
 
-                sensors.append(Sensor(device.name, device.first_version, device.last_version, int(m.group('id'), 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(DeviceSensor(device.name, device.view_no, device.first_version, device.last_version, int(m.group('id'), 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
@@ -236,7 +251,7 @@ def get_dict_devices_sensor(
                     continue
                 
 
-                sensors.append(Sensor(device.name, device.first_version, device.last_version, int(command.id, 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(DeviceSensor(device.name, device.view_no, device.first_version, device.last_version, int(command.id, 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             dict_devices_sensor[device] = sensors
 
