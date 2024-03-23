@@ -2469,7 +2469,7 @@
         "multiplier": "1.0",
         "name": "SystemStatus",
         "unit": "",
-        "values": ""
+        "values": "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;100=TestMode"
     },
     {
         "datatype": "Int16",
@@ -2541,7 +2541,7 @@
         "multiplier": "1.0",
         "name": "VentilationMode",
         "unit": "",
-        "values": ""
+        "values": "0=Off;1=Preset_01;1=Preset_01;2=Preset_02;3=Preset_03;4=Preset_04;5=Preset_05;240=AutoMode"
     },
     {
         "datatype": "UInt16",

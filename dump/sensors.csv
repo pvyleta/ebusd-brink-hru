@@ -204,13 +204,13 @@ DecentralAir70,10101,10700,RHSensorValue,0x20,%,Int16,0.1,,2
 DecentralAir70,10101,10700,SerialNumber,0x51,,,1.0,,12
 DecentralAir70,10101,10700,SoftwareVersion,0x00,,String,1.0,,13
 DecentralAir70,10101,10700,SpeedFan,0x02,rpm,UInt16,1.0,,2
-DecentralAir70,10101,10700,SystemStatus,0x41,,UInt16,1.0,,2
+DecentralAir70,10101,10700,SystemStatus,0x41,,UInt16,1.0,0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;100=TestMode,2
 DecentralAir70,10101,10700,TemperatureInside,0x07,°C,Int16,0.1,,2
 DecentralAir70,10101,10700,TemperatureOutside,0x08,°C,Int16,0.1,,2
 DecentralAir70,10101,10700,TotalFlowIn1000M3,0x3e,m³,,1000,,2
 DecentralAir70,10101,10700,TotalFlowInM3,0x84,m³,Int16,1.0,,4
 DecentralAir70,10101,10700,UIFButtons,0x19,,,1.0,,2
-DecentralAir70,10101,10700,VentilationMode,0x01,,UInt16,1.0,,2
+DecentralAir70,10101,10700,VentilationMode,0x01,,UInt16,1.0,0=Off;1=Preset_01;1=Preset_01;2=Preset_02;3=Preset_03;4=Preset_04;5=Preset_05;240=AutoMode,2
 DecentralAir70,10701,99999,BypassStatus,0x0e,,UInt16,1.0,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,2
 DecentralAir70,10701,99999,BypassStepPosition,0x43,,Int16,1.0,,4
 DecentralAir70,10701,99999,CO2SensorStatus,0x38,,UInt16,1.0,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,2

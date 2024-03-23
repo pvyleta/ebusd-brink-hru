@@ -114,12 +114,6 @@ def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_addres
     return file_str
 
 
-# 0. check if parameters are always a subset for lower version
-# 1. re-define scan for SW so that the string is parsed as integers
-# 2. check the scan results on real device
-# 3. write code to parse SW version to match the sw received
-# 4. Write code to write the include line
-
 # TODO add conditionals for plus
 # TODO add conditionals for dipswitch value
 # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device

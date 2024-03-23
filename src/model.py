@@ -47,6 +47,9 @@ class VersionRange(BaseObject):
         self.first_version = first_version
         self.last_version = last_version
 
+    def __lt__(self, other):
+        return self.view_no < other.view_no
+
 
 class DeviceVersion(BaseObject):
     def __init__(self, device_name: str, version: VersionRange):
@@ -57,9 +60,9 @@ class DeviceVersion(BaseObject):
 class DeviceModel(BaseObject):
     def __init__(self, name: str):
         self.name = name
-        self.sensors: dict[VersionRange, list[Sensor]]
-        self.converters: dict[VersionRange, list[Converter]]
-        self.parameters: dict[VersionRange, list[Parameter]]
+        self.sensors: dict[VersionRange, list[Sensor]] = {}
+        self.converters: dict[VersionRange, list[Converter]] = {}
+        self.parameters: dict[VersionRange, list[Parameter]] = {}
 
 
 # .xaml files do not have verson information, so we must rely on the view 'index' for matching

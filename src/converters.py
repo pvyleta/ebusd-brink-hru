@@ -151,7 +151,9 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt32ToUNumber": Converter("ConverterUInt32ToUNumber", "ULR", 1.0, 4, ""),
 
     "ConverterUInt16ToAir70FanStatus": Converter("ConverterUInt16ToAir70FanStatus", "UIR", 1.0, 2, "0=Off;1=On;2=Blocked;255=Error"),
+    "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus", "UIR", 1.0, 2, "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;100=TestMode"),
     "ConverterUInt16ToAir70SystemStatus_02": Converter("ConverterUInt16ToAir70SystemStatus_02", "UIR", 1.0, 2, "0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode"),
+    "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode", "UIR", 1.0, 2, "0=Off;1=Preset_01;1=Preset_01;2=Preset_02;3=Preset_03;4=Preset_04;5=Preset_05;240=AutoMode"),
     "ConverterUInt16ToAir70VentilationMode_02": Converter("ConverterUInt16ToAir70VentilationMode_02", "UIR", 1.0, 2, "0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off"),
     "ConverterUInt16ToElanFanStatus": Converter("ConverterUInt16ToElanFanStatus", "UIR", 1.0, 2, "0=NotInitialized;1=Initializing;2=Stopped;3=Running;4=Error"),
     "ConverterUInt16ToElanFrostStatus": Converter("ConverterUInt16ToElanFrostStatus", "UIR", 1.0, 2, "0=NoFrost;1=FrostLevel_1;2=FrostLevel_2"),
@@ -161,8 +163,6 @@ converters_map: dict[str, Converter] = {
     "ConverterUInt16ToFilterState": Converter("ConverterUInt16ToOnOff", "UIR", 1.0, 2, "0=Clean;1=Dirty"),
     "ConverterUInt16ToFlairFrostStatus": Converter("ConverterUInt16ToFlairFrostStatus", "UIR", 1.0, 2, "0=Initializing;1=Initializing;2=NoFrost;3=NoFrostDelay;4=FrostCtrlStartDelay;5=WaitForIcing;6=IceDetectedDelay;7=Preheater;8=HeaterCoolDown;9=FanCtrlStartDelay;10=FanCtrlWait;11=FanCtrl;12=FanCtrlFanOffDelay;13=FanCtrlFanOff;14=FanCtrlFanRestart;15=Error;16=TestMode"),
     "ConverterUInt16ToHeaterStatusOldFlair": Converter("ConverterUInt16ToHeaterStatusOldFlair", "UIR", 1.0, 2, "0=Off;1=On;2=LockedValue;3=LockedValueMaximum"),
-    "ConverterUInt16ToSystemStatus": Converter("ConverterUInt16ToSystemStatus", "UIR", 1.0, 2, ""),
-    "ConverterUInt16ToVentilationMode": Converter("ConverterUInt16ToVentilationMode", "UIR", 1.0, 2, ""),
 
     # Following block of converters is manually created; these converters do not exist otherwise in code
     "ConverterByteArrayToSoftwareVersion": Converter("ConverterByteArrayToSoftwareVersion", "STR:13", 1.0, 13, ""),  # length based on appropriate CommandEBus CmdReadActualSoftwareVersion
