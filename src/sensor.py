@@ -4,23 +4,22 @@ import re
 import glob
 import copy
 
-from params import DEBUG
-from converters import Converter, find_converters, converters_map
-from dev import Device, DeviceView
+from converters import find_converters, converters_map
+from model import DeviceView, Sensor, Converter, DeviceVersion, VersionRange, DEBUG
 from sensor_datatype import get_sensor_datatypes
 from command_ebus import CommandEBus
 from dipswitch import dipswitch_dict
 
 
-def substitute_flair_name(device: Device) -> Device:
-    device_copy = copy.deepcopy(device)  # Make copy so that we can manipulate the data
+def maybe_substitute_flair_name(device_version: DeviceVersion) -> DeviceVersion:
+    device_copy = copy.deepcopy(device_version)  # Make copy so that we can manipulate the data
 
     # Vitovent300WH32S comes in too many flavors but only one converter
-    if "Vitovent300WH32S" in device_copy.name:
-        device_copy.name = "Vitovent300WH32S"
+    if "Vitovent300WH32S" in device_copy.device_name:
+        device_copy.device_name = "Vitovent300WH32S"
     # Flair units share common params definition:
-    elif "Flair" in device.name:
-        device_copy.name = "Flair"
+    elif "Flair" in device_version.device_name:
+        device_copy.device_name = "Flair"
 
     return device_copy
 
@@ -85,83 +84,39 @@ manual_current_to_converter = {
 
 manual_current_to_converter_unused = copy.deepcopy(manual_current_to_converter)
 
-
-class Sensor:
-    def __init__(self, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
-        self.id = id
-        self.name_description = name_description
-        self.name_current = name_current
-        self.name_param = name_param
-        self.unit = unit
-        self.update_rate = update_rate
-        self.cmd = cmd
-        self.datatype = datatype
-
-        self.converter: Converter|None = None
-        self.converter_match = ""
-
-    def __eq__(self, other):
-        return str(self) == str(other)
+# Ensures that the CMD read length matches the converters. Turns out, we found few bugs in our and Brink code as well this way.
+def check_converter(sensor: Sensor, device_name: str):
+    assert sensor.converter
+    if sensor.cmd and sensor.cmd.read_len != sensor.converter.length:
+        if sensor.name_current == 'CurrentVirtualDipswitch':
+            # NOTE it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
+            pass
+        elif re.search('Elan|MultiRoomCtrl|Valve', device_name) and sensor.converter.length == 2 and sensor.cmd.read_len == 1:
+            # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
+            sensor.converter.length = 1
+            sensor.converter.type = "UCH"
+            sensor.converter_match = "patched"
+        else:
+            print(f'Length Mismatch: device: {device_name} sensor: {sensor.name_current} converter: {sensor.converter.length} {sensor.converter.name}, cmd: {sensor.cmd.read_len} {sensor.cmd.cmd}')
     
-    def __str__(self):
-        return str([vars(self)[key] for key in sorted(vars(self).keys())])
+    # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
+    if "CurrentFilterStatus" == sensor.name_current and sensor.converter.name == "ConverterUInt16ToOnOff":
+        # NOTE this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
+        sensor.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
+        sensor.converter_match = "patched"
+    # We know the dipswitch setting for certain models. This can be useful to help determine rpogramatically from received message, what is the device model.
+    elif "CurrentDipswitchValue" == sensor.name_current and (device_name + "Basic" in dipswitch_dict or device_name + "Plus" in dipswitch_dict):
+        sensor.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
+        sensor.converter_match = "patched"
 
-    def __hash__(self):
-        return hash(str(self))
-
-    def __repr__(self):
-        return str(self)
-
-class DeviceSensor(Sensor, Device):
-    def __init__(self, device_name: str, view_no: int, first_version: int, last_version: int, id: int, name_description: str, name_current: str, name_param: str|None, unit: str, update_rate: int, cmd: CommandEBus|None, datatype=None):
-        Device.__init__(self, device_name, view_no, first_version, last_version)
-        Sensor.__init__(self, id, name_description, name_current, name_param, unit, update_rate, cmd, datatype)
-
-    def __eq__(self, other):
-        return str(self) == str(other)
-    
-    def __lt__(self, other):
-        return self.name + self.name_current + str(self.first_version) + str(self.last_version) < other.name + other.name_current + str(other.first_version) + str(other.last_version)
-
-    def __str__(self):
-        return str([vars(self)[key] for key in sorted(vars(self).keys())])
-
-    def __hash__(self):
-        return hash(str(self))
-
-    def __repr__(self):
-        return str(self)
-
-    # Ensures that the CMD read length matches the converters. Turns out, we found few bugs in our and Brink code as well this way.
-    def check_converter(self):
-        if self.cmd and self.cmd.read_len != self.converter.length:
-            if self.name_current == 'CurrentVirtualDipswitch':
-                # NOTE it seems VirtualDipswitch is listed in sensors (4022 cmds) but it is in fact a config param (4050 cmds) and it likely even is writable. No way to confirm this though, and likely not worth investigating further...
-                pass
-            elif re.search('Elan|MultiRoomCtrl|Valve', self.name) and self.converter.length == 2 and self.cmd.read_len == 1:
-                # seems that enum values are only one byte long for Elan/Valve/MultiRoomCtrl units based on CMDs. This would be a problem for ebusd, so we overide the converter types and lengths here
-                self.converter.length = 1
-                self.converter.type = "UCH"
-                self.converter_match = "patched"
-            else:
-                print(f'Length Mismatch: device: {self.name} sensor: {self.name_current} converter: {self.converter.length} {self.converter.name}, cmd: {self.cmd.read_len} {self.cmd.cmd}')
-        
-        # Filter state converter is largely unused in favor of UInt16ToOnOffConverter which is a shame - replace it where reasonable
-        if "CurrentFilterStatus" == self.name_current and self.converter.name == "ConverterUInt16ToOnOff":
-            # NOTE this incorrectly reports ConverterUInt16ToFilterState as unused. Why?
-            self.converter = copy.deepcopy(converters_map['ConverterUInt16ToFilterState'])
-            self.converter_match = "patched"
-        elif "CurrentDipswitchValue" == self.name_current and (self.name + "Basic" in dipswitch_dict or self.name + "Plus" in dipswitch_dict):
-            self.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
-            self.converter_match = "patched"
 
 def get_dict_devices_sensor(
         device_to_name_param_to_converter: dict[DeviceView, dict[str, Converter]],
-        device_to_name_current_to_name_param_dict: dict[Device, dict[str, str]],
+        device_to_name_current_to_name_param_dict: dict[DeviceVersion, dict[str, str]],
         cmd_dict: dict[str, CommandEBus],
-        cmd_bytes_dict: dict[str, CommandEBus]) -> dict[Device, list[DeviceSensor]]:
+        cmd_bytes_dict: dict[str, CommandEBus]) -> dict[DeviceVersion, list[Sensor]]:
 
-    dict_devices_sensor: dict[Device, list[DeviceSensor]] = {}
+    dict_devices_sensor: dict[DeviceVersion, list[Sensor]] = {}
     missing_commands_set: set[str] = set()
     missing_params_count = 0
 
@@ -179,8 +134,10 @@ def get_dict_devices_sensor(
             match3 = re.search(r'public const uint VALID_LAST_VERSION = (?P<last_version>\d*);', file_str)
             assert match1 and match2 and match3
 
-            device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
-            sensors: list[DeviceSensor] = []
+            device_name = match1.group('name')
+            version_range = VersionRange(int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
+            device_version = DeviceVersion(device_name, version_range)
+            sensors: list[Sensor] = []
 
             # Then there is a line with sensor definition
             # this._currentSettingExhaustFlow = new ParameterData("parameterDescriptionExhaustFlowSetting", "%", (ushort) 10, "4022010A");
@@ -192,13 +149,13 @@ def get_dict_devices_sensor(
                 assert m.group('len') == "01"
 
                 name_current = "Current" + m.group('name_current')
-                name_param = device_to_name_current_to_name_param_dict[device].get(name_current)
+                name_param = device_to_name_current_to_name_param_dict[device_version].get(name_current)
 
                 # Not all params exist in UI -> we manually assign the most suitable converter later
                 if not name_param:
                     missing_params_count += 1
                     if DEBUG:
-                        print(f'Missing param for {device.name.lower()} sensor {name_current}')
+                        print(f'Missing param for {device_version.device_name} sensor {name_current}')
 
                 # Try finding the commands based on the command_bytes
                 command_bytes = m.group('pbsb') + m.group('len') + m.group('id')
@@ -214,21 +171,21 @@ def get_dict_devices_sensor(
                     print(f'Command {command.cmd} pbsb {command.pbsb} - skipping')
                     continue
 
-                sensors.append(DeviceSensor(device.name, device.view_no, device.first_version, device.last_version, int(m.group('id'), 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(Sensor(int(m.group('id'), 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
             # We need to check separately for flair/elan/decentral/vitovent units that have different definition
             # this._currentBypassSenseLevel = new ParameterData("parameterDescriptionBypassSenseLevel", "m3/h", (ushort) 2, FlairEBusCommands.CmdReadActualBypassSenseLevel.Cmd);
             matches = re.finditer(r'this._current(?P<name_current>\w*) = new ParameterData\("parameterDescription(?P<name>\w*)", "(?P<unit>[^"]*)", \(\w*\) (?P<update_rate>\d*), (?P<cmd>\w*\.\w*)\.Cmd\);', file_str)
             for m in matches:
 
-                device_copy = substitute_flair_name(device)
+                device_copy = maybe_substitute_flair_name(device_version)
 
                 name_current = "Current" + m.group('name_current')
                 name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
 
                 # Vitovent units have some params definition for themselves, and for some they use the Flair base, so if we failed to find it earlier, try the base now
-                if not name_param and "Vitovent" in device.name:
-                    device_copy.name = "Flair"
+                if not name_param and "Vitovent" in device_version.device_name:
+                    device_copy.device_name = "Flair"
                     name_param = device_to_name_current_to_name_param_dict[device_copy].get(name_current)
 
                 # Not all params exist in UI -> we manually assign the most suitable converter later
@@ -236,13 +193,13 @@ def get_dict_devices_sensor(
                     missing_params_count += 1
                     if DEBUG:
                         # NOTE This happens only for FlairEBusCommands.CmdReadParameterDeviceType. figure out a way to include this 'param' here in 'sensors'
-                        print(f'Missing named param for {device.name} sensor {name_current}')
+                        print(f'Missing named param for {device_version.device_name} sensor {name_current}')
                         continue
 
                 command = cmd_dict[m.group('cmd')]
 
                 # Bugfix - this value is clearly written incorrectly in the BCServiceTool
-                if "Decentral" in device.name and name_current == 'CurrentFlowActualValue' and command and command.cmd == 'DecentralEBusCommands.CmdReadActualSoftwareVersion':
+                if "Decentral" in device_version.device_name and name_current == 'CurrentFlowActualValue' and command and command.cmd == 'DecentralEBusCommands.CmdReadActualSoftwareVersion':
                     command = cmd_dict['DecentralEBusCommands.CmdReadActualFlowValue']
 
                 # Sanity check
@@ -251,9 +208,9 @@ def get_dict_devices_sensor(
                     continue
                 
 
-                sensors.append(DeviceSensor(device.name, device.view_no, device.first_version, device.last_version, int(command.id, 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
+                sensors.append(Sensor(int(command.id, 16), m.group('name'), name_current, name_param, value_type_dict[m.group('unit')], int(m.group('update_rate')), command))
 
-            dict_devices_sensor[device] = sensors
+            dict_devices_sensor[device_version] = sensors
 
     print("Info: missing_commands_set: " + str(missing_commands_set))
 
@@ -265,7 +222,7 @@ def get_dict_devices_sensor(
 
     # assign converters to each sensor in each device
     for d, sensors in dict_devices_sensor.items():
-        d_copy = substitute_flair_name(d)
+        d_copy = maybe_substitute_flair_name(d)
 
         for sensor in sensors:
 
@@ -276,16 +233,16 @@ def get_dict_devices_sensor(
             else:
                 sensors_without_datatypes += 1
                 if DEBUG:
-                    print("Warning: No current_param for device: " + str(device) + " sensor: " + str(sensor.name_current))
+                    print("Warning: No current_param for device: " + str(d_copy) + " sensor: " + str(sensor.name_current))
 
-            dev_view = DeviceView(d_copy.name, d_copy.view_no)
+            dev_view = DeviceView(d_copy.device_name, d_copy.version.view_no)
 
             if sensor.name_param:
                 # First, Try to match the converter through following the path in code from ebus to UI
                 if converter := device_to_name_param_to_converter[dev_view].get(sensor.name_param):
                     sensor.converter = converter
                     sensor.converter_match = "auto"
-                    sensor.check_converter()
+                    check_converter(sensor, d.device_name)
                     device_to_name_param_to_converter_unused[dev_view].pop(sensor.name_param, None)
                     continue
 
@@ -295,7 +252,7 @@ def get_dict_devices_sensor(
                     if converter := device_to_name_param_to_converter[dev_view_flair].get(sensor.name_param):
                         sensor.converter = converter
                         sensor.converter_match = "auto_flair_base"
-                        sensor.check_converter()
+                        check_converter(sensor, d.device_name)
                         device_to_name_param_to_converter_unused[dev_view_flair].pop(sensor.name_param, None)
                         continue
 
@@ -303,7 +260,7 @@ def get_dict_devices_sensor(
             if converter_str := manual_current_to_converter.get(sensor.name_current):
                 sensor.converter = converters_map[converter_str]
                 sensor.converter_match = "manual"
-                sensor.check_converter()
+                check_converter(sensor, d.device_name)
                 manual_current_to_converter_unused.pop(sensor.name_current, None)
                 continue
 

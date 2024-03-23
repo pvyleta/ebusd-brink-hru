@@ -28,7 +28,7 @@ for device, sensors in dict_devices_sensor.items():
         if sensor.converter:
             used_converters_set.add(sensor.converter.name)
         else:
-            sensors_without_converters_set.add(sensor.name_current + "_" + device.name)
+            sensors_without_converters_set.add(sensor.name_current + "_" + device.device_name)
 
 converters_set: set[str] = {c for c in converters_map.keys()}
 unused_converters_set = converters_set - used_converters_set
@@ -37,18 +37,5 @@ print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
 write_output(dict_devices_sensor, dict_devices_parameters)
-
-sensors_all: list[Sensor] = []
-params_all: list[Parameter] = []
-for sensors in dict_devices_sensor.values():
-    sensors_all.extend(sensors)
-
-for parameters in dict_devices_parameters.values():
-    params_all.extend(parameters)
-
-sensors_all.sort()
-params_all.sort()
-
-
 
 print("SUCCESS")

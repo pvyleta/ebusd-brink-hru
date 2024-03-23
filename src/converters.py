@@ -2,7 +2,7 @@ import glob
 import re
 import copy
 
-from dev import Device, DeviceView
+from model import DeviceView, Converter, DeviceVersion, VersionRange
 from dipswitch import get_ebusd_values_string
 
 # All converters from BCSServiceTool/Converters
@@ -121,30 +121,6 @@ list_converters_files = [
     "ConverterUInt32vStcsring",
     "ConverterUnitTypeToString",
 ]
-
-
-class Converter:
-    def __init__(self, name: str, type: str, multiplier: float, length: int, values: str):
-        self.name: str = name
-        self.type: str = type
-        self.multiplier: float = multiplier
-        self.length: int = length
-        self.values: str = values
-
-        self.name_actual: str = ""
-        self.converter_str: str = ""
-
-    def __eq__(self, other):
-        return str(self) == str(other)
-
-    def __str__(self):
-        return str([vars(self)[key] for key in sorted(vars(self).keys())])
-
-    def __hash__(self):
-        return hash(str(self))
-
-    def __repr__(self):
-        return str(self)
 
 
 # Based on the converters from BCServiceTool/Converters; formated for ebusd
@@ -281,8 +257,8 @@ def find_converters() -> dict[DeviceView, dict[str, Converter]]:
     return device_to_name_param_to_converter
 
 
-def device_to_name_current_to_name_param() -> dict[Device, dict[str, str]]:
-    device_to_name_current_to_name_param_dict: dict[Device, dict[str, str]] = {}
+def device_to_name_current_to_name_param() -> dict[DeviceVersion, dict[str, str]]:
+    device_to_name_current_to_name_param_dict: dict[DeviceVersion, dict[str, str]] = {}
     files = glob.glob('./BCSServiceTool/View/Devices/**/*ActualState*.cs', recursive=True)
     for file in files:
         with open(file) as f:
@@ -297,8 +273,10 @@ def device_to_name_current_to_name_param() -> dict[Device, dict[str, str]]:
                 continue
 
             assert match1 and match2 and match3
-            device = Device(match1.group('name'), int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
-            device_to_name_current_to_name_param_dict.setdefault(device, {})
+            device_name = match1.group('name')
+            version_range = VersionRange(int(match1.group('view_no')), int(match2.group('first_version')), int(match3.group('last_version')))
+            device_version = DeviceVersion(device_name, version_range)
+            device_to_name_current_to_name_param_dict.setdefault(device_version, {})
             # this.paramExtContact1.ParameterName = this.FindResource((object) this._viewModel.ModelFlairParameterData.CurrentExtContact1Position.Description).ToString();
             matches = re.finditer(r'this\.(?P<name_param>.*)\.ParameterName = this.FindResource\(\(object\) this\._viewModel\.\w*\.(?P<name_current>\w*)\.Description', file_str)
             for m in matches:
@@ -311,12 +289,12 @@ def device_to_name_current_to_name_param() -> dict[Device, dict[str, str]]:
                     co2status = "CurrentCO2Sensor" + match_co2.group('co2_index') + "Status"
                     co2ParamStatus = "paramCO2Sensor" + match_co2.group('co2_index') + "Status"
                     co2ParamValue = "paramCO2Sensor" + match_co2.group('co2_index') + "Value"
-                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(name_current)) or name_param_in_dict == co2ParamValue
-                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(co2status)) or name_param_in_dict == co2ParamStatus
-                    device_to_name_current_to_name_param_dict[device][name_current] = co2ParamValue
-                    device_to_name_current_to_name_param_dict[device][co2status] = co2ParamStatus
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device_version].get(name_current)) or name_param_in_dict == co2ParamValue
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device_version].get(co2status)) or name_param_in_dict == co2ParamStatus
+                    device_to_name_current_to_name_param_dict[device_version][name_current] = co2ParamValue
+                    device_to_name_current_to_name_param_dict[device_version][co2status] = co2ParamStatus
                 else:
-                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device].get(name_current)) or name_param_in_dict == name_param
-                    device_to_name_current_to_name_param_dict[device][name_current] = name_param
+                    assert not (name_param_in_dict := device_to_name_current_to_name_param_dict[device_version].get(name_current)) or name_param_in_dict == name_param
+                    device_to_name_current_to_name_param_dict[device_version][name_current] = name_param
 
     return device_to_name_current_to_name_param_dict
