@@ -1,4 +1,4 @@
-from out import write_output
+from out import write_output, write_known_devices
 from converters import find_converters, device_to_name_current_to_name_param, converters_map
 from sensor import get_dict_devices_sensor
 from parameter import get_device_parameters
@@ -82,5 +82,6 @@ print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
 write_output(dict_devices_sensor, dict_devices_parameters)
+write_known_devices(dict_devices_sensor, dict_devices_parameters)
 
 print("SUCCESS")

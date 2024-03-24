@@ -148,6 +148,19 @@ def get_latest_sw_for_device(device_name: str, devices: list[DeviceVersion]):
             return device
     return None
 
+
+def write_known_devices(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+    if os.path.exists(KNOWN_DEVICES_EN_DIR):
+        shutil.rmtree(KNOWN_DEVICES_EN_DIR)
+    os.mkdir(KNOWN_DEVICES_EN_DIR)
+    for known_device in known_devices:
+        with open(os.path.join(KNOWN_DEVICES_EN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
+            latest_device_sensors = get_latest_sw_for_device(known_device.device_name, list(dict_devices_sensor.keys()))
+            latest_device_params = get_latest_sw_for_device(known_device.device_name, list(dict_devices_parameter.keys()))
+            text_file.write(CSV_HEADER)
+            text_file.write(csv_known_device(dict_devices_sensor[latest_device_sensors], known_device.device_name, dict_devices_parameter[latest_device_params], True, f'{known_device.slave_address:02x}'))
+
+
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
 def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
@@ -173,15 +186,7 @@ def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_de
             text_file.write(CSV_HEADER)
             text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
 
-    if os.path.exists(KNOWN_DEVICES_EN_DIR):
-        shutil.rmtree(KNOWN_DEVICES_EN_DIR)
-    os.mkdir(KNOWN_DEVICES_EN_DIR)
-    for known_device in known_devices:
-        with open(os.path.join(KNOWN_DEVICES_EN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
-            latest_device_sensors = get_latest_sw_for_device(known_device.device_name, list(dict_devices_sensor.keys()))
-            latest_device_params = get_latest_sw_for_device(known_device.device_name, list(dict_devices_parameter.keys()))
-            text_file.write(CSV_HEADER)
-            text_file.write(csv_known_device(dict_devices_sensor[latest_device_sensors], known_device.device_name, dict_devices_parameter[latest_device_params], True, f'{known_device.slave_address:02x}'))
+
 
     if os.path.exists(DUMP_DIR):
         shutil.rmtree(DUMP_DIR)
