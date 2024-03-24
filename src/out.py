@@ -37,11 +37,11 @@ def dump_sensor(sensor: Sensor, device_version: DeviceVersion) -> SensorDump:
     return SensorDump(**dump_sensor_dict)
 
 
-def dump_param(param: Parameter) -> ParameterDump:
+def dump_param(param: Parameter, device_version: DeviceVersion) -> ParameterDump:
     dump_param_dict: dict[str, str] = {}
-    dump_param_dict['device_name'] = param.device_name
-    dump_param_dict['first_version'] = str(param.first_version)
-    dump_param_dict['last_version'] = str(param.last_version)
+    dump_param_dict['device_name'] = device_version.device_name
+    dump_param_dict['first_version'] = str(device_version.version.first_version)
+    dump_param_dict['last_version'] = str(device_version.version.last_version)
     dump_param_dict['name'] = param.name
     dump_param_dict['id'] = f'0x{param.id:02x}'
     dump_param_dict['unit'] = param.unit
@@ -69,23 +69,23 @@ def csv_line_sensor(sensor: Sensor, device_name: str, slave_address: str) -> str
     return f'r,{device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
-def csv_line_parameters_read(param: Parameter, slave_address: str) -> str:
+def csv_line_parameters_read(param: Parameter, device_name: str, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
-        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:6,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
+        return f'r,{device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:6,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{param.device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},{values},{param.unit},[min:{param.field_min}],Max,,{datatype},{values},{param.unit},[max:{param.field_max}],Step,,{datatype},{values},{param.unit},[step:{param.field_step}],Default,,{datatype},{values},{param.unit},[default:{param.field_default}]\n'
+        return f'r,{device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},{values},{param.unit},[min:{param.field_min}],Max,,{datatype},{values},{param.unit},[max:{param.field_max}],Step,,{datatype},{values},{param.unit},[step:{param.field_step}],Default,,{datatype},{values},{param.unit},[default:{param.field_default}]\n'
 
 
-def csv_line_parameters_write(param: Parameter, slave_address: str) -> str:
+def csv_line_parameters_write(param: Parameter, device_name: str, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{param.device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min};max:{param.field_max};step:{param.field_step};default:{param.field_default}]\n'
+    return f'w,{device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min};max:{param.field_max};step:{param.field_step};default:{param.field_default}]\n'
 
 
 def convert_to_ebus_datatype(datatype: str) -> str:
@@ -104,13 +104,13 @@ def csv_from_sensors(sensors: list[Sensor], device_name: str, slave_address = ''
     return file_str
 
 
-def csv_from_parameters(parameters: list[Parameter], is_plus: bool, slave_address: str = ''):
+def csv_from_parameters(parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = ''):
     file_str = ""
     for param in parameters:
         if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
             if not param.is_read_only:
-                file_str += csv_line_parameters_write(param, slave_address)
-            file_str += csv_line_parameters_read(param, slave_address)
+                file_str += csv_line_parameters_write(param, device_name, slave_address)
+            file_str += csv_line_parameters_read(param, device_name, slave_address)
     return file_str
 
 
@@ -137,7 +137,7 @@ def csv_known_device(sensors: list[Sensor], device_name: str, parameters: list[P
     file_str += '''
 ## Configuration parameters ##
 '''
-    file_str += csv_from_parameters(parameters, True, slave_address)
+    file_str += csv_from_parameters(parameters, device_name, True, slave_address)
     return file_str
  
 
@@ -164,14 +164,14 @@ def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_de
             text_file.write(csv_from_sensors(sensors, device.device_name))
 
     for device_param, parameters in dict_devices_parameter.items():
-        params_all.extend([dump_param(param) for param in parameters])
+        params_all.extend([dump_param(param, device_param) for param in parameters])
         with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(CSV_HEADER)
-            text_file.write(csv_from_parameters(parameters, False))
+            text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
 
         with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(CSV_HEADER)
-            text_file.write(csv_from_parameters(parameters, True))
+            text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
 
     if os.path.exists(KNOWN_DEVICES_EN_DIR):
         shutil.rmtree(KNOWN_DEVICES_EN_DIR)

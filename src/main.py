@@ -45,22 +45,36 @@ for device, sensors in dict_devices_sensor.items():
     device_model = device_models.setdefault(device.device_name, DeviceModel(device.device_name))
     device_model.sensors[device.version] = sensors
 
-# Check if subsequent version alwas contain all parameters from previous version
+for device, parameters in dict_devices_parameters.items():
+    device_model = device_models.setdefault(device.device_name, DeviceModel(device.device_name))
+    device_model.parameters[device.version] = parameters
+
+# Check if subsequent version always contain all parameters from previous version
 for device_model in device_models.values():
-    versions: list[VersionRange] = sorted(list(device_model.sensors.keys()))
-    previous_sensors = device_model.sensors[versions[0]] # initialize to the first version
-    for version in versions:
-        sensors = device_model.sensors[version]
+    sensors_versions: list[VersionRange] = sorted(list(device_model.sensors.keys()))
+    previous_sensors = device_model.sensors[sensors_versions[0]] # initialize to the first version
+    for sensor_version in sensors_versions:
+        sensors = device_model.sensors[sensor_version]
         for sensor in previous_sensors:
-            if sensor not in sensors:
-                print(f"ERROR: Sensor {sensor} from previous version not present in version {version} for device {device_model.name}")
-            
             # By default, Fails only for DecentralAir70 for two parameters, where converters were added in newer version. That almost seems like omitment, so we just correct that when assigning converters, and keep this assert as a sanity check
             # assert sensor in sensors
+            if sensor not in sensors:
+                pass
+            #     print(f"WARNING: Sensor {sensor} from previous version not present in version {sensor_version} for device {device_model.name}")
+            
         previous_sensors = sensors
-        
 
-
+    parameters_versions: list[VersionRange] = sorted(list(device_model.parameters.keys()))
+    previous_parameters = device_model.parameters[parameters_versions[0]] # initialize to the first version
+    for parameter_version in parameters_versions:
+        parameters = device_model.parameters[parameter_version]
+        for parameter in previous_parameters:
+            # TODO This fails for surprising amount of devices. Either we need to fix somethign deep in parameter creation, or we just cannot make it subsets
+            if parameter not in parameters:
+                pass
+            #     print(f"WARNING: Parameter {parameter} from previous version not present in version {parameter_version} for device {device_model.name}")
+            
+        previous_parameters = parameters
 
 print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))

@@ -125,10 +125,7 @@ class Fields(BaseObject):
         self.default = default
 
 class Parameter(BaseObject):
-    def __init__(self, device_name: str, first_version: int, last_version: int, is_plus_only: bool, id: int, name: str, unit: str, multiplier: float, datatype: str, is_read_only: bool, fields: Fields):
-        self.device_name = device_name
-        self.first_version = first_version
-        self.last_version = last_version
+    def __init__(self, is_plus_only: bool, id: int, name: str, unit: str, multiplier: float, datatype: str, is_read_only: bool, fields: Fields):
         self.is_plus_only = is_plus_only
         self.id = id
         self.name = name

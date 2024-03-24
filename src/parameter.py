@@ -39,6 +39,10 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
             view_no = int(match.group('view_no'))
             device_type = match.group('device_type')
 
+            # We deal with Flair devices having a base class on following lines
+            if device_name == 'FlairBase':
+                continue
+
             # Flair units have two different base classes, we manually overwrite the relevant base class values
             if device_type == 'FlairBaseParameterSet_01':
                 params_basic = params_plus = 57
@@ -76,7 +80,7 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
                 fields = Fields(int(m.group('current')), int(m.group('min')), int(m.group('max')), int(m.group('step')), int(m.group('default')))
                 datatype = INT16 if m.group('is_signed') == 'true' else UINT16
                 is_read_only = bool(m.group('is_read_only') == 'true')
-                param = Parameter(device_name, first_version, last_version, is_plus_only, int(m.group('id')), m.group('name'), value_type_dict_config[m.group('unit')], float(m.group('multiplier')), datatype, is_read_only, fields)
+                param = Parameter(is_plus_only, int(m.group('id')), m.group('name'), value_type_dict_config[m.group('unit')], float(m.group('multiplier')), datatype, is_read_only, fields)
                 params.append(param)
 
             device_parameters[device] = params
