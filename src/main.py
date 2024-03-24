@@ -32,8 +32,9 @@ for device, sensors in dict_devices_sensor.items():
 converters_set: set[str] = {c for c in converters_map.keys()}
 unused_converters_set = converters_set - used_converters_set
 
-
-# 0. check if parameters are always a subset for lower version
+# Make the output of joined files for a given device and SW version
+# Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
+# consider adding comments for version
 # 1. re-define scan for SW so that the string is parsed as integers
 # 2. check the scan results on real device
 # 3. write code to parse SW version to match the sw received

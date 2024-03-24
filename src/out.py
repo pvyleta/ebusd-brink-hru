@@ -123,7 +123,7 @@ def csv_known_device(sensors: list[Sensor], device_name: str, parameters: list[P
 ## sources:
 ## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
 ## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
-## - Renovent 180 Datasheet: https://www.rosain.cz/dokumenty/Technicky-list-Renovent-Excellent-180.pdf
+## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
 
 ## COMMON HRU COMMANDS ## (WTWCommands.cs)
