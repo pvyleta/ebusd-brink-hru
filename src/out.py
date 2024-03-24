@@ -168,16 +168,12 @@ def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_de
         shutil.rmtree(OUTPUT_DIR)
     os.mkdir(OUTPUT_DIR)
 
-    sensors_all: list[SensorDump] = []
-    params_all: list[ParameterDump] = []
     for device, sensors in dict_devices_sensor.items():
-        sensors_all.extend([dump_sensor(sensor, device) for sensor in sensors])
         with open(os.path.join(OUTPUT_DIR, f'{device.device_name}.{device.version.first_version}.{device.version.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(CSV_HEADER)
             text_file.write(csv_from_sensors(sensors, device.device_name))
 
     for device_param, parameters in dict_devices_parameter.items():
-        params_all.extend([dump_param(param, device_param) for param in parameters])
         with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
             text_file.write(CSV_HEADER)
             text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
@@ -187,10 +183,19 @@ def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_de
             text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
 
 
-
+def write_dump(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
     if os.path.exists(DUMP_DIR):
         shutil.rmtree(DUMP_DIR)
     os.mkdir(DUMP_DIR)
+
+    sensors_all: list[SensorDump] = []
+    params_all: list[ParameterDump] = []
+
+    for device, sensors in dict_devices_sensor.items():
+        sensors_all.extend([dump_sensor(sensor, device) for sensor in sensors])
+
+    for device_param, parameters in dict_devices_parameter.items():
+        params_all.extend([dump_param(param, device_param) for param in parameters])
 
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)

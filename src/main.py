@@ -1,11 +1,13 @@
-from out import write_output, write_known_devices
+from out import write_output, write_known_devices, write_dump
 from converters import find_converters, device_to_name_current_to_name_param, converters_map
 from sensor import get_dict_devices_sensor
 from parameter import get_device_parameters
 from command_ebus import get_commands_dict
-from model import BaseObject, DeviceModel, VersionRange
+from model import DeviceModel, VersionRange
 
-# TODO Simplify output to less files by removing redundanc and extending parameter ranges
+# TODO Simplify output to less files by removing redundancy and extending parameter ranges
+# TODO Simplify output by joining params + sensors in one file per version range
+# TODO Simplify output by removing plus/basic where they are identical and/or where there is no plus device (flairs etc)
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 
@@ -60,8 +62,8 @@ for device_model in device_models.values():
             # By default, Fails only for DecentralAir70 for two parameters, where converters were added in newer version. That almost seems like omitment, so we just correct that when assigning converters, and keep this assert as a sanity check
             # assert sensor in sensors
             if sensor not in sensors:
+                # print(f"WARNING: Sensor {sensor} from previous version not present in version {sensor_version} for device {device_model.name}")
                 pass
-            #     print(f"WARNING: Sensor {sensor} from previous version not present in version {sensor_version} for device {device_model.name}")
             
         previous_sensors = sensors
 
@@ -70,10 +72,10 @@ for device_model in device_models.values():
     for parameter_version in parameters_versions:
         parameters = device_model.parameters[parameter_version]
         for parameter in previous_parameters:
-            # TODO This fails for surprising amount of devices. Either we need to fix somethign deep in parameter creation, or we just cannot make it subsets
+            # TODO This fails for surprising amount of devices. Either we need to fix somethign deep in parameter creation, or we just cannot make it subsets. or it is plus vs basic?
             if parameter not in parameters:
+                # print(f"WARNING: Parameter {parameter} from previous version not present in version {parameter_version} for device {device_model.name}")
                 pass
-            #     print(f"WARNING: Parameter {parameter} from previous version not present in version {parameter_version} for device {device_model.name}")
             
         previous_parameters = parameters
 
@@ -83,5 +85,6 @@ print("sensors_without_converters_set: " + str(len(sensors_without_converters_se
 
 write_output(dict_devices_sensor, dict_devices_parameters)
 write_known_devices(dict_devices_sensor, dict_devices_parameters)
+write_dump(dict_devices_sensor, dict_devices_parameters)
 
 print("SUCCESS")

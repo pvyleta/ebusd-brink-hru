@@ -18,8 +18,9 @@ value_type_dict_config = {
 
 
 class DeviceParameters(DeviceVersion):
-    def __init__(self, device_name: str, version_range: VersionRange, params_basic: int, params_plus: int, controller_code: int):
+    def __init__(self, device_name: str, version_range: VersionRange, has_plus_variant: bool, params_basic: int, params_plus: int, controller_code: int):
         super().__init__(device_name, version_range)
+        self.has_plus_variant = has_plus_variant
         self.params_basic = params_basic
         self.params_plus = params_plus
         self.controller_code = controller_code
@@ -50,11 +51,17 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
                 params_basic = params_plus = 60
             else:
                 match = re.search(
-                    r'public const int PARAMETER_COUNT_(BASIC|AUTO) = (?P<params_basic>\d*);[\s\S]*'
-                    r'public const int PARAMETER_COUNT_(PLUS|MANUAL) = (?P<params_plus>\d*);', file_str)
+                    r'public const int PARAMETER_COUNT_(?P<basic_auto>BASIC|AUTO) = (?P<params_basic>\d*);[\s\S]*'
+                    r'public const int PARAMETER_COUNT_(?P<plus_manual>PLUS|MANUAL) = (?P<params_plus>\d*);', file_str)
                 assert match
                 params_basic = int(match.group('params_basic'))
                 params_plus = int(match.group('params_plus'))
+                has_plus_variant = match.group('plus_manual') == "PLUS"
+                
+                # We assume that auto vs manual params are always the same number - prove it through this sanity check
+                if match.group('basic_auto') == "AUTO":
+                    assert match.group('plus_manual') == "MANUAL"
+                    assert params_basic == params_plus
 
             match = re.search(
                 r'public (new )?const (uint|byte) CONTROLLER_CODE = (?P<controller_code>\d*);[\s\S]*'
@@ -67,7 +74,7 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
             controller_code = int(match.group('controller_code'))
             
             version_range = VersionRange(view_no, first_version, last_version)
-            device = DeviceParameters(device_name, version_range, params_basic, params_plus, controller_code)
+            device = DeviceParameters(device_name, version_range, has_plus_variant, params_basic, params_plus, controller_code)
 
             params_basic_int = int(params_basic)
             

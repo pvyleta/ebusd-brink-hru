@@ -108,9 +108,6 @@ def check_converter(sensor: Sensor, device_name: str):
     elif "CurrentDipswitchValue" == sensor.name_current and (device_name + "Basic" in dipswitch_dict or device_name + "Plus" in dipswitch_dict):
         sensor.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
         sensor.converter_match = "patched"
-    elif "CurrentSystemStatus" == sensor.name_current and (device_name == 'DecentralAir70') and sensor.converter == 'ConverterUInt16ToUNumber':
-        sensor.converter = copy.deepcopy(converters_map['ConverterUInt16DipswitchValue'])
-        sensor.converter_match = "patched"
 
 
 def get_dict_devices_sensor(
