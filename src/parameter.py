@@ -64,11 +64,6 @@ def get_device_parameters() -> dict[DeviceParameters, list[Parameter]]:
                 if match.group('basic_auto') == "AUTO":
                     assert match.group('plus_manual') == "MANUAL"
                     assert params_basic == params_plus
-                
-                # Vitovent200w for whatever reason has plus/basic parameters defined, but since it is rebranded Flair, there is no plus variant actually
-                if device_name == 'Vitovent200W':
-                    assert params_basic == params_plus
-                    has_plus_variant = False
 
             match = re.search(
                 r'public (new )?const (uint|byte) CONTROLLER_CODE = (?P<controller_code>\d*);[\s\S]*'
