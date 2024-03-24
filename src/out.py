@@ -174,13 +174,18 @@ def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_de
             text_file.write(csv_from_sensors(sensors, device.device_name))
 
     for device_param, parameters in dict_devices_parameter.items():
-        with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(CSV_HEADER)
-            text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
+        if device_param.has_plus_variant: 
+            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
+                text_file.write(CSV_HEADER)
+                text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
 
-        with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(CSV_HEADER)
-            text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
+            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+                text_file.write(CSV_HEADER)
+                text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
+        else:
+            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
+                text_file.write(CSV_HEADER)
+                text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
 
 
 def write_dump(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):

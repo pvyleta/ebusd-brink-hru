@@ -7,7 +7,6 @@ from model import DeviceModel, VersionRange
 
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
 # TODO Simplify output by joining params + sensors in one file per version range
-# TODO Simplify output by removing plus/basic where they are identical and/or where there is no plus device (flairs etc)
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 
