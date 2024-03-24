@@ -9,9 +9,10 @@ from model import DeviceModel, VersionRange
 # TODO Simplify output by joining params + sensors in one file per version range
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
+# TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
+# TODO make sure all output files have only LF and not CRLF
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
-
 
 device_to_name_current_to_name_param_dict = device_to_name_current_to_name_param()
 cmd_dict, cmd_bytes_dict = get_commands_dict()
@@ -77,6 +78,9 @@ for device_model in device_models.values():
                 pass
             
         previous_parameters = parameters
+
+
+print("len(device_models): " + str())
 
 print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))

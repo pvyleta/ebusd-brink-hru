@@ -114,7 +114,6 @@ def csv_from_parameters(parameters: list[Parameter], device_name: str, is_plus: 
     return file_str
 
 
-# TODO add conditionals for plus
 # TODO add conditionals for dipswitch value
 # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
 def csv_known_device(sensors: list[Sensor], device_name: str, parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
