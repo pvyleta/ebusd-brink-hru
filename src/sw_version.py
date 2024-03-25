@@ -1,5 +1,14 @@
 from model import BaseObject
 
+class Version(BaseObject):
+    def __init__(self, version: int, type: str):
+        self.version = version
+        self.type = type # assuming only 'first' and 'last'
+
+    def __lt__(self, other):
+        return str(self.version) + self.type < str(other.version) + other.type
+
+
 # This class represents the Brink SoftwareVersion string represented as three integers
 class SWVersionBrinkEbusd(BaseObject):
     def __init__(self, major: int, minor: int, patch: int):

@@ -161,7 +161,7 @@ def write_known_devices(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], 
 
 
 # Contents of output_dir are always cleaned before writing
-# File format is [device_name].[lowest_sw_version].[highest_sw_version].[params|sensors.basic|sensors.plus].csv
+# File format is [device_name].[lowest_sw_version].[highest_sw_version].[sensors|params|params.basic|params.plus].csv
 def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
     if os.path.exists(OUTPUT_DIR):
         shutil.rmtree(OUTPUT_DIR)

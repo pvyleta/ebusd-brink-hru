@@ -3,7 +3,8 @@ from converters import find_converters, device_to_name_current_to_name_param, co
 from sensor import get_dict_devices_sensor
 from parameter import get_device_parameters
 from command_ebus import get_commands_dict
-from model import DeviceModel, VersionRange
+from model import DeviceModel, VersionRange, VersionBase, DEBUG
+from sw_version import Version
 
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
 # TODO Simplify output by joining params + sensors in one file per version range
@@ -11,6 +12,11 @@ from model import DeviceModel, VersionRange
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
 # TODO make sure all output files have only LF and not CRLF
+
+# TODO Make the output of joined files for a given device and SW version
+# Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
+# consider adding comments for version
+# 4. Write code to write the include line
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
@@ -34,13 +40,6 @@ for device, sensors in dict_devices_sensor.items():
 converters_set: set[str] = {c for c in converters_map.keys()}
 unused_converters_set = converters_set - used_converters_set
 
-# Make the output of joined files for a given device and SW version
-# Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
-# consider adding comments for version
-# 1. re-define scan for SW so that the string is parsed as integers
-# 2. check the scan results on real device
-# 3. write code to parse SW version to match the sw received
-# 4. Write code to write the include line
 
 # Reorder to more layered structure
 device_models: dict[str, DeviceModel] = {}
@@ -51,6 +50,38 @@ for device, sensors in dict_devices_sensor.items():
 for device, parameters in dict_devices_parameters.items():
     device_model = device_models.setdefault(device.device_name, DeviceModel(device.device_name))
     device_model.parameters[device.version] = parameters
+
+
+# Add all sw-version-sub-ranges. We take advantage of having only two sets of non-intersecting version ranges. We merge the first/last versions, and make a joined list, and then construct a set out of it.
+for device_model in device_models.values():
+    version_set: set[Version] = set()
+    for version_range in device_model.parameters.keys():
+        version_set.add(Version(version_range.first_version, 'first'))
+        version_set.add(Version(version_range.last_version, 'last'))
+    for version_range in device_model.sensors.keys():
+        version_set.add(Version(version_range.first_version, 'first'))
+        version_set.add(Version(version_range.last_version, 'last'))
+    
+    version_list: list[Version] = sorted(list(version_set))
+    while len(version_list) > 0:
+        first = version_list.pop(0)
+
+        # If the next version is first again, insert artificial last version. 
+        # Note: can happen if the two original set of ranges did not start at the same number, e.g. params start at 10806, sensors start at 10803
+        if version_list[0].type == 'first':
+            version_list.insert(0, Version(version_list[0].version-1, 'last'))
+
+        last = version_list.pop(0)
+
+        # Sanity checks
+        assert first.type == 'first'
+        assert last.type == 'last'
+
+        device_model.version_sub_ranges.add(VersionBase(first.version, last.version))
+    
+    if DEBUG:
+        print(f'{device_model.name} {sorted(list(device_model.version_sub_ranges))}')
+
 
 # Check if subsequent version always contain all parameters from previous version
 for device_model in device_models.values():
@@ -79,8 +110,6 @@ for device_model in device_models.values():
             
         previous_parameters = parameters
 
-
-print("len(device_models): " + str())
 
 print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))
