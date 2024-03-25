@@ -168,7 +168,7 @@ def write_known_devices(device_models: dict[str, DeviceModel]):
         shutil.rmtree(DEVICES_KNOWN_DIR)
     os.mkdir(DEVICES_KNOWN_DIR)
     for known_device in known_devices:
-        with open(os.path.join(DEVICES_KNOWN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
+        with open(os.path.join(DEVICES_KNOWN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8", newline='\n') as text_file:
             device_model = device_models[known_device.device_name]
             latest_sensor_version_range = sorted(list(device_model.sensors.keys()))[-1]
             latest_parameter_version_range = sorted(list(device_model.parameters.keys()))[-1]
@@ -192,7 +192,7 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel]):
         plus_versions: list[bool] = [False, True] if device_model.has_plus_variant else [False]
         for plus_version in plus_versions:
             for subversion in device_model.version_sub_ranges:
-                with open(os.path.join(DEVICES_UNKNOWN_DIR, f'{device_name}.{subversion.first_version}.{subversion.last_version}{'.plus' if plus_version else ''}.csv'), "w", encoding="utf-8") as text_file:
+                with open(os.path.join(DEVICES_UNKNOWN_DIR, f'{device_name}.{subversion.first_version}.{subversion.last_version}{'.plus' if plus_version else ''}.csv'), "w", encoding="utf-8", newline='\n') as text_file:
                     file_str = CSV_HEADER
                     file_str += COMMENT_HEADER
                     file_str += device_name_comment(device_name, subversion)
@@ -229,16 +229,16 @@ def write_output_DEPRECATED(device_models: dict[str, DeviceModel]):
 
     for device_name, device_model in device_models.items():
         for version_range, sensors in device_model.sensors.items():
-            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
+            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8", newline='\n') as text_file:
                 text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
                 text_file.write(csv_from_sensors(sensors))
 
         for version_range, parameters in device_model.parameters.items():
-            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
+            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8", newline='\n') as text_file:
                 text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
                 text_file.write(csv_from_parameters(parameters, False))
             if device_model.has_plus_variant: 
-                with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+                with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8", newline='\n') as text_file:
                     text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
                     text_file.write(csv_from_parameters(parameters, True))
 
@@ -264,13 +264,13 @@ def write_dump(device_models: dict[str, DeviceModel]):
     sensors_all.sort()
     params_all.sort()
 
-    with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'sensors.json'), "w", encoding="utf-8", newline='\n') as text_file:
         text_file.write(jsonpickle.dumps([sensor._asdict() for sensor in sensors_all]))
   
-    with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'params.json'), "w", encoding="utf-8", newline='\n') as text_file:
         text_file.write(jsonpickle.dumps([param._asdict() for param in params_all]))
   
-    with open(os.path.join(DUMP_DIR, 'sensors.csv'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'sensors.csv'), "w", encoding="utf-8", newline='\n') as text_file:
         csv_writer = csv.writer(text_file)
         keys_sensors = sensors_all[0]._fields
         print(f'CSV Dump Sensor keys: {keys_sensors}')
@@ -278,7 +278,7 @@ def write_dump(device_models: dict[str, DeviceModel]):
         for sensor in sensors_all:
             csv_writer.writerow(sensor)
 
-    with open(os.path.join(DUMP_DIR, 'params.csv'), "w", encoding="utf-8") as text_file:
+    with open(os.path.join(DUMP_DIR, 'params.csv'), "w", encoding="utf-8", newline='\n') as text_file:
         csv_writer = csv.writer(text_file)
         keys_params = params_all[0]._fields
         print(f'CSV Dump Params keys: {keys_params}')

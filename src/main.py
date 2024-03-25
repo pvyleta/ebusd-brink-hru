@@ -10,7 +10,6 @@ from sw_version import Version
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
-# TODO make sure all output files have only LF and not CRLF
 
 # TODO Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
 # consider adding comments for version
