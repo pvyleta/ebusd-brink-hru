@@ -51,9 +51,14 @@ Currently, the ebusd-configuration for these heat recovery units is present:
 If you find your device in this folder, you may consider yourself lucky - there can be used verbatim in ebusd. The files contain parameters for the latest SW version, for the 'Plus' variant of the HRU unit, so not all parameters might be applicable for your device. If you want a .csv file that matches your device perfectly, you need to look into `ebusd-configuration-unknown-slave-address`
 
 ## ebusd-configuration-unknown-slave-address
-This folder contains all known Brink devices in all known SW versions and basic/plus variants of HW. The use is simple: 
+This folder contains all known Brink devices in all known SW versions and basic/plus variants of HW. 
 
- 1. Figure out the slave address of your device (can be easily found from ebusd logs - Brink devices respond as manufacturer ENCON to the 0704 id scan message, which might help you to find it)
+The naming format is [device].[first_sw_version].[last_sw_version].[plus].csv (Files for basic devices, or for devices that does not even have a 'plus' variant have no 'plus' suffix)
+
+The use is simple: 
+
+ 1. Find out your device type and SW version (e.g. from the wall controller) and pick the appropriate file.
+ 2. Figure out the slave address of your device (can be easily found from ebusd logs - Brink devices respond as manufacturer ENCON to the 0704 id scan message, which might help you to find it)
  2. Rename the file to that address (in hexa, e.g. `3c.csv`)
  3. In the file, replace `[fill_your_slave_address_here]` with slave address of your device, (e.g. '3c')
  4. Now you can use the file in `ebusd`
