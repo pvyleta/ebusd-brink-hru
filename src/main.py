@@ -1,4 +1,4 @@
-from out import write_output, write_known_devices, write_dump
+from out import write_output_DEPRECATED, write_known_devices, write_dump, write_unknown_address_devices
 from converters import find_converters, device_to_name_current_to_name_param, converters_map
 from sensor import get_dict_devices_sensor
 from parameter import get_device_parameters
@@ -7,14 +7,12 @@ from model import DeviceModel, VersionRange, VersionBase, DEBUG
 from sw_version import Version
 
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
-# TODO Simplify output by joining params + sensors in one file per version range
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
 # TODO make sure all output files have only LF and not CRLF
 
-# TODO Make the output of joined files for a given device and SW version
-# Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
+# TODO Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
 # consider adding comments for version
 # 4. Write code to write the include line
 
@@ -121,7 +119,9 @@ print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
-write_output(device_models)
+write_output_DEPRECATED(device_models)
+
+write_unknown_address_devices(device_models)
 write_known_devices(device_models)
 write_dump(device_models)
 

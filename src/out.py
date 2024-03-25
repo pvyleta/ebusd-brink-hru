@@ -6,16 +6,17 @@ from collections import namedtuple
 
 import jsonpickle # type: ignore
 
-from model import Sensor, INT16, UINT16, DeviceModel, VersionRange
+from model import Sensor, INT16, UINT16, DeviceModel, VersionRange, VersionBase
 from parameter import Parameter
 from known_devices import known_devices
+from sw_version import sw_version_to_friendly_str
 from ebus_message import multiplier_to_divider, brink_wtw_commands_list
 
 
-OUTPUT_DIR = "ebusd-configuration"
+DEPRECATED_DIR = "ebusd-configuration-deprecated"
 DUMP_DIR = "dump"
-KNOWN_DEVICES_EN_DIR = "ebusd-configuration-en"
-KNOWN_DEVICES_DE_DIR = "ebusd-configuration-de"
+DEVICES_UNKNOWN_DIR = "ebusd-configuration-unknown-slave-address"
+DEVICES_KNOWN_DIR = "ebusd-configuration-known-slave-address"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 
@@ -97,14 +98,14 @@ def convert_to_ebus_datatype(datatype: str) -> str:
         raise RuntimeError(f'unexpected datatype {datatype}')
 
 
-def csv_from_sensors(sensors: list[Sensor], device_name: str, slave_address = ''):
+def csv_from_sensors(sensors: list[Sensor], device_name: str = '', slave_address = ''):
     file_str = ""
     for sensor in sensors:
         file_str += csv_line_sensor(sensor, device_name, slave_address)
     return file_str
 
 
-def csv_from_parameters(parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = ''):
+def csv_from_parameters(parameters: list[Parameter], is_plus: bool, device_name: str = '', slave_address: str = ''):
     file_str = ""
     for param in parameters:
         if is_plus or not param.is_plus_only: # Output if device is plus or param does not require plus 
@@ -113,39 +114,61 @@ def csv_from_parameters(parameters: list[Parameter], device_name: str, is_plus: 
             file_str += csv_line_parameters_read(param, device_name, slave_address)
     return file_str
 
-
-# TODO add conditionals for dipswitch value
-# TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
-def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = '') -> str:
-    file_str = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## This file is based on plus version in latest SW version - basic version and older SW versions might not have all the parameters implemented.
+COMMENT_HEADER = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
 ## sources:
 ## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
 ## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
 ## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-
-## COMMON HRU COMMANDS ## (WTWCommands.cs)
 '''
-    for msg in brink_wtw_commands_list:
-        file_str += msg.dump(device_name, slave_address)
-    file_str += '''
+COMMENT_COMMON_COMMANDS = '''
+## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+'''
+COMMENT_CURRENT_STATE = '''
 ## Curent state and sensors ##
 '''
-    file_str += csv_from_sensors(sensors, device_name, slave_address)
-    file_str += '''
+COMMENT_PARAMETERS = '''
 ## Configuration parameters ##
 '''
-    file_str += csv_from_parameters(parameters, device_name, True, slave_address)
+
+def device_name_comment(device_name: str, versions: VersionBase) -> str:
+    if versions.first_version == versions.last_version:
+        return f'\n## This file is for {device_name} SW version {sw_version_to_friendly_str(versions.first_version)} ##\n'
+    else:
+        return f'\n## This file is for {device_name} SW version from {sw_version_to_friendly_str(versions.first_version)} to {sw_version_to_friendly_str(versions.last_version)} ##\n'
+        
+
+def str_slave_and_circuit_mask(type: str, circuit: str = '', slave_address: str = '') -> str:
+    return f'*{type},{circuit},,,,{slave_address},\n'
+
+def slave_and_circuit_comment(circuit: str) -> str:
+    comment = '\n## Slave address and Circuit ##\n'
+    comment += '# Fill in the slave address of your device (hexa without \'0x\' prefix) instead of [fill_your_slave_address_here]\n'
+    comment += '# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.\n'
+    comment += str_slave_and_circuit_mask('r', circuit, '[fill_your_slave_address_here]')
+    comment += str_slave_and_circuit_mask('w', circuit, '[fill_your_slave_address_here]')
+    return comment
+
+# TODO add conditionals for dipswitch value
+# TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
+def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = '') -> str:
+    file_str = COMMENT_HEADER + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
+    file_str += COMMENT_COMMON_COMMANDS
+    for msg in brink_wtw_commands_list:
+        file_str += msg.dump()
+    file_str += COMMENT_CURRENT_STATE
+    file_str += csv_from_sensors(sensors)
+    file_str += COMMENT_PARAMETERS
+    file_str += csv_from_parameters(parameters, True)
     return file_str
  
 
 def write_known_devices(device_models: dict[str, DeviceModel]):
-    if os.path.exists(KNOWN_DEVICES_EN_DIR):
-        shutil.rmtree(KNOWN_DEVICES_EN_DIR)
-    os.mkdir(KNOWN_DEVICES_EN_DIR)
+    if os.path.exists(DEVICES_KNOWN_DIR):
+        shutil.rmtree(DEVICES_KNOWN_DIR)
+    os.mkdir(DEVICES_KNOWN_DIR)
     for known_device in known_devices:
-        with open(os.path.join(KNOWN_DEVICES_EN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
+        with open(os.path.join(DEVICES_KNOWN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
             device_model = device_models[known_device.device_name]
             latest_sensor_version_range = sorted(list(device_model.sensors.keys()))[-1]
             latest_parameter_version_range = sorted(list(device_model.parameters.keys()))[-1]
@@ -153,32 +176,71 @@ def write_known_devices(device_models: dict[str, DeviceModel]):
             text_file.write(csv_known_device(device_model.sensors[latest_sensor_version_range], device_model.parameters[latest_parameter_version_range], known_device.device_name, True, f'{known_device.slave_address:02x}'))
 
 
+# For many devices we know exactly what parameters are present in what version, 
+# but unfortunately we do not know their default slave address. 
+# In that case we just provide a 'sample' file where slave address must be filled
+# in manually in the header, and after that it can be used by ebusd without any issues.
+# Please, report back any slave address you find, so that our database of known
+# adresses can be extended (and devices published directly back to ebusd-configuration repo)
+def write_unknown_address_devices(device_models: dict[str, DeviceModel]):
+    if os.path.exists(DEVICES_UNKNOWN_DIR):
+        shutil.rmtree(DEVICES_UNKNOWN_DIR)
+    os.mkdir(DEVICES_UNKNOWN_DIR)
+
+    for device_name, device_model in device_models.items():
+        # For devices with plus variant, we need to make the files twice:
+        plus_versions: list[bool] = [False, True] if device_model.has_plus_variant else [False]
+        for plus_version in plus_versions:
+            for subversion in device_model.version_sub_ranges:
+                with open(os.path.join(DEVICES_UNKNOWN_DIR, f'{device_name}.{subversion.first_version}.{subversion.last_version}{'.plus' if plus_version else ''}.csv'), "w", encoding="utf-8") as text_file:
+                    file_str = CSV_HEADER
+                    file_str += COMMENT_HEADER
+                    file_str += device_name_comment(device_name, subversion)
+                    file_str += slave_and_circuit_comment(device_name)
+                    # TODO add line with comment saying how to put in correct slave version
+                    # TODO filter the common commands for Valve where they are unlikely to be working
+                    file_str += COMMENT_COMMON_COMMANDS
+                    for msg in brink_wtw_commands_list:
+                        if device_name == 'DecentralAir70' and msg.name == 'FilterNotificationFlow':
+                            # This unit already defines this parameter later
+                            continue
+                        elif device_name in ['ValveT01', 'MultiRoomCtrlT01'] and msg.name not in ['FactoryReset', 'ResetNotifications', 'RequestErrorList']:
+                            # Other than these messages are not meaningful for a valve
+                            continue
+                        file_str += msg.dump()
+                    for version_range, sensors in device_model.sensors.items():
+                        if version_range.contains(subversion):
+                            file_str += COMMENT_CURRENT_STATE
+                            file_str += csv_from_sensors(sensors)
+                    for version_range, parameters in device_model.parameters.items():
+                        if version_range.contains(subversion):
+                            file_str += COMMENT_PARAMETERS
+                            file_str += csv_from_parameters(parameters, plus_version)
+                    text_file.write(file_str)
+
+
+# This functionality is kept for reference, but in general is deprecated in favor of other output styles
 # Contents of output_dir are always cleaned before writing
-# File format is [device_name].[lowest_sw_version].[highest_sw_version].[sensors|params|params.basic|params.plus].csv
-def write_output(device_models: dict[str, DeviceModel]):
-    if os.path.exists(OUTPUT_DIR):
-        shutil.rmtree(OUTPUT_DIR)
-    os.mkdir(OUTPUT_DIR)
+# File format is [device_name].[lowest_sw_version].[highest_sw_version].[sensors|params|params.plus].csv
+def write_output_DEPRECATED(device_models: dict[str, DeviceModel]):
+    if os.path.exists(DEPRECATED_DIR):
+        shutil.rmtree(DEPRECATED_DIR)
+    os.mkdir(DEPRECATED_DIR)
 
     for device_name, device_model in device_models.items():
         for version_range, sensors in device_model.sensors.items():
-            with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
-                text_file.write(CSV_HEADER)
-                text_file.write(csv_from_sensors(sensors, device_name))
+            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
+                text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
+                text_file.write(csv_from_sensors(sensors))
 
         for version_range, parameters in device_model.parameters.items():
+            with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
+                text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
+                text_file.write(csv_from_parameters(parameters, False))
             if device_model.has_plus_variant: 
-                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
-                    text_file.write(CSV_HEADER)
-                    text_file.write(csv_from_parameters(parameters, device_name, False))
-
-                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-                    text_file.write(CSV_HEADER)
-                    text_file.write(csv_from_parameters(parameters, device_name, True))
-            else:
-                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
-                    text_file.write(CSV_HEADER)
-                    text_file.write(csv_from_parameters(parameters, device_name, False))
+                with open(os.path.join(DEPRECATED_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+                    text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
+                    text_file.write(csv_from_parameters(parameters, True))
 
 
 def write_dump(device_models: dict[str, DeviceModel]):

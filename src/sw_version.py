@@ -24,3 +24,7 @@ def sw_version_int_to_ebusd(sw_version_int: int) -> SWVersionBrinkEbusd:
     patch = int.from_bytes(sw_version_bytes[3:5], "big")
 
     return SWVersionBrinkEbusd(major, minor, patch)
+
+def sw_version_to_friendly_str(sw_version_int):
+    sw_version_str = str(sw_version_int)
+    return f'{sw_version_str[0]}.{sw_version_str[1:3]}.{sw_version_str[3:5]}'

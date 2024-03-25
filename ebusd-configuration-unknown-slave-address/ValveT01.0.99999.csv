@@ -1,0 +1,79 @@
+# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+
+## This file is for ValveT01 SW version from 0.. to 9.99.99 ##
+
+## Slave address and Circuit ##
+# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+*r,ValveT01,,,,[fill_your_slave_address_here],
+*w,ValveT01,,,,[fill_your_slave_address_here],
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+w,,FactoryReset,,,,40ff,466163746f72795265736574
+w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+r,,RequestErrorList,,,,4090,,,,HEX:18,,,
+
+## Curent state and sensors ##
+r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
+r,,DeviceID,DeviceID,,,4022,80,,,UCH,,,
+r,,EBusAddressing,EBusAddressing,,,4022,50,,,ULR,,,
+r,,SerialNumber,SerialNumber,,,4022,51,,,STR:12,,,
+r,,OperatingTime,OperatingTime,,,4022,83,,,ULR,,Hour,
+r,,ValveStatus,ValveStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=NotCalibrated;3=Traveling;4=InPosition;5=Calibrating,,
+r,,ValvePosition,ValvePosition,,,4022,81,,,UIR,,,
+r,,EndPositionStepCount,EndPositionStepCount,,,4022,89,,,UIR,,Steps,
+r,,PositionStepCount,PositionStepCount,,,4022,8a,,,UIR,,Steps,
+r,,RunDirection,RunDirection,,,4022,8b,,,UIR,0=CW;1=CCW,,
+r,,ConfigurationValid,ConfigurationValid,,,4022,8c,,,UIR,,,
+
+## Configuration parameters ##
+w,,EBusGroupNumber,EBusGroupNumber,,,4080,d0,,,UIR,,,[min:1;max:8;step:1;default:1]
+r,,EBusGroupNumber,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,EBusSlaveNumber,EBusSlaveNumber,,,4080,d1,,,UIR,,,[min:1;max:9;step:1;default:1]
+r,,EBusSlaveNumber,EBusSlaveNumber,,,4050,d1,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:9],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,HeartBeatTimeout,HeartBeatTimeout,,,4080,d2,,,UIR,,Minutes,[min:0;max:60;step:1;default:15]
+r,,HeartBeatTimeout,HeartBeatTimeout,,,4050,d2,,,UIR,,Minutes,,Min,,UIR,,Minutes,[min:0],Max,,UIR,,Minutes,[max:60],Step,,UIR,,Minutes,[step:1],Default,,UIR,,Minutes,[default:15]
+w,,PositionZone01,PositionZone01,,,4080,80,,,UIR,,,[min:0;max:3;step:1;default:0]
+r,,PositionZone01,PositionZone01,,,4050,80,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+w,,PositionZone02,PositionZone02,,,4080,81,,,UIR,,,[min:0;max:3;step:1;default:0]
+r,,PositionZone02,PositionZone02,,,4050,81,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+w,,SafePosition,SafePosition,,,4080,82,,,UIR,,,[min:0;max:3;step:1;default:0]
+r,,SafePosition,SafePosition,,,4050,82,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+w,,ExpectedEndPosition,ExpectedEndPosition,,,4080,83,,,UIR,,,[min:0;max:6000;step:1;default:2825]
+r,,ExpectedEndPosition,ExpectedEndPosition,,,4050,83,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:6000],Step,,UIR,,,[step:1],Default,,UIR,,,[default:2825]
+w,,CalibrationTolerance,CalibrationTolerance,,,4080,84,,,UIR,,,[min:0;max:200;step:1;default:50]
+r,,CalibrationTolerance,CalibrationTolerance,,,4050,84,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:200],Step,,UIR,,,[step:1],Default,,UIR,,,[default:50]
+w,,PositionTolerance,PositionTolerance,,,4080,85,,,UIR,,,[min:0;max:200;step:1;default:50]
+r,,PositionTolerance,PositionTolerance,,,4050,85,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:200],Step,,UIR,,,[step:1],Default,,UIR,,,[default:50]
+w,,FlowMaximum,FlowMaximum,,,4080,86,,,UIR,,m³/h,[min:0;max:400;step:5;default:100]
+r,,FlowMaximum,FlowMaximum,,,4050,86,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:0],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:100]
+w,,EndPositionAngle,EndPositionAngle,,,4080,87,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,EndPositionAngle,EndPositionAngle,,,4050,87,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,NrOfPositions,NrOfPositions,,,4080,88,,,UIR,,,[min:2;max:10;step:1;default:2]
+r,,NrOfPositions,NrOfPositions,,,4050,88,,,UIR,,,,Min,,UIR,,,[min:2],Max,,UIR,,,[max:10],Step,,UIR,,,[step:1],Default,,UIR,,,[default:2]
+w,,PositionAngle00,PositionAngle00,,,4080,89,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle00,PositionAngle00,,,4050,89,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle01,PositionAngle01,,,4080,8a,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle01,PositionAngle01,,,4050,8a,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle02,PositionAngle02,,,4080,8b,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle02,PositionAngle02,,,4050,8b,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle03,PositionAngle03,,,4080,8c,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle03,PositionAngle03,,,4050,8c,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle04,PositionAngle04,,,4080,8d,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle04,PositionAngle04,,,4050,8d,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle05,PositionAngle05,,,4080,8e,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle05,PositionAngle05,,,4050,8e,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle06,PositionAngle06,,,4080,8f,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle06,PositionAngle06,,,4050,8f,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle07,PositionAngle07,,,4080,90,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle07,PositionAngle07,,,4050,90,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle08,PositionAngle08,,,4080,91,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle08,PositionAngle08,,,4050,91,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]
+w,,PositionAngle09,PositionAngle09,,,4080,92,,,UIR,,°,[min:0;max:360;step:1;default:180]
+r,,PositionAngle09,PositionAngle09,,,4050,92,,,UIR,,°,,Min,,UIR,,°,[min:0],Max,,UIR,,°,[max:360],Step,,UIR,,°,[step:1],Default,,UIR,,°,[default:180]

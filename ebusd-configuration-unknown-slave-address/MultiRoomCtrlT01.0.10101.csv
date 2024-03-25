@@ -1,0 +1,46 @@
+# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+
+## This file is for MultiRoomCtrlT01 SW version from 0.. to 1.01.01 ##
+
+## Slave address and Circuit ##
+# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+*r,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
+*w,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+w,,FactoryReset,,,,40ff,466163746f72795265736574
+w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+r,,RequestErrorList,,,,4090,,,,HEX:18,,,
+
+## Curent state and sensors ##
+r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
+r,,DeviceID,DeviceID,,,4022,80,,,UCH,,,
+r,,EBusAddressing,EBusAddressing,,,4022,50,,,ULR,,,
+r,,SerialNumber,SerialNumber,,,4022,51,,,STR:12,,,
+r,,OperatingTime,OperatingTime,,,4022,83,,,ULR,,Hour,
+r,,MRCStatus,MRCStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running,,
+r,,MRCConfigurationStatus,MRCConfigurationStatus,,,4022,a0,,,HEX:9,,,
+
+## Configuration parameters ##
+r,,EBusGroupNumber,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,PPMThresholdKitchen,PPMThresholdKitchen,,,4080,a0,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdKitchen,PPMThresholdKitchen,,,4050,a0,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit01,PPMThresholdUnit01,,,4080,a1,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit01,PPMThresholdUnit01,,,4050,a1,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit02,PPMThresholdUnit02,,,4080,a2,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit02,PPMThresholdUnit02,,,4050,a2,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit03,PPMThresholdUnit03,,,4080,a3,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit03,PPMThresholdUnit03,,,4050,a3,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit04,PPMThresholdUnit04,,,4080,a4,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit04,PPMThresholdUnit04,,,4050,a4,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit05,PPMThresholdUnit05,,,4080,a5,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit05,PPMThresholdUnit05,,,4050,a5,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit06,PPMThresholdUnit06,,,4080,a6,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit06,PPMThresholdUnit06,,,4050,a6,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]

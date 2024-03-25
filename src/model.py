@@ -48,15 +48,15 @@ class VersionBase(BaseObject):
 
     def __lt__(self, other):
         return self.first_version < other.first_version
+    
+    def contains(self, other) -> bool:
+        return other.first_version >= self.first_version and other.last_version <= self.last_version
 
-class VersionRange(BaseObject):
+class VersionRange(VersionBase):
     def __init__(self, view_no: int, first_version: int, last_version: int):
         self.view_no = view_no
         self.first_version = first_version
         self.last_version = last_version
-
-    def __lt__(self, other):
-        return self.first_version < other.first_version
     
 
 class DeviceVersion(BaseObject):

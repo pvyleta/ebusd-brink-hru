@@ -1,0 +1,76 @@
+# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+
+## This file is for MultiRoomCtrlT01 SW version from 1.01.03 to 9.99.99 ##
+
+## Slave address and Circuit ##
+# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+*r,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
+*w,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+w,,FactoryReset,,,,40ff,466163746f72795265736574
+w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+r,,RequestErrorList,,,,4090,,,,HEX:18,,,
+
+## Curent state and sensors ##
+r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
+r,,DeviceID,DeviceID,,,4022,80,,,UCH,,,
+r,,EBusAddressing,EBusAddressing,,,4022,50,,,ULR,,,
+r,,SerialNumber,SerialNumber,,,4022,51,,,STR:12,,,
+r,,OperatingTime,OperatingTime,,,4022,83,,,ULR,,Hour,
+r,,MRCStatus,MRCStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running,,
+r,,MRCConfigurationStatus,MRCConfigurationStatus,,,4022,a0,,,HEX:9,,,
+
+## Configuration parameters ##
+r,,EBusGroupNumber,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,PPMThresholdKitchen,PPMThresholdKitchen,,,4080,a0,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdKitchen,PPMThresholdKitchen,,,4050,a0,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit01,PPMThresholdUnit01,,,4080,a1,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit01,PPMThresholdUnit01,,,4050,a1,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit02,PPMThresholdUnit02,,,4080,a2,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit02,PPMThresholdUnit02,,,4050,a2,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit03,PPMThresholdUnit03,,,4080,a3,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit03,PPMThresholdUnit03,,,4050,a3,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit04,PPMThresholdUnit04,,,4080,a4,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit04,PPMThresholdUnit04,,,4050,a4,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit05,PPMThresholdUnit05,,,4080,a5,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit05,PPMThresholdUnit05,,,4050,a5,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,PPMThresholdUnit06,PPMThresholdUnit06,,,4080,a6,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
+r,,PPMThresholdUnit06,PPMThresholdUnit06,,,4050,a6,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]
+w,,BathroomStartDelay,BathroomStartDelay,,,4080,ab,,,UIR,,Minutes,[min:0;max:10;step:1;default:6]
+r,,BathroomStartDelay,BathroomStartDelay,,,4050,ab,,,UIR,,Minutes,,Min,,UIR,,Minutes,[min:0],Max,,UIR,,Minutes,[max:10],Step,,UIR,,Minutes,[step:1],Default,,UIR,,Minutes,[default:6]
+w,,BathroomRunoutTime,BathroomRunoutTime,,,4080,ac,,,UIR,,Minutes,[min:15;max:60;step:1;default:20]
+r,,BathroomRunoutTime,BathroomRunoutTime,,,4050,ac,,,UIR,,Minutes,,Min,,UIR,,Minutes,[min:15],Max,,UIR,,Minutes,[max:60],Step,,UIR,,Minutes,[step:1],Default,,UIR,,Minutes,[default:20]
+w,,KitchenRunoutTime,KitchenRunoutTime,,,4080,ad,,,UIR,,Minutes,[min:0;max:60;step:1;default:30]
+r,,KitchenRunoutTime,KitchenRunoutTime,,,4050,ad,,,UIR,,Minutes,,Min,,UIR,,Minutes,[min:0],Max,,UIR,,Minutes,[max:60],Step,,UIR,,Minutes,[step:1],Default,,UIR,,Minutes,[default:30]
+w,,KitchenSwitchType,KitchenSwitchType,,,4080,ae,,,UIR,,,[min:0;max:1;step:1;default:1]
+r,,KitchenSwitchType,KitchenSwitchType,,,4050,ae,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,SetpointFlowHallway,SetpointFlowHallway,,,4080,af,,,UIR,,m³/h,[min:0;max:50;step:5;default:25]
+r,,SetpointFlowHallway,SetpointFlowHallway,,,4050,af,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:0],Max,,UIR,,m³/h,[max:50],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:25]
+w,,SetpointFlowWTWSetting1,SetpointFlowWTWSetting1,,,4080,b0,,,UIR,,m³/h,[min:50;max:400;step:5;default:75]
+r,,SetpointFlowWTWSetting1,SetpointFlowWTWSetting1,,,4050,b0,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:75]
+w,,SetpointFlowWTWSetting2,SetpointFlowWTWSetting2,,,4080,b1,,,UIR,,m³/h,[min:50;max:400;step:5;default:125]
+r,,SetpointFlowWTWSetting2,SetpointFlowWTWSetting2,,,4050,b1,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:125]
+w,,SetpointFlowWTWSetting3,SetpointFlowWTWSetting3,,,4080,b2,,,UIR,,m³/h,[min:50;max:400;step:5;default:175]
+r,,SetpointFlowWTWSetting3,SetpointFlowWTWSetting3,,,4050,b2,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:175]
+w,,SetpointFlowWTWSetting4,SetpointFlowWTWSetting4,,,4080,b3,,,UIR,,m³/h,[min:50;max:400;step:5;default:125]
+r,,SetpointFlowWTWSetting4,SetpointFlowWTWSetting4,,,4050,b3,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:125]
+w,,SetpointFlowWTWSetting5,SetpointFlowWTWSetting5,,,4080,b4,,,UIR,,m³/h,[min:50;max:400;step:5;default:175]
+r,,SetpointFlowWTWSetting5,SetpointFlowWTWSetting5,,,4050,b4,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:175]
+w,,SetpointFlowWTWSetting6,SetpointFlowWTWSetting6,,,4080,b5,,,UIR,,m³/h,[min:50;max:400;step:5;default:225]
+r,,SetpointFlowWTWSetting6,SetpointFlowWTWSetting6,,,4050,b5,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:225]
+w,,SetpointFlowWTWSetting7,SetpointFlowWTWSetting7,,,4080,b6,,,UIR,,m³/h,[min:50;max:400;step:5;default:175]
+r,,SetpointFlowWTWSetting7,SetpointFlowWTWSetting7,,,4050,b6,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:175]
+w,,SetpointFlowWTWSetting8,SetpointFlowWTWSetting8,,,4080,b7,,,UIR,,m³/h,[min:50;max:400;step:5;default:225]
+r,,SetpointFlowWTWSetting8,SetpointFlowWTWSetting8,,,4050,b7,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:225]
+w,,SetpointFlowWTWSetting9,SetpointFlowWTWSetting9,,,4080,b8,,,UIR,,m³/h,[min:50;max:400;step:5;default:275]
+r,,SetpointFlowWTWSetting9,SetpointFlowWTWSetting9,,,4050,b8,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:50],Max,,UIR,,m³/h,[max:400],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:275]
+w,,WTWFlowMaximum,WTWFlowMaximum,,,4080,b9,,,UIR,,m³/h,[min:0;max:1000;step:5;default:400]
+r,,WTWFlowMaximum,WTWFlowMaximum,,,4050,b9,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:0],Max,,UIR,,m³/h,[max:1000],Step,,UIR,,m³/h,[step:5],Default,,UIR,,m³/h,[default:400]
