@@ -6,14 +6,13 @@ from command_ebus import get_commands_dict
 from model import DeviceModel, VersionRange, VersionBase, DEBUG
 from sw_version import Version
 
+# TODO Test the 'no-reset-requested' for filter and error reset
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
+# TODO add conditionals for csv_known_device (output of devices with known slave addresses) for dipswitch value and software version
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
-
 # TODO Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
-# consider adding comments for version
-# 4. Write code to write the include line
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
@@ -86,42 +85,43 @@ for device_model in device_models.values():
         print(f'{device_model.name} {sorted(list(device_model.version_sub_ranges))}')
 
 
-# Check if subsequent version always contain all parameters from previous version
-for device_model in device_models.values():
-    sensors_versions: list[VersionRange] = sorted(list(device_model.sensors.keys()))
-    previous_sensors = device_model.sensors[sensors_versions[0]] # initialize to the first version
-    for sensor_version in sensors_versions:
-        sensors = device_model.sensors[sensor_version]
-        for sensor in previous_sensors:
-            # By default, Fails only for DecentralAir70 for two parameters, where converters were added in newer version. That almost seems like omitment, so we just correct that when assigning converters, and keep this assert as a sanity check
-            # assert sensor in sensors
-            if sensor not in sensors:
-                # print(f"WARNING: Sensor {sensor} from previous version not present in version {sensor_version} for device {device_model.name}")
-                pass
-            
-        previous_sensors = sensors
+if DEBUG:
+    # Check if subsequent version always contain all parameters from previous version
+    for device_model in device_models.values():
+        sensors_versions: list[VersionRange] = sorted(list(device_model.sensors.keys()))
+        previous_sensors = device_model.sensors[sensors_versions[0]] # initialize to the first version
+        for sensor_version in sensors_versions:
+            sensors = device_model.sensors[sensor_version]
+            for sensor in previous_sensors:
+                # By default, Fails only for DecentralAir70 for two parameters, where converters were added in newer version. That almost seems like omitment, so we just correct that when assigning converters, and keep this assert as a sanity check
+                # assert sensor in sensors
+                if sensor not in sensors:
+                    # print(f"WARNING: Sensor {sensor} from previous version not present in version {sensor_version} for device {device_model.name}")
+                    pass
+                
+            previous_sensors = sensors
 
-    parameters_versions: list[VersionRange] = sorted(list(device_model.parameters.keys()))
-    previous_parameters = device_model.parameters[parameters_versions[0]] # initialize to the first version
-    for parameter_version in parameters_versions:
-        parameters = device_model.parameters[parameter_version]
-        for parameter in previous_parameters:
-            # TODO This fails for surprising amount of devices. Either we need to fix somethign deep in parameter creation, or we just cannot make it subsets. or it is plus vs basic?
-            if parameter not in parameters:
-                # print(f"WARNING: Parameter {parameter} from previous version not present in version {parameter_version} for device {device_model.name}")
-                pass
-            
-        previous_parameters = parameters
+        parameters_versions: list[VersionRange] = sorted(list(device_model.parameters.keys()))
+        previous_parameters = device_model.parameters[parameters_versions[0]] # initialize to the first version
+        for parameter_version in parameters_versions:
+            parameters = device_model.parameters[parameter_version]
+            for parameter in previous_parameters:
+                # This fails for surprising amount of devices. Either we need to fix somethign deep in parameter creation, or we just cannot make it subsets. or it is plus vs basic?
+                if parameter not in parameters:
+                    # print(f"WARNING: Parameter {parameter} from previous version not present in version {parameter_version} for device {device_model.name}")
+                    pass
+                
+            previous_parameters = parameters
 
 
 print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
-write_output_DEPRECATED(device_models)
-
 write_unknown_address_devices(device_models)
 write_known_devices(device_models)
 write_dump(device_models)
+
+write_output_DEPRECATED(device_models)
 
 print("SUCCESS")

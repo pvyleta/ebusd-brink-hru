@@ -10,15 +10,15 @@ def multiplier_to_divider(multiplier: float) -> str:
     else:
         return ""
 
-# TODO Allow comments for fields and messages
 class Field:
-    def __init__(self, name: str, datatype: str, length: int, multiplier: float, values: str, unit: str):
+    def __init__(self, name: str, datatype: str, length: int, multiplier: float, values: str, unit: str, comment: str = ''):
         self.name: str = name
         self.datatype: str = datatype
         self.length: int = length
         self.multiplier: float = multiplier
         self.values: str = values
         self.unit: str = unit
+        self.comment: str = comment
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
@@ -36,12 +36,13 @@ class Field:
         return str(self)
 
 class EbusMessage:
-    def __init__(self, name: str, pbsb: int, id: int|None, type: str, fields: list[Field]):
+    def __init__(self, name: str, pbsb: int, id: int|None, type: str, fields: list[Field], comment: str = ''):
         self.name: str = name
         self.pbsb: int = pbsb
         self.id: int|None = id
         self.type: str = type
         self.fields: list[Field] = fields
+        self.comment: str = comment
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
@@ -61,19 +62,20 @@ class EbusMessage:
     def dump(self, circuit: str = '', slave_address: str = '') -> str:
         # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
         id_str = f'{self.id:02x}' if self.id else ''
-        result = f'{self.type},{circuit},{self.name},,,{slave_address},{self.pbsb:04x},{id_str}'
+        result = f'{self.type},{circuit},{self.name},{self.comment},,{slave_address},{self.pbsb:04x},{id_str}'
         for field in self.fields:
             values_str = multiplier_to_divider(field.multiplier) if field.values == '' else field.values 
-            result += f',{field.name},,{field.datatype},{values_str},{field.unit},'
+            result += f',{field.name},,{field.datatype},{values_str},{field.unit},{field.comment}'
         return result + '\n'
 
 
 class BrinkConfigEbusMessage(EbusMessage):
-    def __init__(self, name: str, id: int, type: str, is_signed: bool, multiplier: float, values: str, unit: str):
+    def __init__(self, name: str, id: int, type: str, is_signed: bool, multiplier: float, values: str, unit: str, comment: str = ''):
         field_names = ['', 'Min', 'Max', 'Step', 'Default']
         self.name = name
         self.id = id
         self.type = type
+        self.comment = comment
         
         if is_signed:
             datatype = 'SIR'
@@ -84,7 +86,7 @@ class BrinkConfigEbusMessage(EbusMessage):
         if type == MSG_TYPE_WRITE:
             self.pbsb = 0x4080
             self.fields.append(Field('', datatype, 2, multiplier, values, unit))
-        else:
+        elif type == MSG_TYPE_READ:
             self.pbsb = 0x4050
             if values == '':
                 for field_name in field_names:
@@ -93,29 +95,24 @@ class BrinkConfigEbusMessage(EbusMessage):
                 self.fields.append(Field('', datatype, 2, multiplier, values, unit))
                 self.fields.append(Field('', 'IGN:6', 6, 1.0, '', ''))
                 self.fields.append(Field('Default', datatype, 2, multiplier, values, unit))
+        else:
+            raise RuntimeError()
 
-## TODO what if ru message has the same name? then this could work...
-## Filter and error reset is split to two messages - one for writing and one for reading. I am unaware how to otherwise specify this so that MQTT would understand this Command-Response type of message ##
-## Reset notification logic and response codes is base on HandleResetNotificationsResponse function from BCSServiceTool
-#ru,,ResetErrors,409103FFFFFF,,,4091,3c0001,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=NoErrorsFound;4=ResetFailed;5=BlockingErrors,,,,,IGN:2,,,
-#ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,,
-#w,,ResetNotifications,409103FFFFFF,,,4091,3c,,,UIR,0x0001=Errors;0x0100=Filter,,
-                
-# ## Control Commands - No further knowledge of meaning, or list of compatible units
-# w,,ApplianceCascade,ApplianceCascade,,,40A0,,,,HEX:4,,,
-# w,,ApplianceStatus,ApplianceStatus,,,40A1,,,,HEX:6,,,
 
-# # WTWCommandControlMode_HandleResponse sends 0x03 - can we figure out the meaning?
-# w,,WTWControlMode,WTWControlMode,,,40A2,,,,UCH,,,
-# w,,WTWControlDemandStatus,WTWControlDemandStatus,,,40A3,,,,HEX:4,,,
-
+# TODO The list contains some known, yet unimplemented commands. They would need more testing to figure out what they mean and how to use them    
 brink_wtw_commands_list: list[EbusMessage] = [
     
     # Factory reset is a write to address 40FF with no ID and a string "FactoryReset" in ascii -> "40FF0C466163746F72795265736574"
     # EbusMessage('FactoryReset', 0x40ff, None, 'w', [Field('', 'STR:12', 12, 1.0, '0x466163746F72795265736574=FactoryReset', '')]),
     EbusMessage('FactoryReset', 0x40ff, 0x466163746F72795265736574, 'w', []),
 
-    EbusMessage('ResetNotifications', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter', '')]),
+    # Filter and error reset is split to two messages - one for writing and one for reading. I am unaware how to otherwise specify this so that MQTT would understand this Command-Response type of message ##
+    # ru,,ResetErrors,409103FFFFFF,,,4091,3c0001,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=NoErrorsFound;4=ResetFailed;5=BlockingErrors,,,,,IGN:2,,,
+    # ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,, 
+      
+    # Reset notification logic and response codes is based on HandleResetNotificationsResponse function from BCSServiceTool
+    EbusMessage('ResetNotifications', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested', '', 'NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.')]),
+    
     EbusMessage('RequestErrorList', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
     EbusMessage('FanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
     
@@ -124,6 +121,14 @@ brink_wtw_commands_list: list[EbusMessage] = [
     
     # This one look like not present on Sky300
     # BrinkConfigEbusMessage('DeviceType', 0x00, 'r', False, 1.0, '', ''),
+
+    # ## Control Commands - No further knowledge of meaning, or list of compatible units
+    # w,,ApplianceCascade,ApplianceCascade,,,40A0,,,,HEX:4,,,
+    # w,,ApplianceStatus,ApplianceStatus,,,40A1,,,,HEX:6,,,
+
+    # # WTWCommandControlMode_HandleResponse sends 0x03 - can we figure out the meaning?
+    # w,,WTWControlMode,WTWControlMode,,,40A2,,,,UCH,,,
+    # w,,WTWControlDemandStatus,WTWControlDemandStatus,,,40A3,,,,HEX:4,,,
     
     BrinkConfigEbusMessage('FilterNotificationFlow', 0x1c, 'r', False, 1000, '', 'm³'),
     BrinkConfigEbusMessage('TotalFilterDays', 0x22, 'r', False, 1.0, '', 'Days'),
@@ -135,49 +140,3 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
     BrinkConfigEbusMessage('TotalFlow', 0x25, 'r', False, 1000, '', 'm³'), 
 ]
-        
-raw_ebusd_config = '''
-# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates ,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-## Read commands from WTWCommands.cs, search '.*CmdRead(.*) = "(....)01(..).*', replace 'r,,$1,$1,,,$2,$3,,,SIR,,,'
-## Write commands from WTWCommands.cs, search '.*CmdWrite(.*) = "(....)03(..)FFFF.*', replace 'w,,$1,$1,,,$2,$3,,,SIR,,,'
-## Test commands from WTWCommands.cs, search '.*CmdTestCommand(.*) = "(....)03(..).*', replace 'w,,TestCommand$1,TestCommand$1,,,$2,$3,,,HEX:2,,,'
-
-## These commands are based on contents of WTWCommands.cs. There is more commands in that file, but the following subset looks useful and implemented by Renovent units. Flair units and/or other devices might differ.
-
-*r,sky300,,,,3c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Request Error - ID taken from capture of what air control sends
-r,,RequestErrorList,RequestErrorList,,,4090,00,,,HEX:18,,,
-
-## Control Commands - No further knowledge of meaning, or list of compatible units
-w,,ApplianceCascade,ApplianceCascade,,,40A0,,,,HEX:4,,,
-w,,ApplianceStatus,ApplianceStatus,,,40A1,,,,HEX:6,,,
-
-# WTWCommandControlMode_HandleResponse sends 0x03 - can we figure out the meaning?
-w,,WTWControlMode,WTWControlMode,,,40A2,,,,UCH,,,
-w,,WTWControlDemandStatus,WTWControlDemandStatus,,,40A3,,,,HEX:4,,,
-
-## Factory reset is a write to address 40FF with no ID and a string "FactoryReset" in ascii -> "40FF0C466163746F72795265736574"
-w,,FactoryReset,FactoryReset,,,40FF,466163746F72795265736574
-
-r,,ParameterFilterNotificationFlow,ParameterFilterNotificationFlow,,,4050,1C,,,UIR,-1000,m³,
-r,,ParameterActualFilterDays,ParameterActualFilterDays,,,4050,22,,,UIR,,,,min,,UIR,,,,max,,UIR,,,,step,,UIR,,,,default,,UIR,,
-r,,ParameterActualFilterFlow,ParameterActualFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
-
-# Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
-r,,ParameterOperatingHours,ParameterOperatingHours,,,4050,24,,,UIR,-5,h,,min,,UIR,-5,h,,max,,UIR,-5,h,,step,,UIR,-5,h,,default,,UIR,-5,h,
-
-# Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
-r,,ParameterTotalFlow,ParameterTotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
-
-#### CHANGE FAN MODE ####
-w,,FanMode,,,,40a1,,,,ULR,0x0=Min;0x00010001=Low;0x00020002=Medium;0x00030003=High,,,,,IGN:2
-w,,FanMode,,,,40a3,01,,,UCH,0=Min;1=Low;2=Medium;3=High,,,,,IGN:2
-
-## Filter and error reset is split to two messages - one for writing and one for reading. I am unaware how to otherwise specify this so that MQTT would understand this Command-Response type of message ##
-## TODO Check and explain this from code
-## TODO what if ru message has the same name? then this could work...
-ru,,ResetErrors,409103FFFFFF,,,4091,3c0001,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=NoErrorsFound;4=ResetFailed;5=BlockingErrors,,,,,IGN:2,,,
-ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,,
-w,,ResetNotifications,409103FFFFFF,,,4091,3c,,,UIR,0x0001=Errors;0x0100=Filter,,
-'''
-

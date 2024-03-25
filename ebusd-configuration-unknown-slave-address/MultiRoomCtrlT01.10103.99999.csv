@@ -16,7 +16,7 @@
 
 ## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
 w,,FactoryReset,,,,40ff,466163746f72795265736574
-w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter,,
+w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,RequestErrorList,,,,4090,,,,HEX:18,,,
 
 ## Curent state and sensors ##

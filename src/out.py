@@ -149,8 +149,6 @@ def slave_and_circuit_comment(circuit: str) -> str:
     comment += str_slave_and_circuit_mask('w', circuit, '[fill_your_slave_address_here]')
     return comment
 
-# TODO add conditionals for dipswitch value
-# TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
 def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = '') -> str:
     file_str = COMMENT_HEADER + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
     file_str += COMMENT_COMMON_COMMANDS
@@ -197,8 +195,6 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel]):
                     file_str += COMMENT_HEADER
                     file_str += device_name_comment(device_name, subversion)
                     file_str += slave_and_circuit_comment(device_name)
-                    # TODO add line with comment saying how to put in correct slave version
-                    # TODO filter the common commands for Valve where they are unlikely to be working
                     file_str += COMMENT_COMMON_COMMANDS
                     for msg in brink_wtw_commands_list:
                         if device_name == 'DecentralAir70' and msg.name == 'FilterNotificationFlow':

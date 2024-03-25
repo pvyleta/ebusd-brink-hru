@@ -46,7 +46,27 @@ Currently, the ebusd-configuration for these heat recovery units is present:
  Note, that Brink devices are re-branded as Viessmann, Wolf, VisionAIR, Ubbink and maybe others, os these configuration files are (mostly) applicable for those as well.
 
 # repo structure
-## ebusd-configuration
+
+## ebusd-configuration-known-slave-address
+If you find your device in this folder, you may consider yourself lucky - there can be used verbatim in ebusd. The files contain parameters for the latest SW version, for the 'Plus' variant of the HRU unit, so not all parameters might be applicable for your device. If you want a .csv file that matches your device perfectly, you need to look into `ebusd-configuration-unknown-slave-address`
+
+## ebusd-configuration-unknown-slave-address
+This folder contains all known Brink devices in all known SW versions and basic/plus variants of HW. The use is simple: 
+
+ 1. Figure out the slave address of your device (can be easily found from ebusd logs - Brink devices respond as manufacturer ENCON to the 0704 id scan message, which might help you to find it)
+ 2. Rename the file to that address (in hexa, e.g. `3c.csv`)
+ 3. In the file, replace `[fill_your_slave_address_here]` with slave address of your device, (e.g. '3c')
+ 4. Now you can use the file in `ebusd`
+
+## ebusd-mqtt
+Contains useful adaptation of the `mqtt-hassio.cfg` file from the ebus repo, that is suitable for controlling Brink HRUs. The original is aimed mostly at water heaters and not ventilation units, so it was extended.
+
+## ebusd-scan
+This is work-in-progress. The hope is, that we would be able to automate the selection of right file in ebusd through properly scanning various fields in this file, however, after several tries, this looks like way more difficult thing to achieve, than originally thought. 
+ 
+## ebusd-configuration-deprecated
+** The files in this folder should not be needed to be used. They are kept mostly for reference **
+
 Contains the config files for individual Brink devices. There are two types of files - sensors and params. Sensors are read only, while params are almost in all instances writable. For params, each message contains five fields: [current, min, max, step_size, default]. This is reflected in the generated .csv files.
 
 The naming format is [device].[first_sw_version].[last_sw_version].[sensors|params.basic|params.plus].csv, where the range first-last SW versions is the range of versions this file is applicable for, sensors is for sensors, params.plus are params for plus version of device and params.basic is for basic version of the device. Note, that not all devices have basic/plus version, but for simplicity we write out bot for every device - sometimes those files are just identical.
