@@ -69,6 +69,7 @@ Contains useful adaptation of the `mqtt-hassio.cfg` file from the ebus repo, tha
 ## ebusd-scan
 This is work-in-progress. The hope is, that we would be able to automate the selection of right file in ebusd through properly scanning various fields in this file, however, after several tries, this looks like way more difficult thing to achieve, than originally thought. 
  
+<!---
 ## ebusd-configuration-deprecated
 ** The files in this folder should not be needed to be used. They are kept mostly for reference **
 
@@ -77,6 +78,7 @@ Contains the config files for individual Brink devices. There are two types of f
 The naming format is [device].[first_sw_version].[last_sw_version].[sensors|params.basic|params.plus].csv, where the range first-last SW versions is the range of versions this file is applicable for, sensors is for sensors, params.plus are params for plus version of device and params.basic is for basic version of the device. Note, that not all devices have basic/plus version, but for simplicity we write out bot for every device - sometimes those files are just identical.
 
 Since Brink uses non-standard identification response (0704h message), it is not that straightforward to fabricate the .csv files so that they can be directly consumed by ebusd. Therefore, we just create 'blocks' of CSV data for the given device, which you then need to adjust to match the ebus slave address of your device. Unfortunately, the default slave address of a device is a parameter not foudn in Brink Service Tool. Please, report those numbers, and we can gradually build the files for those devices, that would be directly consumable by ebusd.
+-->
 
 ## src
 Contains the python scripts used to parse the decompiled Brink Service Tool. They are not exactly pretty, but they do the jobs and they contain reasonable number of sanity checks. The scripts are expected to be run from the root repo directory, i.e. `python .\src\main.py`

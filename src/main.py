@@ -122,6 +122,7 @@ write_unknown_address_devices(device_models)
 write_known_devices(device_models)
 write_dump(device_models)
 
-write_output_DEPRECATED(device_models)
+if DEBUG:
+    write_output_DEPRECATED(device_models)
 
 print("SUCCESS")
