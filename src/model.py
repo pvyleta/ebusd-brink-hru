@@ -71,6 +71,7 @@ class DeviceModel(BaseObject):
         self.sensors: dict[VersionRange, list[Sensor]] = {}
         self.parameters: dict[VersionRange, list[Parameter]] = {}
         self.version_sub_ranges: set[VersionBase] = set()
+        self.has_plus_variant: bool = False
 
 
 # .xaml files do not have verson information, so we must rely on the view 'index' for matching

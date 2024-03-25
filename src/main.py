@@ -48,8 +48,14 @@ for device, sensors in dict_devices_sensor.items():
     device_model.sensors[device.version] = sensors
 
 for device, parameters in dict_devices_parameters.items():
+
+    # sanity check, that all device parameter definitions for one device are consistent in having or not having a plus variant
+    if device.device_name in device_models:
+        device_model.has_plus_variant == device.has_plus_variant
+
     device_model = device_models.setdefault(device.device_name, DeviceModel(device.device_name))
     device_model.parameters[device.version] = parameters
+    device_model.has_plus_variant = device.has_plus_variant
 
 
 # Add all sw-version-sub-ranges. We take advantage of having only two sets of non-intersecting version ranges. We merge the first/last versions, and make a joined list, and then construct a set out of it.
@@ -115,8 +121,8 @@ print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
-write_output(dict_devices_sensor, dict_devices_parameters)
-write_known_devices(dict_devices_sensor, dict_devices_parameters)
-write_dump(dict_devices_sensor, dict_devices_parameters)
+write_output(device_models)
+write_known_devices(device_models)
+write_dump(device_models)
 
 print("SUCCESS")

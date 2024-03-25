@@ -6,8 +6,8 @@ from collections import namedtuple
 
 import jsonpickle # type: ignore
 
-from model import Sensor, DeviceVersion, INT16, UINT16
-from parameter import Parameter, DeviceParameters
+from model import Sensor, INT16, UINT16, DeviceModel, VersionRange
+from parameter import Parameter
 from known_devices import known_devices
 from ebus_message import multiplier_to_divider, brink_wtw_commands_list
 
@@ -22,11 +22,11 @@ CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field
 SensorDump = namedtuple('SensorDump', ['device_name', 'first_version', 'last_version', 'name', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length'])
 ParameterDump = namedtuple('ParameterDump', ['device_name', 'first_version', 'last_version', 'name', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length', 'field_current', 'field_min', 'field_max', 'field_step', 'field_default'])
 
-def dump_sensor(sensor: Sensor, device_version: DeviceVersion) -> SensorDump:
+def dump_sensor(sensor: Sensor, device_name: str, version_range: VersionRange) -> SensorDump:
     dump_sensor_dict: dict[str, str] = {}
-    dump_sensor_dict['device_name'] = device_version.device_name
-    dump_sensor_dict['first_version'] = str(device_version.version.first_version)
-    dump_sensor_dict['last_version'] = str(device_version.version.last_version)
+    dump_sensor_dict['device_name'] = device_name
+    dump_sensor_dict['first_version'] = str(version_range.first_version)
+    dump_sensor_dict['last_version'] = str(version_range.last_version)
     dump_sensor_dict['name'] = sensor.name_current.removeprefix('Current')
     dump_sensor_dict['id'] = f'0x{sensor.id:02x}'
     dump_sensor_dict['unit'] = sensor.unit
@@ -37,11 +37,11 @@ def dump_sensor(sensor: Sensor, device_version: DeviceVersion) -> SensorDump:
     return SensorDump(**dump_sensor_dict)
 
 
-def dump_param(param: Parameter, device_version: DeviceVersion) -> ParameterDump:
+def dump_param(param: Parameter, device_name: str, version_range: VersionRange) -> ParameterDump:
     dump_param_dict: dict[str, str] = {}
-    dump_param_dict['device_name'] = device_version.device_name
-    dump_param_dict['first_version'] = str(device_version.version.first_version)
-    dump_param_dict['last_version'] = str(device_version.version.last_version)
+    dump_param_dict['device_name'] = device_name
+    dump_param_dict['first_version'] = str(version_range.first_version)
+    dump_param_dict['last_version'] = str(version_range.last_version)
     dump_param_dict['name'] = param.name
     dump_param_dict['id'] = f'0x{param.id:02x}'
     dump_param_dict['unit'] = param.unit
@@ -116,7 +116,7 @@ def csv_from_parameters(parameters: list[Parameter], device_name: str, is_plus: 
 
 # TODO add conditionals for dipswitch value
 # TODO figure out what to do with the versions... for start, we can include the latest version, but then we will need to add some conditionals on current sw version -> which would be worth to add to scan, scan can likely be added per device
-def csv_known_device(sensors: list[Sensor], device_name: str, parameters: list[Parameter], is_plus: bool, slave_address: str = '') -> str:
+def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, is_plus: bool, slave_address: str = '') -> str:
     file_str = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
 ## This file is based on plus version in latest SW version - basic version and older SW versions might not have all the parameters implemented.
 ## sources:
@@ -140,54 +140,48 @@ def csv_known_device(sensors: list[Sensor], device_name: str, parameters: list[P
     return file_str
  
 
-
-def get_latest_sw_for_device(device_name: str, devices: list[DeviceVersion]):
-    for device in devices:
-        if device.device_name == device_name and device.version.last_version == 99999:
-            return device
-    return None
-
-
-def write_known_devices(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+def write_known_devices(device_models: dict[str, DeviceModel]):
     if os.path.exists(KNOWN_DEVICES_EN_DIR):
         shutil.rmtree(KNOWN_DEVICES_EN_DIR)
     os.mkdir(KNOWN_DEVICES_EN_DIR)
     for known_device in known_devices:
         with open(os.path.join(KNOWN_DEVICES_EN_DIR, f'{known_device.slave_address:02x}.{known_device.device_name}.csv'), "w", encoding="utf-8") as text_file:
-            latest_device_sensors = get_latest_sw_for_device(known_device.device_name, list(dict_devices_sensor.keys()))
-            latest_device_params = get_latest_sw_for_device(known_device.device_name, list(dict_devices_parameter.keys()))
+            device_model = device_models[known_device.device_name]
+            latest_sensor_version_range = sorted(list(device_model.sensors.keys()))[-1]
+            latest_parameter_version_range = sorted(list(device_model.parameters.keys()))[-1]
             text_file.write(CSV_HEADER)
-            text_file.write(csv_known_device(dict_devices_sensor[latest_device_sensors], known_device.device_name, dict_devices_parameter[latest_device_params], True, f'{known_device.slave_address:02x}'))
+            text_file.write(csv_known_device(device_model.sensors[latest_sensor_version_range], device_model.parameters[latest_parameter_version_range], known_device.device_name, True, f'{known_device.slave_address:02x}'))
 
 
 # Contents of output_dir are always cleaned before writing
 # File format is [device_name].[lowest_sw_version].[highest_sw_version].[sensors|params|params.basic|params.plus].csv
-def write_output(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+def write_output(device_models: dict[str, DeviceModel]):
     if os.path.exists(OUTPUT_DIR):
         shutil.rmtree(OUTPUT_DIR)
     os.mkdir(OUTPUT_DIR)
 
-    for device, sensors in dict_devices_sensor.items():
-        with open(os.path.join(OUTPUT_DIR, f'{device.device_name}.{device.version.first_version}.{device.version.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
-            text_file.write(CSV_HEADER)
-            text_file.write(csv_from_sensors(sensors, device.device_name))
-
-    for device_param, parameters in dict_devices_parameter.items():
-        if device_param.has_plus_variant: 
-            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
+    for device_name, device_model in device_models.items():
+        for version_range, sensors in device_model.sensors.items():
+            with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8") as text_file:
                 text_file.write(CSV_HEADER)
-                text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
+                text_file.write(csv_from_sensors(sensors, device_name))
 
-            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
-                text_file.write(CSV_HEADER)
-                text_file.write(csv_from_parameters(parameters, device_param.device_name, True))
-        else:
-            with open(os.path.join(OUTPUT_DIR, f'{device_param.device_name}.{device_param.version.first_version}.{device_param.version.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
-                text_file.write(CSV_HEADER)
-                text_file.write(csv_from_parameters(parameters, device_param.device_name, False))
+        for version_range, parameters in device_model.parameters.items():
+            if device_model.has_plus_variant: 
+                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.basic.csv'), "w", encoding="utf-8") as text_file:
+                    text_file.write(CSV_HEADER)
+                    text_file.write(csv_from_parameters(parameters, device_name, False))
+
+                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8") as text_file:
+                    text_file.write(CSV_HEADER)
+                    text_file.write(csv_from_parameters(parameters, device_name, True))
+            else:
+                with open(os.path.join(OUTPUT_DIR, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8") as text_file:
+                    text_file.write(CSV_HEADER)
+                    text_file.write(csv_from_parameters(parameters, device_name, False))
 
 
-def write_dump(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devices_parameter: dict[DeviceParameters, list[Parameter]]):
+def write_dump(device_models: dict[str, DeviceModel]):
     if os.path.exists(DUMP_DIR):
         shutil.rmtree(DUMP_DIR)
     os.mkdir(DUMP_DIR)
@@ -195,11 +189,13 @@ def write_dump(dict_devices_sensor: dict[DeviceVersion, list[Sensor]], dict_devi
     sensors_all: list[SensorDump] = []
     params_all: list[ParameterDump] = []
 
-    for device, sensors in dict_devices_sensor.items():
-        sensors_all.extend([dump_sensor(sensor, device) for sensor in sensors])
 
-    for device_param, parameters in dict_devices_parameter.items():
-        params_all.extend([dump_param(param, device_param) for param in parameters])
+    for device_name, device_model in device_models.items():
+        for version_range, sensors in device_model.sensors.items():
+            sensors_all.extend([dump_sensor(sensor, device_name, version_range) for sensor in sensors])
+
+        for version_range, parameters in device_model.parameters.items():
+            params_all.extend([dump_param(param, device_name, version_range) for param in parameters])
 
     # Write out JSON and CVS of all params and sensors for an further processing in different tools
     jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
