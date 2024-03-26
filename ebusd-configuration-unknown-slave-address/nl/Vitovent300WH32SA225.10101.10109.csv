@@ -1,24 +1,24 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## sources:
-## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
-## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## Deze ebus-configuratie kan werken voor Ubbink, VisionAIR, WOLF CWL-serie, Viessmann en sommige andere systemen die gewoon opnieuw gelabelde Brink-apparaten zijn
+## bronnen:
+## - Origineel idee en enkele scheiders: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (gedecompileerd via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
 ## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
-## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
+## Berichtnamen zijn gebaseerd op officiële Brink Service Tool vertalingen met verwijderde spaties en speciale tekens.
+## Berichtcommentaar is de naam van de parameter zoals intern in de code gebruikt (om te helpen als de vertaling zelf verwarrend is)
 ## 
-## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
+## Voor ebusd-configuratiebestanden voor het complete Brink-portfolio ga naar https://github.com/pvyleta/ebusd-brink-hru
 
 ## This file is for Vitovent300WH32SA225 SW version from 1.01.01 to 1.01.09 ##
 
-## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Slave-adres en Circuit ##
+## Vul het slave-adres van uw apparaat in (hexa zonder '0x' voorvoegsel) in plaats van [fill_your_slave_address_here]
+## Hernoem dit bestand vervolgens naar [fill_your_slave_address_here].csv en u zou het in ebusd moeten kunnen gebruiken.
 *r,Vitovent300WH32SA225,,,,[fill_your_slave_address_here],
 *w,Vitovent300WH32SA225,,,,[fill_your_slave_address_here],
 
-## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+## GEMEENSCHAPPELIJKE HRU COMMANDO'S ## (WTWCommands.cs - Sommige zijn mogelijk niet van toepassing op dit apparaat, gebruik met voorzichtigheid)
 w,,FactoryReset,,,,40ff,466163746f72795265736574
 w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,RequestErrorList,,,,4090,,,,HEX:18,,,
@@ -29,7 +29,7 @@ r,,TotalFilterFlow,,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-100
 r,,TotalOperatingHours,,,,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
 r,,TotalFlow,,,,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 
-## Curent state and sensors ##
+## Huidige staat en sensoren ##
 r,,SoftwareVersie,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,,VentilatieMode,VentilationMode,,,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,
 r,,HuidigeToevoerSnelheid,InletFanSpeed,,,4022,02,,,UIR,,rpm,

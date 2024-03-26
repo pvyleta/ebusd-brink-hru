@@ -13,8 +13,8 @@
 ## This file is for Excellent180 SW version from 1.06.04 to 1.06.05 ##
 
 ## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+## Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
 *r,Excellent180,,,,[fill_your_slave_address_here],
 *w,Excellent180,,,,[fill_your_slave_address_here],
 

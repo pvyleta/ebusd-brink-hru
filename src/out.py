@@ -12,6 +12,7 @@ from known_devices import known_devices
 from sw_version import sw_version_to_friendly_str
 from ebus_message import multiplier_to_divider, brink_wtw_commands_list
 from parse_xaml import get_name
+from comments_translations import translations
 
 DEPRECATED_DIR = "ebusd-configuration-deprecated"
 DUMP_DIR = "dump"
@@ -141,26 +142,6 @@ def csv_from_parameters(parameters: list[Parameter], language: str, is_plus: boo
             file_str += csv_line_parameters_read(param, language, device_name, slave_address)
     return file_str
 
-COMMENT_HEADER = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## sources:
-## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
-## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
-## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
-## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
-## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
-## 
-## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
-'''
-COMMENT_COMMON_COMMANDS = '''
-## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
-'''
-COMMENT_CURRENT_STATE = '''
-## Curent state and sensors ##
-'''
-COMMENT_PARAMETERS = '''
-## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
-'''
 
 def device_name_comment(device_name: str, versions: VersionBase) -> str:
     if versions.first_version == versions.last_version:
@@ -172,22 +153,20 @@ def device_name_comment(device_name: str, versions: VersionBase) -> str:
 def str_slave_and_circuit_mask(type: str, circuit: str = '', slave_address: str = '') -> str:
     return f'*{type},{circuit},,,,{slave_address},\n'
 
-def slave_and_circuit_comment(circuit: str) -> str:
-    comment = '\n## Slave address and Circuit ##\n'
-    comment += '# Fill in the slave address of your device (hexa without \'0x\' prefix) instead of [fill_your_slave_address_here]\n'
-    comment += '# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.\n'
+def slave_and_circuit_comment(circuit: str, language: str) -> str:
+    comment = translations[language]['COMMENT_SLAVE_AND_CIRCUIT']
     comment += str_slave_and_circuit_mask('r', circuit, '[fill_your_slave_address_here]')
     comment += str_slave_and_circuit_mask('w', circuit, '[fill_your_slave_address_here]')
     return comment
 
 def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, language: str, is_plus: bool, slave_address: str = '') -> str:
-    file_str = COMMENT_HEADER + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
-    file_str += COMMENT_COMMON_COMMANDS
+    file_str = translations[language]['COMMENT_HEADER'] + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
+    file_str += translations[language]['COMMENT_COMMON_COMMANDS']
     for msg in brink_wtw_commands_list:
         file_str += msg.dump()
-    file_str += COMMENT_CURRENT_STATE
+    file_str += translations[language]['COMMENT_CURRENT_STATE']
     file_str += csv_from_sensors(sensors, language)
-    file_str += COMMENT_PARAMETERS
+    file_str += translations[language]['COMMENT_PARAMETERS']
     file_str += csv_from_parameters(parameters, language, True)
     return file_str
  
@@ -219,10 +198,10 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel], languag
             for subversion in device_model.version_sub_ranges:
                 with open(os.path.join(DEVICES_UNKNOWN_DIR, language, f'{device_name}.{subversion.first_version}.{subversion.last_version}{'.plus' if plus_version else ''}.csv'), "w", encoding="utf-8", newline='\n') as text_file:
                     file_str = CSV_HEADER
-                    file_str += COMMENT_HEADER
+                    file_str += translations[language]['COMMENT_HEADER']
                     file_str += device_name_comment(device_name, subversion)
-                    file_str += slave_and_circuit_comment(device_name)
-                    file_str += COMMENT_COMMON_COMMANDS
+                    file_str += slave_and_circuit_comment(device_name, language)
+                    file_str += translations[language]['COMMENT_COMMON_COMMANDS']
                     for msg in brink_wtw_commands_list:
                         if device_name == 'DecentralAir70' and msg.name == 'FilterNotificationFlow':
                             # This unit already defines this parameter later
@@ -233,11 +212,11 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel], languag
                         file_str += msg.dump()
                     for version_range, sensors in device_model.sensors.items():
                         if version_range.contains(subversion):
-                            file_str += COMMENT_CURRENT_STATE
+                            file_str += translations[language]['COMMENT_CURRENT_STATE']
                             file_str += csv_from_sensors(sensors, language)
                     for version_range, parameters in device_model.parameters.items():
                         if version_range.contains(subversion):
-                            file_str += COMMENT_PARAMETERS
+                            file_str += translations[language]['COMMENT_PARAMETERS']
                             file_str += csv_from_parameters(parameters, language, plus_version)
                     text_file.write(file_str)
 

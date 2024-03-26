@@ -13,8 +13,8 @@
 ## This file is for Flair300 SW version from 2.01.06 to 9.99.99 ##
 
 ## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+## Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
 *r,Flair300,,,,[fill_your_slave_address_here],
 *w,Flair300,,,,[fill_your_slave_address_here],
 

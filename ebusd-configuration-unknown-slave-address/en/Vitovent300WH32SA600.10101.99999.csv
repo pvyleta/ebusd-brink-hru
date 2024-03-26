@@ -13,8 +13,8 @@
 ## This file is for Vitovent300WH32SA600 SW version from 1.01.01 to 9.99.99 ##
 
 ## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+## Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
 *r,Vitovent300WH32SA600,,,,[fill_your_slave_address_here],
 *w,Vitovent300WH32SA600,,,,[fill_your_slave_address_here],
 

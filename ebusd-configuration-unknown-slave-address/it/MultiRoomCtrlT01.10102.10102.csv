@@ -1,29 +1,27 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## sources:
-## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
-## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
-## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
-## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
-## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
-## 
-## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
+## Questa configurazione ebus potrebbe funzionare per Ubbink, VisionAIR, serie WOLF CWL, Viessmann e alcuni altri sistemi che sono semplicemente dispositivi Brink con marchio diverso
+## fonti:
+## - Idea originale e alcuni divisori: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Strumento di servizio Brink (decompilato tramite Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Scheda tecnica Renovent 150: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Scheda tecnica modulo Modbus: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## I nomi dei messaggi si basano sulle traduzioni ufficiali dello Strumento di servizio Brink con spazi e caratteri speciali rimossi.
+## Il commento al messaggio è il nome del parametro come utilizzato internamente nel codice (per aiutare se la traduzione di per sé è confusa)
 
 ## This file is for MultiRoomCtrlT01 SW version 1.01.02 ##
 
-## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Indirizzo slave e circuito ##
+## Inserire l'indirizzo slave del proprio dispositivo (hexa senza prefisso '0x') al posto di [fill_your_slave_address_here]
+## Rinominare poi semplicemente questo file in [fill_your_slave_address_here].csv e si dovrebbe essere in grado di utilizzarlo in ebusd.
 *r,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
 *w,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
 
-## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+## COMANDI HRU COMUNI ## (WTWCommands.cs - Alcuni di essi potrebbero non essere applicabili per questo dispositivo, usare con cautela)
 w,,FactoryReset,,,,40ff,466163746f72795265736574
 w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,RequestErrorList,,,,4090,,,,HEX:18,,,
 
-## Curent state and sensors ##
+## Stato corrente e sensori ##
 r,,VersioneDelSoftware,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,,IDDispositivo,DeviceID,,,4022,80,,,UCH,,,
 r,,IndirizzamentoEBus,EBusAddressing,,,4022,50,,,ULR,,,
@@ -32,7 +30,7 @@ r,,DurataDiFunzionamento,OperatingTime,,,4022,83,,,ULR,,Hour,
 r,,StatoMRC,MRCStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running,,
 r,,StatoDiConfigurazioneMRC,MRCConfigurationStatus,,,4022,a0,,,HEX:9,,,
 
-## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
+## Parametri di configurazione ## (i valori tra parentesi accanto al campo sono definizioni di quei valori dei campi dallo Strumento di servizio Brink.)
 r,,NumeroGruppoEBus,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
 w,,SogliaPPMCucina,PPMThresholdKitchen,,,4080,a0,,,UIR,,ppm,[min:0;max:2000;step:10;default:600]
 r,,SogliaPPMCucina,PPMThresholdKitchen,,,4050,a0,,,UIR,,ppm,,Min,,UIR,,ppm,[min:0],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:10],Default,,UIR,,ppm,[default:600]

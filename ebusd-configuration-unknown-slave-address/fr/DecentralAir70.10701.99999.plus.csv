@@ -1,24 +1,22 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## sources:
-## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
-## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
-## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
-## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
-## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
-## 
-## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
+## Cette configuration ebus peut fonctionner pour Ubbink, VisionAIR, les séries WOLF CWL, Viessmann et certains autres systèmes qui sont juste des dispositifs Brink re-marqués
+## sources :
+## - Idée originale et certains séparateurs : https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Outil de service Brink (décompilé via Jetbrains DotPeak) : https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Fiche technique Renovent 150 : https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Fiche technique du module Modbus : https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## Les noms des messages sont basés sur les traductions officielles de l'outil de service Brink avec espaces et caractères spéciaux supprimés.
+## Le commentaire du message est le nom du paramètre tel qu'utilisé en interne dans le code (pour aider si la traduction elle-même est déroutante)
 
 ## This file is for DecentralAir70 SW version from 1.07.01 to 9.99.99 ##
 
-## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Adresse esclave et circuit ##
+## Remplissez l'adresse esclave de votre appareil (hexa sans préfixe '0x') au lieu de [fill_your_slave_address_here]
+## Renommez ensuite simplement ce fichier en [fill_your_slave_address_here].csv et vous devriez pouvoir l'utiliser dans ebusd.
 *r,DecentralAir70,,,,[fill_your_slave_address_here],
 *w,DecentralAir70,,,,[fill_your_slave_address_here],
 
-## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+## COMMANDES HRU COMMUNES ## (WTWCommands.cs - Certaines d'entre elles peuvent ne pas être applicables pour cet appareil, à utiliser avec prudence)
 w,,FactoryReset,,,,40ff,466163746f72795265736574
 w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,RequestErrorList,,,,4090,,,,HEX:18,,,
@@ -28,7 +26,7 @@ r,,TotalFilterFlow,,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-100
 r,,TotalOperatingHours,,,,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
 r,,TotalFlow,,,,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 
-## Curent state and sensors ##
+## État actuel et capteurs ##
 r,,VersionDuLogiciel,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,,VersionDuLogicielPlus,PlusSoftwareVersion,,,4022,f0,,,STR:13,,,
 r,,ModeDeVentilation,VentilationMode,,,4022,01,,,UIR,0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off,,
@@ -65,7 +63,7 @@ r,,NuméroDeSérie,SerialNumber,,,4022,51,,,STR:12,,,
 r,,EBusSyncGenErrors,EBusSyncGenErrors,,,4022,64,,,UIR,,,
 r,,TempsDeFonctionnement,OperatingTime,,,4022,83,,,ULR,,Hours,
 
-## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
+## Paramètres de configuration ## (les valeurs entre parenthèses à côté du champ sont des définitions de ces valeurs de champ du Brink Service Tool.)
 w,,DernièreValeurPrédéfinieDuFlux,LastFlowPresetValue,,,4080,50,,,UIR,,,[min:0;max:5;step:1;default:3]
 r,,DernièreValeurPrédéfinieDuFlux,LastFlowPresetValue,,,4050,50,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:5],Step,,UIR,,,[step:1],Default,,UIR,,,[default:3]
 w,,FluxPrédéfini01,FlowPreset01,,,4080,51,,,UIR,,m³/h,[min:15;max:70;step:1;default:15]

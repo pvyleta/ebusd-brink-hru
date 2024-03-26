@@ -1,29 +1,27 @@
 # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
-## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
-## sources:
-## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
-## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
-## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
-## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
-## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
-## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
-## 
-## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
+## Esta configuración de ebus puede funcionar para Ubbink, VisionAIR, series WOLF CWL, Viessmann y algunos otros sistemas que son simplemente dispositivos Brink re-marcados
+## fuentes:
+## - Idea original y algunos divisores: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Herramienta de Servicio Brink (decompilada vía Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Hoja de datos Renovent 150: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Hoja de datos del Módulo Modbus: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## Los nombres de los mensajes se basan en las traducciones oficiales de la Herramienta de Servicio Brink con espacios y caracteres especiales eliminados.
+## El comentario del mensaje es el nombre del parámetro tal como se usa internamente en el código (para ayudar si la traducción en sí es confusa)
 
 ## This file is for ValveT01 SW version from 0.. to 9.99.99 ##
 
-## Slave address and Circuit ##
-# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
-# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+## Dirección esclava y circuito ##
+## Complete la dirección esclava de su dispositivo (hex sin prefijo '0x') en lugar de [fill_your_slave_address_here]
+## Luego simplemente renombre este archivo a [fill_your_slave_address_here].csv y debería poder usarlo en ebusd.
 *r,ValveT01,,,,[fill_your_slave_address_here],
 *w,ValveT01,,,,[fill_your_slave_address_here],
 
-## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+## COMANDOS HRU COMUNES ## (WTWCommands.cs - Algunos de ellos pueden no ser aplicables para este dispositivo, usar con precaución)
 w,,FactoryReset,,,,40ff,466163746f72795265736574
 w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,RequestErrorList,,,,4090,,,,HEX:18,,,
 
-## Curent state and sensors ##
+## Estado actual y sensores ##
 r,,VersiónDeSoftware,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,,IDDeDispositivo,DeviceID,,,4022,80,,,UCH,,,
 r,,DirecciónDeEBus,EBusAddressing,,,4022,50,,,ULR,,,
@@ -36,7 +34,7 @@ r,,RecuentoDePasosDePosición,PositionStepCount,,,4022,8a,,,UIR,,Steps,
 r,,SentidoDeCarrera,RunDirection,,,4022,8b,,,UIR,0=CW;1=CCW,,
 r,,ConfiguraciónDeZonaVálida,ConfigurationValid,,,4022,8c,,,UIR,,,
 
-## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
+## Parámetros de configuración ## (los valores entre paréntesis junto al campo son definiciones de esos valores de campo del Herramienta de Servicio Brink.)
 w,,NúmeroDeGrupoDeEBus,EBusGroupNumber,,,4080,d0,,,UIR,,,[min:1;max:8;step:1;default:1]
 r,,NúmeroDeGrupoDeEBus,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
 w,,NúmeroDeSecundarioDeEBus,EBusSlaveNumber,,,4080,d1,,,UIR,,,[min:1;max:9;step:1;default:1]
