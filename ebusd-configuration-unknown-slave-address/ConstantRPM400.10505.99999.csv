@@ -5,6 +5,10 @@
 ## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
 ## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
+## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
+## 
+## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
 
 ## This file is for ConstantRPM400 SW version from 1.05.05 to 9.99.99 ##
 
@@ -27,12 +31,12 @@ r,,TotalFlow,,,,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,
 
 ## Curent state and sensors ##
 r,,FanMode,FanMode,,,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,
-r,,SettingInletFlow,InletFlowSetting,,,4022,09,,,UIR,,%,
-r,,SettingExhaustFlow,ExhaustFlowSetting,,,4022,0a,,,UIR,,%,
-r,,InletFlow,ActualInletFlow,,,4022,0b,,,UIR,,%,
-r,,ExhaustFlow,ActualExhaustFlow,,,4022,0c,,,UIR,,%,
-r,,InletFanSpeed,ActualInletfanSpeed,,,4022,02,,,UIR,,rpm,
-r,,ExhaustFanSpeed,ActualExhaustfanSpeed,,,4022,03,,,UIR,,rpm,
+r,,InletFlowSetting,SettingInletFlow,,,4022,09,,,UIR,,%,
+r,,ExhaustFlowSetting,SettingExhaustFlow,,,4022,0a,,,UIR,,%,
+r,,ActualInletFlow,InletFlow,,,4022,0b,,,UIR,,%,
+r,,ActualExhaustFlow,ExhaustFlow,,,4022,0c,,,UIR,,%,
+r,,ActualInletfanSpeed,InletFanSpeed,,,4022,02,,,UIR,,rpm,
+r,,ActualExhaustfanSpeed,ExhaustFanSpeed,,,4022,03,,,UIR,,rpm,
 r,,PerilexPosition,PerilexPosition,,,4022,05,,,UIR,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,,
 r,,SwitchPosition,SwitchPosition,,,4022,06,,,UIR,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,,
 r,,Contact1Position,Contact1Position,,,4022,1b,,,UIR,0=Off;1=On,,
@@ -51,31 +55,31 @@ r,,FanStatus,FanStatus,,,4022,11,,,UIR,0=Initializing;1=ConstantFlow;2=ConstantP
 r,,InsideTemperature,InsideTemperature,,,4022,07,,,SIR,10,°C,
 r,,OutsideTemperature,OutsideTemperature,,,4022,08,,,SIR,10,°C,
 r,,OptionTemperature,OptionTemperature,,,4022,1a,,,SIR,10,°C,
-r,,FilterStatus,FilterNotification,,,4022,18,,,UIR,0=Clean;1=Dirty,,
+r,,FilterNotification,FilterStatus,,,4022,18,,,UIR,0=Clean;1=Dirty,,
 r,,RelativeHumidity,RelativeHumidity,,,4022,20,,,SIR,10,%,
 r,,HumidityBoostState,HumidityBoostState,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,,
-r,,PressureInlet,ActualInletPressure,,,4022,14,,,UIR,10,Pa,
-r,,PressureExhaust,ActualExhaustPressure,,,4022,15,,,UIR,10,Pa,
-r,,EBusSyncGenErrorCount,EBusSyncGenErrors,,,4022,64,,,UIR,,,
+r,,ActualInletPressure,PressureInlet,,,4022,14,,,UIR,10,Pa,
+r,,ActualExhaustPressure,PressureExhaust,,,4022,15,,,UIR,10,Pa,
+r,,EBusSyncGenErrors,EBusSyncGenErrorCount,,,4022,64,,,UIR,,,
 
-## Configuration parameters ##
-w,,RpmInletMode1,RpmInletMode1,,,4080,01,,,SIR,,%,[min:15;max:100;step:1;default:25]
-r,,RpmInletMode1,RpmInletMode1,,,4050,01,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:25]
-w,,RpmExhaustMode1,RpmExhaustMode1,,,4080,02,,,SIR,,%,[min:15;max:100;step:1;default:25]
-r,,RpmExhaustMode1,RpmExhaustMode1,,,4050,02,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:25]
-w,,RpmInletMode2,RpmInletMode2,,,4080,03,,,SIR,,%,[min:15;max:100;step:1;default:48]
-r,,RpmInletMode2,RpmInletMode2,,,4050,03,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:48]
-w,,RpmExhaustMode2,RpmExhaustMode2,,,4080,04,,,SIR,,%,[min:15;max:100;step:1;default:48]
-r,,RpmExhaustMode2,RpmExhaustMode2,,,4050,04,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:48]
-w,,RpmInletMode3,RpmInletMode3,,,4080,05,,,SIR,,%,[min:15;max:100;step:1;default:68]
-r,,RpmInletMode3,RpmInletMode3,,,4050,05,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:68]
-w,,RpmExhaustMode3,RpmExhaustMode3,,,4080,06,,,SIR,,%,[min:15;max:100;step:1;default:68]
-r,,RpmExhaustMode3,RpmExhaustMode3,,,4050,06,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:68]
-w,,BypassTemp,BypassTemp,,,4080,07,,,SIR,10,°C,[min:150;max:350;step:5;default:240]
-r,,BypassTemp,BypassTemp,,,4050,07,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:240]
-w,,BypassTempHyst,BypassTempHyst,,,4080,2e,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
-r,,BypassTempHyst,BypassTempHyst,,,4050,2e,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
-w,,BypassMode,BypassMode,,,4080,08,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
-r,,BypassMode,BypassMode,,,4050,08,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
+w,,RPMInletMode1,RpmInletMode1,,,4080,01,,,SIR,,%,[min:15;max:100;step:1;default:25]
+r,,RPMInletMode1,RpmInletMode1,,,4050,01,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:25]
+w,,RPMExhaustMode1,RpmExhaustMode1,,,4080,02,,,SIR,,%,[min:15;max:100;step:1;default:25]
+r,,RPMExhaustMode1,RpmExhaustMode1,,,4050,02,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:25]
+w,,RPMInletMode2,RpmInletMode2,,,4080,03,,,SIR,,%,[min:15;max:100;step:1;default:48]
+r,,RPMInletMode2,RpmInletMode2,,,4050,03,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:48]
+w,,RPMExhaustMode2,RpmExhaustMode2,,,4080,04,,,SIR,,%,[min:15;max:100;step:1;default:48]
+r,,RPMExhaustMode2,RpmExhaustMode2,,,4050,04,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:48]
+w,,RPMInletMode3,RpmInletMode3,,,4080,05,,,SIR,,%,[min:15;max:100;step:1;default:68]
+r,,RPMInletMode3,RpmInletMode3,,,4050,05,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:68]
+w,,RPMExhaustMode3,RpmExhaustMode3,,,4080,06,,,SIR,,%,[min:15;max:100;step:1;default:68]
+r,,RPMExhaustMode3,RpmExhaustMode3,,,4050,06,,,SIR,,%,,Min,,SIR,,%,[min:15],Max,,SIR,,%,[max:100],Step,,SIR,,%,[step:1],Default,,SIR,,%,[default:68]
+w,,BypassTemperature,BypassTemp,,,4080,07,,,SIR,10,°C,[min:150;max:350;step:5;default:240]
+r,,BypassTemperature,BypassTemp,,,4050,07,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:240]
+w,,BypassHysteresis,BypassTempHyst,,,4080,2e,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
+r,,BypassHysteresis,BypassTempHyst,,,4050,2e,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
+w,,OperationBypassValve,BypassMode,,,4080,08,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
+r,,OperationBypassValve,BypassMode,,,4050,08,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,,BacklightLevel,BacklightLevel,,,4080,1d,,,UIR,,%,[min:0;max:100;step:5;default:10]
 r,,BacklightLevel,BacklightLevel,,,4050,1d,,,UIR,,%,,Min,,UIR,,%,[min:0],Max,,UIR,,%,[max:100],Step,,UIR,,%,[step:5],Default,,UIR,,%,[default:10]

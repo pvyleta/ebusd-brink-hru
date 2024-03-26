@@ -11,7 +11,7 @@ from parameter import Parameter
 from known_devices import known_devices
 from sw_version import sw_version_to_friendly_str
 from ebus_message import multiplier_to_divider, brink_wtw_commands_list
-
+from parse_xaml import get_name
 
 DEPRECATED_DIR = "ebusd-configuration-deprecated"
 DUMP_DIR = "dump"
@@ -20,8 +20,8 @@ DEVICES_KNOWN_DIR = "ebusd-configuration-known-slave-address"
 CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment\n'
 
 
-SensorDump = namedtuple('SensorDump', ['device_name', 'first_version', 'last_version', 'name', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length'])
-ParameterDump = namedtuple('ParameterDump', ['device_name', 'first_version', 'last_version', 'name', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length', 'field_current', 'field_min', 'field_max', 'field_step', 'field_default'])
+SensorDump = namedtuple('SensorDump', ['device_name', 'first_version', 'last_version', 'name', 'display_name_en', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length'])
+ParameterDump = namedtuple('ParameterDump', ['device_name', 'first_version', 'last_version', 'name', 'display_name_en', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length', 'field_current', 'field_min', 'field_max', 'field_step', 'field_default'])
 
 def dump_sensor(sensor: Sensor, device_name: str, version_range: VersionRange) -> SensorDump:
     dump_sensor_dict: dict[str, str] = {}
@@ -29,6 +29,7 @@ def dump_sensor(sensor: Sensor, device_name: str, version_range: VersionRange) -
     dump_sensor_dict['first_version'] = str(version_range.first_version)
     dump_sensor_dict['last_version'] = str(version_range.last_version)
     dump_sensor_dict['name'] = sensor.name_current.removeprefix('Current')
+    dump_sensor_dict['display_name_en'] = get_name('parameterDescription' + sensor.name_description)
     dump_sensor_dict['id'] = f'0x{sensor.id:02x}'
     dump_sensor_dict['unit'] = sensor.unit
     dump_sensor_dict['datatype'] = sensor.datatype
@@ -44,6 +45,7 @@ def dump_param(param: Parameter, device_name: str, version_range: VersionRange) 
     dump_param_dict['first_version'] = str(version_range.first_version)
     dump_param_dict['last_version'] = str(version_range.last_version)
     dump_param_dict['name'] = param.name
+    dump_param_dict['display_name_en'] = get_name('parameterSetDescription' + param.name)
     dump_param_dict['id'] = f'0x{param.id:02x}'
     dump_param_dict['unit'] = param.unit
     dump_param_dict['datatype'] = param.datatype
@@ -57,7 +59,6 @@ def dump_param(param: Parameter, device_name: str, version_range: VersionRange) 
     dump_param_dict['field_default'] = str(param.field_default)
     return ParameterDump(**dump_param_dict)
 
-
 def csv_line_sensor(sensor: Sensor, device_name: str, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
     assert sensor.converter
@@ -67,7 +68,7 @@ def csv_line_sensor(sensor: Sensor, device_name: str, slave_address: str) -> str
     if not (values := sensor.converter.values):
         values = multiplier_to_divider(sensor.converter.multiplier)
 
-    return f'r,{device_name},{sensor.name_current.removeprefix('Current')},{sensor.name_description},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
+    return f'r,{device_name},{get_name('parameterDescription' + sensor.name_description)},{sensor.name_current.removeprefix('Current')},,{slave_address},4022,{sensor.id:02x},,,{type},{values},{sensor.unit},\n'
 
 
 def csv_line_parameters_read(param: Parameter, device_name: str, slave_address: str) -> str:
@@ -75,10 +76,10 @@ def csv_line_parameters_read(param: Parameter, device_name: str, slave_address: 
     datatype = convert_to_ebus_datatype(param.datatype)
     if values := param.values:
         comment = f'[default:{param.field_default}] - min/max/step fields of enum message omitted'
-        return f'r,{device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:6,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
+        return f'r,{device_name},{get_name('parameterSetDescription' + param.name)},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,,,IGN:6,,,,Default,,{datatype},{values},{param.unit},{comment}\n'
     else:
         values = multiplier_to_divider(param.multiplier)
-        return f'r,{device_name},{param.name},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},{values},{param.unit},[min:{param.field_min}],Max,,{datatype},{values},{param.unit},[max:{param.field_max}],Step,,{datatype},{values},{param.unit},[step:{param.field_step}],Default,,{datatype},{values},{param.unit},[default:{param.field_default}]\n'
+        return f'r,{device_name},{get_name('parameterSetDescription' + param.name)},{param.name},,{slave_address},4050,{param.id:02x},,,{datatype},{values},{param.unit},,Min,,{datatype},{values},{param.unit},[min:{param.field_min}],Max,,{datatype},{values},{param.unit},[max:{param.field_max}],Step,,{datatype},{values},{param.unit},[step:{param.field_step}],Default,,{datatype},{values},{param.unit},[default:{param.field_default}]\n'
 
 
 def csv_line_parameters_write(param: Parameter, device_name: str, slave_address: str) -> str:
@@ -86,7 +87,7 @@ def csv_line_parameters_write(param: Parameter, device_name: str, slave_address:
     datatype = convert_to_ebus_datatype(param.datatype)
     if not (values := param.values):
         values = multiplier_to_divider(param.multiplier)
-    return f'w,{device_name},{param.name},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min};max:{param.field_max};step:{param.field_step};default:{param.field_default}]\n'
+    return f'w,{device_name},{get_name('parameterSetDescription' + param.name)},{param.name},,{slave_address},4080,{param.id:02x},,,{datatype},{values},{param.unit},[min:{param.field_min};max:{param.field_max};step:{param.field_step};default:{param.field_default}]\n'
 
 
 def convert_to_ebus_datatype(datatype: str) -> str:
@@ -120,6 +121,10 @@ COMMENT_HEADER = '''## This ebus config may work for Ubbink, VisionAIR, WOLF CWL
 ## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
 ## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
 ## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
+## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
+## 
+## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
 '''
 COMMENT_COMMON_COMMANDS = '''
 ## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
@@ -128,7 +133,7 @@ COMMENT_CURRENT_STATE = '''
 ## Curent state and sensors ##
 '''
 COMMENT_PARAMETERS = '''
-## Configuration parameters ##
+## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
 '''
 
 def device_name_comment(device_name: str, versions: VersionBase) -> str:

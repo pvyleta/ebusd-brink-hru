@@ -6,6 +6,7 @@ from command_ebus import get_commands_dict
 from model import DeviceModel, VersionRange, VersionBase, DEBUG
 from sw_version import Version
 
+# TODO Rework so that first dump is generated, and then output is created from dump - that way dump can be manually edited in future if the brink service tool becomes unavailable, and we can still generate arbitrary output.
 # TODO Test the 'no-reset-requested' for filter and error reset
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
 # TODO add names of parameters parsed through the stringresources.de-de.xaml
