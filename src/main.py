@@ -5,6 +5,7 @@ from parameter import get_device_parameters
 from command_ebus import get_commands_dict
 from model import DeviceModel, VersionRange, VersionBase, DEBUG
 from sw_version import Version
+from parse_xaml import file_suffix_dict
 
 # TODO Rework so that first dump is generated, and then output is created from dump - that way dump can be manually edited in future if the brink service tool becomes unavailable, and we can still generate arbitrary output.
 # TODO Test the 'no-reset-requested' for filter and error reset
@@ -119,11 +120,12 @@ print("len(device_models): " + str(len(device_models)))
 print("unused_converters_set: " + str(unused_converters_set))
 print("sensors_without_converters_set: " + str(len(sensors_without_converters_set)))
 
-write_unknown_address_devices(device_models)
-write_known_devices(device_models)
 write_dump(device_models)
 
-if DEBUG:
-    write_output_DEPRECATED(device_models)
+for language in file_suffix_dict:
+    write_unknown_address_devices(device_models, language)
+    write_known_devices(device_models, language)
+    if DEBUG:
+        write_output_DEPRECATED(device_models, language)
 
 print("SUCCESS")

@@ -24,7 +24,7 @@ def parse_xaml(file_name: str) -> Dict[str, str]:
 
     return result
 
-__file_suffix_dict = {
+file_suffix_dict = {
     'en': '',
     'de': '.de-de',
     'es': '.es-es',
@@ -47,8 +47,8 @@ def get_name_from_dict(param_name: str, language_dict: dict[str, str]) -> str:
         return param_name
     
 def to_camel_case(text):
-    # Find all alphanumeric sequences
-    words = re.findall(r'[a-zA-Z0-9]+', text)
+    # Find all alphanumeric sequences, including non-ASCII characters
+    words = re.findall(r'[^\W_]+', text, re.UNICODE)
     # Convert each word to CamelCase
     camel_case_words = []
     for word in words:
@@ -61,9 +61,9 @@ def to_camel_case(text):
     return ''.join(camel_case_words)
 
 
-def get_name(param_name: str, language: str = 'en'):
+def get_name(param_name: str, language: str):
     if not (language_dict := __languages_dict.get(language)):
-        language_dict = parse_xaml(f'./BCSServiceTool/resources/languages/stringresources{__file_suffix_dict[language]}.xaml')
+        language_dict = parse_xaml(f'./BCSServiceTool/resources/languages/stringresources{file_suffix_dict[language]}.xaml')
         __languages_dict[language] = language_dict
     
     return to_camel_case(get_name_from_dict(param_name, language_dict))

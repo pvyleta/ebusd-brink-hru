@@ -1,0 +1,112 @@
+# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment,field2,part (m/s),datatypes/templates,divider/values,unit,comment,field3,part (m/s),datatypes/templates,divider/values,unit,comment,field4,part (m/s),datatypes/templates,divider/values,unit,comment,field5,part (m/s),datatypes/templates,divider/values,unit,comment
+## This ebus config may work for Ubbink, VisionAIR, WOLF CWL series, Viessmann and some other systems that are just re-branded Brink devices
+## sources:
+## - Original idea and some dividers: https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300
+## - Brink Service Tool (decompiled via Jetbrains DotPeak): https://www.brinkclimatesystems.nl/tools/software-brink-service-tool-en
+## - Renovent 150 Datasheet: https://manuals.plus/brink/renovent-sky-150-plus-mechanical-ventilation-with-heat-recovery-manual
+## - Modbus Module Datasheet: https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf
+## Message names are based on official Brink Service Tool translations with removed spaces and special characters. 
+## Message comment is the name of the parameter as used internally in code (as to help if the translation itself is confusing)
+## 
+## For ebusd configuration files for the complete Brink portfolio go to https://github.com/pvyleta/ebusd-brink-hru
+
+## This file is for DecentralAir70 SW version from 1.07.01 to 9.99.99 ##
+
+## Slave address and Circuit ##
+# Fill in the slave address of your device (hexa without '0x' prefix) instead of [fill_your_slave_address_here]
+# Then just rename this file to [fill_your_slave_address_here].csv and you should be good to use it in ebusd.
+*r,DecentralAir70,,,,[fill_your_slave_address_here],
+*w,DecentralAir70,,,,[fill_your_slave_address_here],
+
+## COMMON HRU COMMANDS ## (WTWCommands.cs - Some of them might not be applicable for this device, use with caution)
+w,,FactoryReset,,,,40ff,466163746f72795265736574
+w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
+r,,RequestErrorList,,,,4090,,,,HEX:18,,,
+w,,FanMode,,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
+r,,TotalFilterDays,,,,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
+r,,TotalFilterFlow,,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,,TotalOperatingHours,,,,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
+r,,TotalFlow,,,,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+
+## Curent state and sensors ##
+r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
+r,,VersionPlusSoftware,PlusSoftwareVersion,,,4022,f0,,,STR:13,,,
+r,,Ventilatorbetrieb,VentilationMode,,,4022,01,,,UIR,0=Preset_01;1=Preset_02;2=Preset_03;3=Preset_04;4=Preset_05;240=AutoMode;254=Off,,
+r,,Ventilatorgeschwindigkeit,SpeedFan,,,4022,02,,,UIR,,rpm,
+r,,Dipschalter,DipswitchValue,,,4022,04,,,UIR,,,
+r,,PositionStufenschalter,FlowSwitchPosition,,,4022,06,,,UIR,0=Position_0;1=Position_1;2=Position_2;3=Position_3;,,
+r,,Ablufttemperatur,TemperatureInside,,,4022,07,,,SIR,10,°C,
+r,,Außenlufttemperatur,TemperatureOutside,,,4022,08,,,SIR,10,°C,
+r,,Durchsatzsollwert,FlowSetpoint,,,4022,09,,,UIR,,m³/h,
+r,,TatsächlicherDurchsatz,FlowActualValue,,,4022,0b,,,UIR,,m³/h,
+r,,StatusBypass,BypassStatus,,,4022,0e,,,UIR,0=Initializing;1=Opening;2=Closing;3=Open;4=Closed;5=Error;6=Calibrating;255=Error,,
+r,,StatusVorheizregister,PreheaterStatus,,,4022,0f,,,UIR,0=Initializing;1=Off;2=On,,
+r,,LeistungVorheizregister,PreheaterPower,,,4022,10,,,UIR,,%,
+r,,StatusFrostschutz,FrostStatus,,,4022,16,,,UIR,0=Initializing;1=NoFrost;17=NoFrost;2=DefrostWait;3=Preheater;18=Preheater;255=Error;5=VeluHeater;6=VeluFanCtrl;7=TableFanCtrl;19=TableFanCtrl;8=Sky150Heater;9=FanCtrlFanOff;10=FanCtrlFanRestart;11=FanCtrlCurve1;12=FanCtrlCurve2;13=FanCtrlCurve3;14=FanCtrlCurve4;15=HeaterCoolDown;16=Blocked,,
+r,,BetriebsstatusEBus,EBusPowerStatus,,,4022,17,,,UIR,0=PowerUp;1=Initialize;2=PowerOff;3=PowerOn;4=WaitForPowerOff;5=SlavePowerOff;255=Error,,
+r,,Filtermeldung,FilterStatus,,,4022,18,,,UIR,0=Clean;1=Dirty,,
+r,,GedrückteTaste,UIFButtons,,,4022,19,,,UIR,,,
+r,,ExternerKontakt,ExternalContact1,,,4022,1b,,,UIR,0=Off;1=On,,
+r,,RelativeFeuchteRHSensor,RHSensorValue,,,4022,20,,,SIR,10,%,
+r,,FeuchtesensorStatus,HumidityControlStatus,,,4022,21,,,UIR,0=Error;1=NotInitialized;2=SensorNotActive;3=PowerUpDelay;4=NormalRH;5=BoostRising;6=BoostStable;7=BoostDecending;8=BoostRHLowLevelStable,,
+r,,PWMSollwertVentilator,PWMFan,,,4022,24,,,UIR,,,
+r,,StatusCO2Sensor,CO2SensorStatus,,,4022,38,,,UIR,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,,
+r,,WertCO2Sensor,CO2SensorValue,,,4022,39,,,UIR,,ppm,
+r,,StatusVentilator,FanStatus,,,4022,3a,,,UIR,0=Off;1=On;2=Blocked;255=Error,,
+r,,FilterverwendungTage,FilterUsedInDays,,,4022,3c,,,UIR,,Days,
+r,,Filterverwendung1000m3,FilterUsedIn1000M3,,,4022,3d,,,UIR,-1000,m³,
+r,,Gesamtdurchsatz1000m3,TotalFlowIn1000M3,,,4022,3e,,,UIR,-1000,m³,
+r,,Filterverwendung,FilterUsedInM3,,,4022,85,,,ULR,,m³,
+r,,Gesamtdurchsatz,TotalFlowInM3,,,4022,84,,,ULR,,m³,
+r,,Verschlusserkennung,CapDetection,,,4022,42,,,UIR,0=Off;1=On,,
+r,,PositionBypassSchritt,BypassStepPosition,,,4022,43,,,ULR,,,
+r,,Systemstatus,SystemStatus,,,4022,41,,,UIR,0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode,,
+r,,Seriennummer,SerialNumber,,,4022,51,,,STR:12,,,
+r,,EBusSynchFehler,EBusSyncGenErrors,,,4022,64,,,UIR,,,
+r,,Betriebsdauer,OperatingTime,,,4022,83,,,ULR,,Hours,
+
+## Configuration parameters ## (values in brackets next to field are definitions of those fields values from Brink Service Tool.)
+w,,LetzterVoreinstellwertDurchsatz,LastFlowPresetValue,,,4080,50,,,UIR,,,[min:0;max:5;step:1;default:3]
+r,,LetzterVoreinstellwertDurchsatz,LastFlowPresetValue,,,4050,50,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:5],Step,,UIR,,,[step:1],Default,,UIR,,,[default:3]
+w,,VoreinstellungDurchsatz01,FlowPreset01,,,4080,51,,,UIR,,m³/h,[min:15;max:70;step:1;default:15]
+r,,VoreinstellungDurchsatz01,FlowPreset01,,,4050,51,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:15],Max,,UIR,,m³/h,[max:70],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:15]
+w,,VoreinstellungDurchsatz02,FlowPreset02,,,4080,52,,,UIR,,m³/h,[min:15;max:70;step:1;default:25]
+r,,VoreinstellungDurchsatz02,FlowPreset02,,,4050,52,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:15],Max,,UIR,,m³/h,[max:70],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:25]
+w,,VoreinstellungDurchsatz03,FlowPreset03,,,4080,53,,,UIR,,m³/h,[min:15;max:70;step:1;default:40]
+r,,VoreinstellungDurchsatz03,FlowPreset03,,,4050,53,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:15],Max,,UIR,,m³/h,[max:70],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:40]
+w,,VoreinstellungDurchsatz04,FlowPreset04,,,4080,54,,,UIR,,m³/h,[min:15;max:70;step:1;default:55]
+r,,VoreinstellungDurchsatz04,FlowPreset04,,,4050,54,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:15],Max,,UIR,,m³/h,[max:70],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:55]
+w,,VoreinstellungDurchsatz05,FlowPreset05,,,4080,55,,,UIR,,m³/h,[min:15;max:70;step:1;default:70]
+r,,VoreinstellungDurchsatz05,FlowPreset05,,,4050,55,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:15],Max,,UIR,,m³/h,[max:70],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:70]
+w,,BypassTemperatur,BypassTemp,,,4080,04,,,SIR,10,°C,[min:150;max:350;step:5;default:240]
+r,,BypassTemperatur,BypassTemp,,,4050,04,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:350],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:240]
+w,,Bypassbetrieb,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
+r,,Bypassbetrieb,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+w,,MaximalerDurchsatzFilter,FilterMaximumFlow,,,4080,1c,,,UIR,,m³/h,[min:0;max:2000;step:1;default:86]
+r,,MaximalerDurchsatzFilter,FilterMaximumFlow,,,4050,1c,,,UIR,,m³/h,,Min,,UIR,,m³/h,[min:0],Max,,UIR,,m³/h,[max:2000],Step,,UIR,,m³/h,[step:1],Default,,UIR,,m³/h,[default:86]
+w,,LEDHelligkeit,LedIntensity,,,4080,1d,,,UIR,,%,[min:20;max:100;step:1;default:100]
+r,,LEDHelligkeit,LedIntensity,,,4050,1d,,,UIR,,%,,Min,,UIR,,%,[min:20],Max,,UIR,,%,[max:100],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
+w,,BypassHysterese,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
+r,,BypassHysterese,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
+w,,EmpfindlichkeitFeuchtesensor,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2;max:2;step:1;default:0]
+r,,EmpfindlichkeitFeuchtesensor,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
+w,,NiedrigesNiveauCO2Sensor,CO2SensorLowLevel,,,4080,48,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
+r,,NiedrigesNiveauCO2Sensor,CO2SensorLowLevel,,,4050,48,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+w,,HohesNiveauCO2Sensor,CO2SensorHighLevel,,,4080,49,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
+r,,HohesNiveauCO2Sensor,CO2SensorHighLevel,,,4050,49,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+w,,Lichtausgang,LightOutput,,,4080,56,,,UIR,,%,[min:0;max:100;step:1;default:0]
+r,,Lichtausgang,LightOutput,,,4050,56,,,UIR,,%,,Min,,UIR,,%,[min:0],Max,,UIR,,%,[max:100],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:0]
+w,,AdresseModbusSlave,ModbusSlaveAddress,,,4080,44,,,SIR,,,[min:1;max:247;step:1;default:20]
+r,,AdresseModbusSlave,ModbusSlaveAddress,,,4050,44,,,SIR,,,,Min,,SIR,,,[min:1],Max,,SIR,,,[max:247],Step,,SIR,,,[step:1],Default,,SIR,,,[default:20]
+w,,GeschwindigkeitModbus,ModbusSpeed,,,4080,45,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[min:0;max:7;step:1;default:4]
+r,,GeschwindigkeitModbus,ModbusSpeed,,,4050,45,,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,,,,IGN:6,,,,Default,,UIR,0=1200 Baud;1=2400 Baud;2=4800 Baud;3=9600 Baud;4=19k2 Baud;5=38k4 Baud;6=56k Baud;7=115k Baud,,[default:4] - min/max/step fields of enum message omitted
+w,,ParitätModbus,ModbusParity,,,4080,46,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[min:0;max:3;step:1;default:1]
+r,,ParitätModbus,ModbusParity,,,4050,46,,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,,,,IGN:6,,,,Default,,UIR,0=No Parity;1=Even Parity;2=Odd Parity;3=Unknown,,[default:1] - min/max/step fields of enum message omitted
+w,,SchnittstelleModbus,ModbusInterface,,,4080,47,,,UIR,,,[min:0;max:1;step:1;default:1]
+r,,SchnittstelleModbus,ModbusInterface,,,4050,47,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:1]
+w,,DurchsatzFeineinstellung,FlowTuning,,,4080,3d,,,UIR,,%,[min:75;max:125;step:1;default:100]
+r,,DurchsatzFeineinstellung,FlowTuning,,,4050,3d,,,UIR,,%,,Min,,UIR,,%,[min:75],Max,,UIR,,%,[max:125],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
+w,,Durchsatzkorrektur,FlowCorrection,,,4080,3f,,,UIR,,%,[min:90;max:110;step:1;default:100]
+r,,Durchsatzkorrektur,FlowCorrection,,,4050,3f,,,UIR,,%,,Min,,UIR,,%,[min:90],Max,,UIR,,%,[max:110],Step,,UIR,,%,[step:1],Default,,UIR,,%,[default:100]
+w,,NummerEBusGruppe,EBusGroupNumber,,,4080,d0,,,UIR,,,[min:1;max:8;step:1;default:8]
+r,,NummerEBusGruppe,EBusGroupNumber,,,4050,d0,,,UIR,,,,Min,,UIR,,,[min:1],Max,,UIR,,,[max:8],Step,,UIR,,,[step:1],Default,,UIR,,,[default:8]

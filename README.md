@@ -50,8 +50,12 @@ Currently, the ebusd-configuration for these heat recovery units is present:
 ## ebusd-configuration-known-slave-address
 If you find your device in this folder, you may consider yourself lucky - there can be used verbatim in ebusd. The files contain parameters for the latest SW version, for the 'Plus' variant of the HRU unit, so not all parameters might be applicable for your device. If you want a .csv file that matches your device perfectly, you need to look into `ebusd-configuration-unknown-slave-address`
 
+All files are provided with language mutations for English, German, French, Italian, Spanish, Dutch and Polish in the respective subdirectories.
+
 ## ebusd-configuration-unknown-slave-address
 This folder contains all known Brink devices in all known SW versions and basic/plus variants of HW. 
+
+All files are provided with language mutations for English, German, French, Italian, Spanish, Dutch and Polish in the respective subdirectories.
 
 The naming format is [device].[first_sw_version].[last_sw_version].[plus].csv (Files for basic devices, or for devices that does not even have a 'plus' variant have no 'plus' suffix)
 
@@ -91,7 +95,6 @@ The version of tool used and tested with the parsing scripts is 'S1_04_11_0002'
 ## dump
 Contains dump of the parsed data in fairly re-usable JSON and CSV formats. if you plan to integrate Brink HRUs in other software than ebusd, this is the place to go.
 
-# TODO
-- add German translation based on the translations present in Brink Service Tool
+# Future work
 - structure config files better with using !include instructions and conditions
 - find out slave IDs for more Brink HRUs
