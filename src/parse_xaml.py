@@ -24,16 +24,26 @@ def parse_xaml(file_name: str) -> Dict[str, str]:
 
     return result
 
-english_dict = parse_xaml('./BCSServiceTool/resources/languages/stringresources.xaml')
+__file_suffix_dict = {
+    'en': '',
+    'de': '.de-de',
+    'es': '.es-es',
+    'fr': '.fr-fr',
+    'it': '.it-it',
+    'nl': '.nl-nl',
+    'pl': '.pl-pl',
+}
 
-def get_english_name(param_name: str) -> str:
-    if name := english_dict.get(param_name):
+__languages_dict: dict[str, dict[str, str]] = {}
+
+def get_name_from_dict(param_name: str, language_dict: dict[str, str]) -> str:
+    if name := language_dict.get(param_name):
         return name
     elif param_name == 'parameterDescriptionDeviceType':
-        # This is currently known to be the only one missing parameter from the dictionary
+        # This is currently known to be the only one missing parameter from the dictionary. Just use plain English and continue
         return 'Device Type'
     else:
-        print (f'ERROR english_dict: missing {param_name}')
+        print (f'ERROR language_dict: missing {param_name}')
         return param_name
     
 def to_camel_case(text):
@@ -52,4 +62,8 @@ def to_camel_case(text):
 
 
 def get_name(param_name: str, language: str = 'en'):
-    return to_camel_case(get_english_name(param_name))
+    if not (language_dict := __languages_dict.get(language)):
+        language_dict = parse_xaml(f'./BCSServiceTool/resources/languages/stringresources{__file_suffix_dict[language]}.xaml')
+        __languages_dict[language] = language_dict
+    
+    return to_camel_case(get_name_from_dict(param_name, language_dict))
