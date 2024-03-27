@@ -134,9 +134,10 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # w,,WTWControlMode,WTWControlMode,,,40A2,,,,UCH,,,
     # w,,WTWControlDemandStatus,WTWControlDemandStatus,,,40A3,,,,HEX:4,,,
     
-    BrinkConfigEbusMessage('FilterNotificationFlow', 'parameterDescriptionFiltersUsedIn1000M3',0x1c, 'r', False, 1000, '', 'm³'),
+    # TODO should there be a message with how many days before filter warning. is it this one? 
+    BrinkConfigEbusMessage('FilterNotificationFlow', 'parameterSetDescriptionFilterMaximumFlow',0x1c, 'r', False, 1000, '', 'm³'),
     BrinkConfigEbusMessage('TotalFilterDays', 'parameterDescriptionFiltersUsedInDays', 0x22, 'r', False, 1.0, '', 'Days'),
-    BrinkConfigEbusMessage('TotalFilterFlow', 'parameterDescriptionFiltersUsedIn1000M3', 0x23, 'r', False, 1000,'',  'm³'),
+    BrinkConfigEbusMessage('TotalFilterFlow', 'parameterDescriptionFiltersUsedInM3', 0x23, 'r', False, 1000,'',  'm³'),
 
     # Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
     BrinkConfigEbusMessage('TotalOperatingHours', 'parameterDescriptionOperatingTime', 0x24, 'r', False, 5,'',  'Hours'),
