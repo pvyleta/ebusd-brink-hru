@@ -163,7 +163,7 @@ def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_
     file_str = translations[language]['COMMENT_HEADER'] + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
     file_str += translations[language]['COMMENT_COMMON_COMMANDS']
     for msg in brink_wtw_commands_list:
-        file_str += msg.dump()
+        file_str += msg.dump(language)
     file_str += translations[language]['COMMENT_CURRENT_STATE']
     file_str += csv_from_sensors(sensors, language)
     file_str += translations[language]['COMMENT_PARAMETERS']
@@ -209,7 +209,7 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel], languag
                         elif device_name in ['ValveT01', 'MultiRoomCtrlT01'] and msg.name not in ['FactoryReset', 'ResetNotifications', 'RequestErrorList']:
                             # Other than these messages are not meaningful for a valve
                             continue
-                        file_str += msg.dump()
+                        file_str += msg.dump(language)
                     for version_range, sensors in device_model.sensors.items():
                         if version_range.contains(subversion):
                             file_str += translations[language]['COMMENT_CURRENT_STATE']

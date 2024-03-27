@@ -17,9 +17,9 @@
 *w,MultiRoomCtrlT01,,,,[fill_your_slave_address_here],
 
 ## ALLGEMEINE HRU BEFEHLE ## (WTWCommands.cs - Einige davon sind möglicherweise nicht für dieses Gerät anwendbar, mit Vorsicht verwenden)
-w,,FactoryReset,,,,40ff,466163746f72795265736574
-w,,ResetNotifications,,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
-r,,RequestErrorList,,,,4090,,,,HEX:18,,,
+w,,RücksetzenAufWerkseinstellung,FactoryReset,,,40ff,466163746f72795265736574
+w,,Fehlerliste,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
+r,,GespeicherteFehler,RequestErrorList,,,4090,,,,HEX:18,,,
 
 ## Aktueller Zustand und Sensoren ##
 r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
