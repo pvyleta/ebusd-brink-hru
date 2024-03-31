@@ -110,21 +110,26 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # EbusMessage('FactoryReset', 0x40ff, None, 'w', [Field('', 'STR:12', 12, 1.0, '0x466163746F72795265736574=FactoryReset', '')]),
     EbusMessage('FactoryReset', 'diagnosticsViewbtnFactoryReset', 0x40ff, 0x466163746F72795265736574, 'w', []),
 
-    # Filter and error reset is split to two messages - one for writing and one for reading. I am unaware how to otherwise specify this so that MQTT would understand this Command-Response type of message ##
+    # Filter and error reset is split to two messages - one for writing and one for reading. I am unaware how to otherwise specify this so that MQTT would understand this Command-Response type of message
     # ru,,ResetErrors,409103FFFFFF,,,4091,3c0001,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=NoErrorsFound;4=ResetFailed;5=BlockingErrors,,,,,IGN:2,,,
     # ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,, 
       
     # Reset notification logic and response codes is based on HandleResetNotificationsResponse function from BCSServiceTool
     EbusMessage('ResetNotifications', 'ResetNotificationDialogTitle', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested', '', 'NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.')]),
     
+    # TODO FIXME EEEEEh. this is not error history.... that one is a different command
     EbusMessage('RequestErrorList', 'errorHistoryViewTableTitle', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
     EbusMessage('FanMode', 'parameterDescriptionFanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
     
-    # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was nto able to decode the meaning.
-    # EbusMessage('FanMode', 0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
+    # TODO Figure out how to make sure not only comment is different but also the name - some sort of override? Sequence number?
+    # This one is workign as well - might be a good alternative if the obove one does not work
+    # EbusMessage('FanModeAlternative', 'parameterDescriptionFanMode', 0x40cb, 0x0101, 'w', [Field('', 'UIR', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', '')]),
     
-    # This one look like not present on Sky300
-    # BrinkConfigEbusMessage('DeviceType', 0x00, 'r', False, 1.0, '', ''),
+    # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was not able to decode the meaning.
+    # EbusMessage('FanMode', 'parameterDescriptionFanMode',0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
+    
+    # TODO this needs a converter
+    BrinkConfigEbusMessage('DeviceType', 'parameterDescriptionDeviceType', 0x00, 'r', False, 1.0, '', ''),
 
     # ## Control Commands - No further knowledge of meaning, or list of compatible units
     # w,,ApplianceCascade,ApplianceCascade,,,40A0,,,,HEX:4,,,

@@ -8,13 +8,10 @@ from sw_version import Version
 from parse_xaml import file_suffix_dict
 
 # TODO Rework so that first dump is generated, and then output is created from dump - that way dump can be manually edited in future if the brink service tool becomes unavailable, and we can still generate arbitrary output.
-# TODO Test the 'no-reset-requested' for filter and error reset
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
-# TODO add names of parameters parsed through the stringresources.de-de.xaml
 # TODO add conditionals for csv_known_device (output of devices with known slave addresses) for dipswitch value and software version
 # TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
-# TODO Publish known files to ebusd configuration, distinguish them by dipswitch for 3c and 7c
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 

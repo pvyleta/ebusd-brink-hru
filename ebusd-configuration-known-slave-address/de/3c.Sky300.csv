@@ -16,6 +16,7 @@ w,,RücksetzenAufWerkseinstellung,FactoryReset,,,40ff,466163746f72795265736574
 w,,Fehlerliste,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,GespeicherteFehler,RequestErrorList,,,4090,,,,HEX:18,,,
 w,,Ventilatorbetrieb,FanMode,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
+r,,DeviceType,DeviceType,,,4050,,,,UIR,,,,Min,,UIR,,,,Max,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,,MaximalerDurchsatzFilter,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 r,,FilterverwendungTage,TotalFilterDays,,,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
 r,,Filterverwendung,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,

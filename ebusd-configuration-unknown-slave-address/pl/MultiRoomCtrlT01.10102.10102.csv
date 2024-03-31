@@ -28,7 +28,7 @@ r,,WersjaOprogramowania,SoftwareVersion,,,4022,00,,,STR:13,,,
 r,,IDUrządzenia,DeviceID,,,4022,80,,,UCH,,,
 r,,AdresowanieEBus,EBusAddressing,,,4022,50,,,ULR,,,
 r,,NumerSeryjny,SerialNumber,,,4022,51,,,STR:12,,,
-r,,CzasPracy,OperatingTime,,,4022,83,,,ULR,,Hour,
+r,,CzasPracy,OperatingTime,,,4022,83,,,ULR,,h,
 r,,StatusMRC,MRCStatus,,,4022,82,,,UIR,0=Error;1=NotInitialized;2=Idle;3=PowerUp;4=Running,,
 r,,StatusKonfiguracjiMRC,MRCConfigurationStatus,,,4022,a0,,,HEX:9,,,
 

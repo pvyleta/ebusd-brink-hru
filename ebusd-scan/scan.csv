@@ -9,4 +9,9 @@ r,scan,id,Scan ID,,,0704,ff,MF,,UCH,0x06=Dungs;0x0f=FH Ostfalia;0x10=TEM;0x11=La
 # string for Brink devices - some have prefix of one letter, some don't. For the lack of other 
 # possible solutions, we just assume that majority of devices will have the one-letter prefix, 
 # and only if/when proven otherwise, we would try to come up with a different, more robust solution.
-r,scan,SoftwareVersion,S1.08.18 0001,,,4022,00,,,IGN:1,,,,sw_major,,UCH,,,,sw_dot,,IGN:1,,,,sw_minor,,UIN,,,,sw_patch,,UIN,,,,,,IGN:5,,,,
+# The definition is based on HandleResponse_ReadActualSoftwareVersion from BCS Service Tool
+r,scan,SoftwareVersion,S1.08.18,,,4022,00,,,IGN:1,,,,sw_major,,UCH,,,,sw_dot,,IGN:1,,,,sw_minor,,UIN,,,,sw_patch,,UIN,,,,,,IGN:5,,,,
+
+# This is the alternative parsing of SoftwareVersion, that we assume is not widely used
+# r,scan,SoftwareVersion,1.08.18,,,4022,00,sw_major,,UCH,,,,sw_dot,,IGN:1,,,,sw_minor,,UIN,,,,sw_patch,,UIN,,,,,,IGN:6,,,,
+

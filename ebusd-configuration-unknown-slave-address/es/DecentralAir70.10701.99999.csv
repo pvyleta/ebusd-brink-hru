@@ -21,6 +21,7 @@ w,,RestablecimientoDeLosAjustesDeFábrica,FactoryReset,,,40ff,466163746f72795265
 w,,RestablecerNotificaciones,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,HistorialDeErrores,RequestErrorList,,,4090,,,,HEX:18,,,
 w,,ModoDeVentilador,FanMode,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
+r,,DeviceType,DeviceType,,,4050,,,,UIR,,,,Min,,UIR,,,,Max,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
 r,,UsoDelFiltroDías,TotalFilterDays,,,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
 r,,UsoDelFiltro,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
 r,,TiempoDeFuncionamiento,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
@@ -51,7 +52,7 @@ r,,PuntoDeAjusteDePWMDeVentilador,PWMFan,,,4022,24,,,UIR,,,
 r,,EstadoDelSensorDeCO2,CO2SensorStatus,,,4022,38,,,UIR,0=Error;1=NotInitialized;2=Idle;3=WarmingUp;4=Running;5=Calibrating;6=SelfTest,,
 r,,ValorDelSensorDeCO2,CO2SensorValue,,,4022,39,,,UIR,,ppm,
 r,,EstadoDeVentilador,FanStatus,,,4022,3a,,,UIR,0=Off;1=On;2=Blocked;255=Error,,
-r,,UsoDelFiltroDías,FilterUsedInDays,,,4022,3c,,,UIR,,Days,
+r,,UsoDelFiltroDías,FilterUsedInDays,,,4022,3c,,,UIR,,d,
 r,,UsoDelFiltro1000m3,FilterUsedIn1000M3,,,4022,3d,,,UIR,-1000,m³,
 r,,FlujoTotal1000m3,TotalFlowIn1000M3,,,4022,3e,,,UIR,-1000,m³,
 r,,UsoDelFiltro,FilterUsedInM3,,,4022,85,,,ULR,,m³,
@@ -61,7 +62,7 @@ r,,PosiciónDelPasoDeDesviación,BypassStepPosition,,,4022,43,,,ULR,,,
 r,,EstadoDelSistema,SystemStatus,,,4022,41,,,UIR,0=PowerUp;1=Off;2=TemporaryOff;3=Normal;4=CoolingDown;5=FrostMode;6=FrostModeReduced;7=FanOff;8=SelfTestMode;9=TestMode,,
 r,,NúmeroDeSerie,SerialNumber,,,4022,51,,,STR:12,,,
 r,,ErroresGeneralesDeSincronizaciónDeEBus,EBusSyncGenErrors,,,4022,64,,,UIR,,,
-r,,TiempoDeFuncionamiento,OperatingTime,,,4022,83,,,ULR,,Hours,
+r,,TiempoDeFuncionamiento,OperatingTime,,,4022,83,,,ULR,,h,
 
 ## Parámetros de configuración ## (los valores entre paréntesis junto al campo son definiciones de esos valores de campo del Herramienta de Servicio Brink.)
 w,,ValorDePreajusteDeFlujoÚltimo,LastFlowPresetValue,,,4080,50,,,UIR,,,[min:0;max:5;step:1;default:3]
