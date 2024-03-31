@@ -21,6 +21,7 @@ w,,ResetDiFabbrica,FactoryReset,,,40ff,466163746f72795265736574
 w,,ResettaLeNotifiche,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,CronologiaDegliErrori,RequestErrorList,,,4090,,,,HEX:18,,,
 w,,PosizioneVentilatore,FanMode,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
+w,,PosizioneVentilatoreAlternative,FanModeAlternative,,,40cb,101,,,UIR,0=Min;1=Low;2=Medium;3=High,,
 r,,DeviceType,DeviceType,,,4050,,,,UIR,,,,min,,UIR,,,,max,,UIR,,,,step,,UIR,,,,default,,UIR,,,
 r,,UtilizzoDelFiltroGiorni,TotalFilterDays,,,4050,22,,,UIR,,Days,,min,,UIR,,Days,,max,,UIR,,Days,,step,,UIR,,Days,,default,,UIR,,Days,
 r,,UtilizzoDelFiltro,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,

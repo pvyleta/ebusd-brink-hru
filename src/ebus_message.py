@@ -38,13 +38,14 @@ class Field:
         return str(self)
 
 class EbusMessage:
-    def __init__(self, name: str, parameter_name: str, pbsb: int, id: int|None, type: str, fields: list[Field]):
+    def __init__(self, name: str, parameter_name: str, pbsb: int, id: int|None, type: str, fields: list[Field], suffix: str = ''):
         self.name: str = name
         self.pbsb: int = pbsb
         self.id: int|None = id
         self.type: str = type
         self.fields: list[Field] = fields
         self.parameter_name = parameter_name # This one is necessary for correct translation
+        self.suffix = suffix
 
     def __str__(self):
         return str([vars(self)[key] for key in sorted(vars(self).keys())])
@@ -64,7 +65,7 @@ class EbusMessage:
     def dump(self, language: str, circuit: str = '', slave_address: str = '') -> str:
         # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
         id_str = f'{self.id:02x}' if self.id else ''
-        result = f'{self.type},{circuit},{get_name(self.parameter_name, language)},{self.name},,{slave_address},{self.pbsb:04x},{id_str}'
+        result = f'{self.type},{circuit},{get_name(self.parameter_name, language)}{self.suffix},{self.name},,{slave_address},{self.pbsb:04x},{id_str}'
         for field in self.fields:
             values_str = multiplier_to_divider(field.multiplier) if field.values == '' else field.values 
             result += f',{field.name},,{field.datatype},{values_str},{field.unit},{field.comment}'
@@ -72,12 +73,13 @@ class EbusMessage:
 
 
 class BrinkConfigEbusMessage(EbusMessage):
-    def __init__(self, name: str, parameter_name: str, id: int, type: str, is_signed: bool, multiplier: float, values: str, unit: str):
+    def __init__(self, name: str, parameter_name: str, id: int, type: str, is_signed: bool, multiplier: float, values: str, unit: str, suffix: str = ''):
         field_names = ['', 'min', 'max', 'step', 'default']
         self.name = name
         self.id = id
         self.type = type
         self.parameter_name = parameter_name # This one is necessary for correct translation
+        self.suffix = suffix
         
         if is_signed:
             datatype = 'SIR'
@@ -118,9 +120,8 @@ brink_wtw_commands_list: list[EbusMessage] = [
     EbusMessage('RequestErrorList', 'errorHistoryViewTableTitle', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
     EbusMessage('FanMode', 'parameterDescriptionFanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
     
-    # TODO Figure out how to make sure not only comment is different but also the name - some sort of override? Sequence number?
-    # This one is workign as well - might be a good alternative if the obove one does not work
-    # EbusMessage('FanModeAlternative', 'parameterDescriptionFanMode', 0x40cb, 0x0101, 'w', [Field('', 'UIR', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', '')]),
+    # This one is working as well - might be a good alternative if the obove one does not work
+    EbusMessage('FanModeAlternative', 'parameterDescriptionFanMode', 0x40cb, 0x0101, 'w', [Field('', 'UIR', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', '')], 'Alternative'),
     
     # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was not able to decode the meaning.
     # EbusMessage('FanMode', 'parameterDescriptionFanMode',0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
