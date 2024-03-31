@@ -75,7 +75,7 @@ class EbusMessage:
 
 class BrinkConfigEbusMessage(EbusMessage):
     def __init__(self, name: str, parameter_name: str, id: int, type: str, is_signed: bool, multiplier: float, values: str, unit: str):
-        field_names = ['', 'Min', 'Max', 'Step', 'Default']
+        field_names = ['', 'min', 'max', 'step', 'default']
         self.name = name
         self.id = id
         self.type = type
@@ -98,7 +98,7 @@ class BrinkConfigEbusMessage(EbusMessage):
             else:
                 self.fields.append(Field('', datatype, 2, multiplier, values, unit))
                 self.fields.append(Field('', 'IGN:6', 6, 1.0, '', ''))
-                self.fields.append(Field('Default', datatype, 2, multiplier, values, unit))
+                self.fields.append(Field('default', datatype, 2, multiplier, values, unit))
         else:
             raise RuntimeError()
 

@@ -21,12 +21,12 @@ w,,RücksetzenAufWerkseinstellung,FactoryReset,,,40ff,466163746f72795265736574
 w,,Fehlerliste,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
 r,,GespeicherteFehler,RequestErrorList,,,4090,,,,HEX:18,,,
 w,,Ventilatorbetrieb,FanMode,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
-r,,DeviceType,DeviceType,,,4050,,,,UIR,,,,Min,,UIR,,,,Max,,UIR,,,,Step,,UIR,,,,Default,,UIR,,,
-r,,MaximalerDurchsatzFilter,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
-r,,FilterverwendungTage,TotalFilterDays,,,4050,22,,,UIR,,Days,,Min,,UIR,,Days,,Max,,UIR,,Days,,Step,,UIR,,Days,,Default,,UIR,,Days,
-r,,Filterverwendung,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
-r,,Betriebsdauer,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,Min,,UIR,-5,Hours,,Max,,UIR,-5,Hours,,Step,,UIR,-5,Hours,,Default,,UIR,-5,Hours,
-r,,Gesamtdurchsatz1000m3,TotalFlow,,,4050,25,,,UIR,-1000,m³,,Min,,UIR,-1000,m³,,Max,,UIR,-1000,m³,,Step,,UIR,-1000,m³,,Default,,UIR,-1000,m³,
+r,,DeviceType,DeviceType,,,4050,,,,UIR,,,,min,,UIR,,,,max,,UIR,,,,step,,UIR,,,,default,,UIR,,,
+r,,MaximalerDurchsatzFilter,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
+r,,FilterverwendungTage,TotalFilterDays,,,4050,22,,,UIR,,Days,,min,,UIR,,Days,,max,,UIR,,Days,,step,,UIR,,Days,,default,,UIR,,Days,
+r,,Filterverwendung,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
+r,,Betriebsdauer,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,min,,UIR,-5,Hours,,max,,UIR,-5,Hours,,step,,UIR,-5,Hours,,default,,UIR,-5,Hours,
+r,,Gesamtdurchsatz1000m3,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 
 ## Aktueller Zustand und Sensoren ##
 r,,SoftwareVersion,SoftwareVersion,,,4022,00,,,STR:13,,,
@@ -106,74 +106,74 @@ r,,Hardwareversion,HardwareVersionExtensionModule,,,4022,f7,,,STR:4,,,
 
 ## Konfigurationsparameter ## (Werte in Klammern neben dem Feld sind Definitionen dieser Feldwerte aus dem Brink Service Tool.)
 w,,LuftmengeStufe0,FlowMode0,,,4080,21,,,SIR,,m³/h,[min:0;max:50;step:50;default:50]
-r,,LuftmengeStufe0,FlowMode0,,,4050,21,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:0],Max,,SIR,,m³/h,[max:50],Step,,SIR,,m³/h,[step:50],Default,,SIR,,m³/h,[default:50]
+r,,LuftmengeStufe0,FlowMode0,,,4050,21,,,SIR,,m³/h,,min,,SIR,,m³/h,[min:0],max,,SIR,,m³/h,[max:50],step,,SIR,,m³/h,[step:50],default,,SIR,,m³/h,[default:50]
 w,,LuftmengeStufe1,FlowMode1,,,4080,01,,,SIR,,m³/h,[min:50;max:325;step:5;default:100]
-r,,LuftmengeStufe1,FlowMode1,,,4050,01,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:325],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:100]
+r,,LuftmengeStufe1,FlowMode1,,,4050,01,,,SIR,,m³/h,,min,,SIR,,m³/h,[min:50],max,,SIR,,m³/h,[max:325],step,,SIR,,m³/h,[step:5],default,,SIR,,m³/h,[default:100]
 w,,LuftmengeStufe2,FlowMode2,,,4080,02,,,SIR,,m³/h,[min:50;max:325;step:5;default:150]
-r,,LuftmengeStufe2,FlowMode2,,,4050,02,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:325],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:150]
+r,,LuftmengeStufe2,FlowMode2,,,4050,02,,,SIR,,m³/h,,min,,SIR,,m³/h,[min:50],max,,SIR,,m³/h,[max:325],step,,SIR,,m³/h,[step:5],default,,SIR,,m³/h,[default:150]
 w,,LuftmengeStufe3,FlowMode3,,,4080,03,,,SIR,,m³/h,[min:50;max:325;step:5;default:250]
-r,,LuftmengeStufe3,FlowMode3,,,4050,03,,,SIR,,m³/h,,Min,,SIR,,m³/h,[min:50],Max,,SIR,,m³/h,[max:325],Step,,SIR,,m³/h,[step:5],Default,,SIR,,m³/h,[default:250]
+r,,LuftmengeStufe3,FlowMode3,,,4050,03,,,SIR,,m³/h,,min,,SIR,,m³/h,[min:50],max,,SIR,,m³/h,[max:325],step,,SIR,,m³/h,[step:5],default,,SIR,,m³/h,[default:250]
 w,,UngleichgewichtMöglich,UnbalanceMode,,,4080,08,,,UIR,0=Not Permitted;1=Permitted,,[min:0;max:1;step:1;default:1]
-r,,UngleichgewichtMöglich,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,Default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
+r,,UngleichgewichtMöglich,UnbalanceMode,,,4050,08,,,UIR,0=Not Permitted;1=Permitted,,,,,IGN:6,,,,default,,UIR,0=Not Permitted;1=Permitted,,[default:1] - min/max/step fields of enum message omitted
 w,,StändigesUngleichgewicht,UnbalanceFlow,,,4080,09,,,UIR,10,%,[min:0;max:200;step:1;default:0]
-r,,StändigesUngleichgewicht,UnbalanceFlow,,,4050,09,,,UIR,10,%,,Min,,UIR,10,%,[min:0],Max,,UIR,10,%,[max:200],Step,,UIR,10,%,[step:1],Default,,UIR,10,%,[default:0]
+r,,StändigesUngleichgewicht,UnbalanceFlow,,,4050,09,,,UIR,10,%,,min,,UIR,10,%,[min:0],max,,UIR,10,%,[max:200],step,,UIR,10,%,[step:1],default,,UIR,10,%,[default:0]
 w,,OffsetDurchsatzZuluft,FlowOffsetInlet,,,4080,4a,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,,OffsetDurchsatzZuluft,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
+r,,OffsetDurchsatzZuluft,FlowOffsetInlet,,,4050,4a,,,SIR,10,%,,min,,SIR,10,%,[min:-150],max,,SIR,10,%,[max:150],step,,SIR,10,%,[step:1],default,,SIR,10,%,[default:0]
 w,,OffsetDurchsatzAbluft,FlowOffsetExhaust,,,4080,4b,,,SIR,10,%,[min:-150;max:150;step:1;default:0]
-r,,OffsetDurchsatzAbluft,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,Min,,SIR,10,%,[min:-150],Max,,SIR,10,%,[max:150],Step,,SIR,10,%,[step:1],Default,,SIR,10,%,[default:0]
+r,,OffsetDurchsatzAbluft,FlowOffsetExhaust,,,4050,4b,,,SIR,10,%,,min,,SIR,10,%,[min:-150],max,,SIR,10,%,[max:150],step,,SIR,10,%,[step:1],default,,SIR,10,%,[default:0]
 w,,Schaltergrundstellung,SwitchDefaultPos,,,4080,40,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:1]
-r,,Schaltergrundstellung,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
+r,,Schaltergrundstellung,SwitchDefaultPos,,,4050,40,,,UIR,0=off;1=on,,,,,IGN:6,,,,default,,UIR,0=off;1=on,,[default:1] - min/max/step fields of enum message omitted
 w,,Bypassbetrieb,BypassMode,,,4080,1b,,,UIR,0=Auto;1=Closed;2=Open,,[min:0;max:2;step:1;default:0]
-r,,Bypassbetrieb,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,Default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
+r,,Bypassbetrieb,BypassMode,,,4050,1b,,,UIR,0=Auto;1=Closed;2=Open,,,,,IGN:6,,,,default,,UIR,0=Auto;1=Closed;2=Open,,[default:0] - min/max/step fields of enum message omitted
 w,,BypasstemperaturVonAußen,BypassTempFromOutside,,,4080,05,,,SIR,10,°C,[min:70;max:150;step:1;default:100]
-r,,BypasstemperaturVonAußen,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:150],Step,,SIR,10,°C,[step:1],Default,,SIR,10,°C,[default:100]
+r,,BypasstemperaturVonAußen,BypassTempFromOutside,,,4050,05,,,SIR,10,°C,,min,,SIR,10,°C,[min:70],max,,SIR,10,°C,[max:150],step,,SIR,10,°C,[step:1],default,,SIR,10,°C,[default:100]
 w,,BypassHysterese,BypassTempHyst,,,4080,30,,,SIR,10,°C,[min:0;max:50;step:5;default:20]
-r,,BypassHysterese,BypassTempHyst,,,4050,30,,,SIR,10,°C,,Min,,SIR,10,°C,[min:0],Max,,SIR,10,°C,[max:50],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:20]
+r,,BypassHysterese,BypassTempHyst,,,4050,30,,,SIR,10,°C,,min,,SIR,10,°C,[min:0],max,,SIR,10,°C,[max:50],step,,SIR,10,°C,[step:5],default,,SIR,10,°C,[default:20]
 w,,ModusBypassBoost,BypassBoostMode,,,4080,4c,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,,ModusBypassBoost,BypassBoostMode,,,4050,4c,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,ModusBypassBoost,BypassBoostMode,,,4050,4c,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:1],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,DurchsatzBypassBoostVoreingestellt,BypassBoostFlowPreset,,,4080,4d,,,UIR,,,[min:0;max:3;step:1;default:3]
-r,,DurchsatzBypassBoostVoreingestellt,BypassBoostFlowPreset,,,4050,4d,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:3]
+r,,DurchsatzBypassBoostVoreingestellt,BypassBoostFlowPreset,,,4050,4d,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:3],step,,UIR,,,[step:1],default,,UIR,,,[default:3]
 w,,StarttemperaturFrostschutzmodus,FrostStartTemperature,,,4080,4e,,,SIR,10,°C,[min:-15;max:15;step:1;default:0]
-r,,StarttemperaturFrostschutzmodus,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,Min,,SIR,10,°C,[min:-15],Max,,SIR,10,°C,[max:15],Step,,SIR,10,°C,[step:1],Default,,SIR,10,°C,[default:0]
+r,,StarttemperaturFrostschutzmodus,FrostStartTemperature,,,4050,4e,,,SIR,10,°C,,min,,SIR,10,°C,[min:-15],max,,SIR,10,°C,[max:15],step,,SIR,10,°C,[step:1],default,,SIR,10,°C,[default:0]
 w,,Mindestansaugtemperatur,FrostMinInletTemperature,,,4080,62,,,SIR,10,°C,[min:70;max:220;step:5;default:100]
-r,,Mindestansaugtemperatur,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,Min,,SIR,10,°C,[min:70],Max,,SIR,10,°C,[max:220],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:100]
+r,,Mindestansaugtemperatur,FrostMinInletTemperature,,,4050,62,,,SIR,10,°C,,min,,SIR,10,°C,[min:70],max,,SIR,10,°C,[max:220],step,,SIR,10,°C,[step:5],default,,SIR,10,°C,[default:100]
 w,,TageVorFilterwarnung,FilterDaysBeforeWarning,,,4080,4f,,,UIR,,Day,[min:1;max:365;step:1;default:365]
-r,,TageVorFilterwarnung,FilterDaysBeforeWarning,,,4050,4f,,,UIR,,Day,,Min,,UIR,,Day,[min:1],Max,,UIR,,Day,[max:365],Step,,UIR,,Day,[step:1],Default,,UIR,,Day,[default:365]
+r,,TageVorFilterwarnung,FilterDaysBeforeWarning,,,4050,4f,,,UIR,,Day,,min,,UIR,,Day,[min:1],max,,UIR,,Day,[max:365],step,,UIR,,Day,[step:1],default,,UIR,,Day,[default:365]
 w,,ModusExternesVorheizregister,ExternalPreHeaterMode,,,4080,0a,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,,ModusExternesVorheizregister,ExternalPreHeaterMode,,,4050,0a,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,ModusExternesVorheizregister,ExternalPreHeaterMode,,,4050,0a,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:1],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,ModusExternesNachheizregister,ExternalPostHeaterMode,,,4080,1e,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,,ModusExternesNachheizregister,ExternalPostHeaterMode,,,4050,1e,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,ModusExternesNachheizregister,ExternalPostHeaterMode,,,4050,1e,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:1],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,TemperaturNachheizregister,PostheaterTemp,,,4080,0b,,,SIR,10,°C,[min:150;max:300;step:5;default:210]
-r,,TemperaturNachheizregister,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,Min,,SIR,10,°C,[min:150],Max,,SIR,10,°C,[max:300],Step,,SIR,10,°C,[step:5],Default,,SIR,10,°C,[default:210]
+r,,TemperaturNachheizregister,PostheaterTemp,,,4050,0b,,,SIR,10,°C,,min,,SIR,10,°C,[min:150],max,,SIR,10,°C,[max:300],step,,SIR,10,°C,[step:5],default,,SIR,10,°C,[default:210]
 w,,CO2SensorenAktiviert,CO2SensorsActivated,,,4080,3c,,,UIR,0=no;1=yes,,[min:0;max:1;step:1;default:0]
-r,,CO2SensorenAktiviert,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,Default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
+r,,CO2SensorenAktiviert,CO2SensorsActivated,,,4050,3c,,,UIR,0=no;1=yes,,,,,IGN:6,,,,default,,UIR,0=no;1=yes,,[default:0] - min/max/step fields of enum message omitted
 w,,CO2Sensor1UntererGrenzwert,CO2Sensor1LowerLimit,,,4080,34,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,,CO2Sensor1UntererGrenzwert,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,,CO2Sensor1UntererGrenzwert,CO2Sensor1LowerLimit,,,4050,34,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:400]
 w,,CO2Sensor1ObererGrenzwert,CO2Sensor1UpperLimit,,,4080,35,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,,CO2Sensor1ObererGrenzwert,CO2Sensor1UpperLimit,,,4050,35,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,,CO2Sensor1ObererGrenzwert,CO2Sensor1UpperLimit,,,4050,35,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:1200]
 w,,CO2Sensor2UntererGrenzwert,CO2Sensor2LowerLimit,,,4080,36,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,,CO2Sensor2UntererGrenzwert,CO2Sensor2LowerLimit,,,4050,36,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,,CO2Sensor2UntererGrenzwert,CO2Sensor2LowerLimit,,,4050,36,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:400]
 w,,CO2Sensor2ObererGrenzwert,CO2Sensor2UpperLimit,,,4080,37,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,,CO2Sensor2ObererGrenzwert,CO2Sensor2UpperLimit,,,4050,37,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,,CO2Sensor2ObererGrenzwert,CO2Sensor2UpperLimit,,,4050,37,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:1200]
 w,,CO2Sensor3UntererGrenzwert,CO2Sensor3LowerLimit,,,4080,38,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,,CO2Sensor3UntererGrenzwert,CO2Sensor3LowerLimit,,,4050,38,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,,CO2Sensor3UntererGrenzwert,CO2Sensor3LowerLimit,,,4050,38,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:400]
 w,,CO2Sensor3ObererGrenzwert,CO2Sensor3UpperLimit,,,4080,39,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,,CO2Sensor3ObererGrenzwert,CO2Sensor3UpperLimit,,,4050,39,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,,CO2Sensor3ObererGrenzwert,CO2Sensor3UpperLimit,,,4050,39,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:1200]
 w,,CO2Sensor4UntererGrenzwert,CO2Sensor4LowerLimit,,,4080,3a,,,UIR,,ppm,[min:400;max:2000;step:25;default:400]
-r,,CO2Sensor4UntererGrenzwert,CO2Sensor4LowerLimit,,,4050,3a,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:400]
+r,,CO2Sensor4UntererGrenzwert,CO2Sensor4LowerLimit,,,4050,3a,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:400]
 w,,CO2Sensor4ObererGrenzwert,CO2Sensor4UpperLimit,,,4080,3b,,,UIR,,ppm,[min:400;max:2000;step:25;default:1200]
-r,,CO2Sensor4ObererGrenzwert,CO2Sensor4UpperLimit,,,4050,3b,,,UIR,,ppm,,Min,,UIR,,ppm,[min:400],Max,,UIR,,ppm,[max:2000],Step,,UIR,,ppm,[step:25],Default,,UIR,,ppm,[default:1200]
+r,,CO2Sensor4ObererGrenzwert,CO2Sensor4UpperLimit,,,4050,3b,,,UIR,,ppm,,min,,UIR,,ppm,[min:400],max,,UIR,,ppm,[max:2000],step,,UIR,,ppm,[step:25],default,,UIR,,ppm,[default:1200]
 w,,FeuchtesensorVorhanden,RHTSensorPresent,,,4080,32,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,,FeuchtesensorVorhanden,RHTSensorPresent,,,4050,32,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,FeuchtesensorVorhanden,RHTSensorPresent,,,4050,32,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:1],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,EmpfindlichkeitFeuchtesensor,RHTSensorSensitivity,,,4080,33,,,SIR,,,[min:-2;max:2;step:1;default:0]
-r,,EmpfindlichkeitFeuchtesensor,RHTSensorSensitivity,,,4050,33,,,SIR,,,,Min,,SIR,,,[min:-2],Max,,SIR,,,[max:2],Step,,SIR,,,[step:1],Default,,SIR,,,[default:0]
+r,,EmpfindlichkeitFeuchtesensor,RHTSensorSensitivity,,,4050,33,,,SIR,,,,min,,SIR,,,[min:-2],max,,SIR,,,[max:2],step,,SIR,,,[step:1],default,,SIR,,,[default:0]
 w,,ZentralheizungWRG,CVWTWMode,,,4080,07,,,UIR,0=off;1=on,,[min:0;max:1;step:1;default:0]
-r,,ZentralheizungWRG,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,Default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
+r,,ZentralheizungWRG,CVWTWMode,,,4050,07,,,UIR,0=off;1=on,,,,,IGN:6,,,,default,,UIR,0=off;1=on,,[default:0] - min/max/step fields of enum message omitted
 w,,Signalausgangsmodus,SignalOutputMode,,,4080,61,,,UIR,,,[min:0;max:3;step:1;default:0]
-r,,Signalausgangsmodus,SignalOutputMode,,,4050,61,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:3],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,Signalausgangsmodus,SignalOutputMode,,,4050,61,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:3],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,ExtLüfterAktiviert,ExternalFanEnable,,,4080,a5,,,UIR,,,[min:0;max:1;step:1;default:0]
-r,,ExtLüfterAktiviert,ExternalFanEnable,,,4050,a5,,,UIR,,,,Min,,UIR,,,[min:0],Max,,UIR,,,[max:1],Step,,UIR,,,[step:1],Default,,UIR,,,[default:0]
+r,,ExtLüfterAktiviert,ExternalFanEnable,,,4050,a5,,,UIR,,,,min,,UIR,,,[min:0],max,,UIR,,,[max:1],step,,UIR,,,[step:1],default,,UIR,,,[default:0]
 w,,ExtLüfterMinimaleSpannung,ExternalFanVmin,,,4080,a6,,,SIR,10,V,[min:0;max:100;step:1;default:10]
-r,,ExtLüfterMinimaleSpannung,ExternalFanVmin,,,4050,a6,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:1],Default,,SIR,10,V,[default:10]
+r,,ExtLüfterMinimaleSpannung,ExternalFanVmin,,,4050,a6,,,SIR,10,V,,min,,SIR,10,V,[min:0],max,,SIR,10,V,[max:100],step,,SIR,10,V,[step:1],default,,SIR,10,V,[default:10]
 w,,ExtLüfterMaximaleSpannung,ExternalFanVmax,,,4080,a7,,,SIR,10,V,[min:0;max:100;step:1;default:10]
-r,,ExtLüfterMaximaleSpannung,ExternalFanVmax,,,4050,a7,,,SIR,10,V,,Min,,SIR,10,V,[min:0],Max,,SIR,10,V,[max:100],Step,,SIR,10,V,[step:1],Default,,SIR,10,V,[default:10]
+r,,ExtLüfterMaximaleSpannung,ExternalFanVmax,,,4050,a7,,,SIR,10,V,,min,,SIR,10,V,[min:0],max,,SIR,10,V,[max:100],step,,SIR,10,V,[step:1],default,,SIR,10,V,[default:10]
