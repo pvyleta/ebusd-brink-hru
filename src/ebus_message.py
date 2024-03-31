@@ -37,8 +37,6 @@ class Field:
     def __repr__(self):
         return str(self)
 
-# TODO translate the fields names
-# TODO translate the values in enums
 class EbusMessage:
     def __init__(self, name: str, parameter_name: str, pbsb: int, id: int|None, type: str, fields: list[Field]):
         self.name: str = name
@@ -117,7 +115,6 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # Reset notification logic and response codes is based on HandleResetNotificationsResponse function from BCSServiceTool
     EbusMessage('ResetNotifications', 'ResetNotificationDialogTitle', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested', '', 'NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.')]),
     
-    # TODO FIXME EEEEEh. this is not error history.... that one is a different command
     EbusMessage('RequestErrorList', 'errorHistoryViewTableTitle', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
     EbusMessage('FanMode', 'parameterDescriptionFanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
     
@@ -139,14 +136,16 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # w,,WTWControlMode,WTWControlMode,,,40A2,,,,UCH,,,
     # w,,WTWControlDemandStatus,WTWControlDemandStatus,,,40A3,,,,HEX:4,,,
     
-    # TODO should there be a message with how many days before filter warning. is it this one? 
     BrinkConfigEbusMessage('FilterNotificationFlow', 'parameterSetDescriptionFilterMaximumFlow',0x1c, 'r', False, 1000, '', 'm³'),
     BrinkConfigEbusMessage('TotalFilterDays', 'parameterDescriptionFiltersUsedInDays', 0x22, 'r', False, 1.0, '', 'Days'),
+    
+    # Note: there is also parameterDescriptionFiltersUsedIn1000M3, but that is unnecessary, since we already factored in the 1000 multiplier
     BrinkConfigEbusMessage('TotalFilterFlow', 'parameterDescriptionFiltersUsedInM3', 0x23, 'r', False, 1000,'',  'm³'),
 
     # Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
     BrinkConfigEbusMessage('TotalOperatingHours', 'parameterDescriptionOperatingTime', 0x24, 'r', False, 5,'',  'Hours'),
 
     # Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
-    BrinkConfigEbusMessage('TotalFlow', 'parameterDescriptionTotalFlowIn1000M3', 0x25, 'r', False, 1000, '', 'm³'), 
+    # Note: there is also parameterDescriptionTotalFlowIn1000M3, but that is unnecessary, since we already factored in the 1000 multiplier
+    BrinkConfigEbusMessage('TotalFlow', 'parameterDescriptionTotalFlowInM3', 0x25, 'r', False, 1000, '', 'm³'), 
 ]

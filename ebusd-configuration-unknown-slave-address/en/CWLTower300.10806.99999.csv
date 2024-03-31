@@ -28,7 +28,7 @@ r,,FilterMaximumFlow,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,min,,UIR,
 r,,FilterUsageDays,TotalFilterDays,,,4050,22,,,UIR,,Days,,min,,UIR,,Days,,max,,UIR,,Days,,step,,UIR,,Days,,default,,UIR,,Days,
 r,,FilterUsage,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 r,,OperatingTime,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,min,,UIR,-5,Hours,,max,,UIR,-5,Hours,,step,,UIR,-5,Hours,,default,,UIR,-5,Hours,
-r,,TotalFlow1000m3,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
+r,,TotalFlow,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 
 ## Curent state and sensors ##
 r,,FanMode,FanMode,,,4022,01,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High;4=Auto,,

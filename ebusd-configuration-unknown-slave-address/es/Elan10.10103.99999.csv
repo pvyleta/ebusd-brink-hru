@@ -26,7 +26,7 @@ r,,FlujoMáximoDeFiltro,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,min,,U
 r,,UsoDelFiltroDías,TotalFilterDays,,,4050,22,,,UIR,,Days,,min,,UIR,,Days,,max,,UIR,,Days,,step,,UIR,,Days,,default,,UIR,,Days,
 r,,UsoDelFiltro,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 r,,TiempoDeFuncionamiento,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,min,,UIR,-5,Hours,,max,,UIR,-5,Hours,,step,,UIR,-5,Hours,,default,,UIR,-5,Hours,
-r,,FlujoTotal1000m3,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
+r,,FlujoTotal,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 
 ## Estado actual y sensores ##
 r,,EstadoDeElan,ElanStatus,,,4022,01,,,UCH,0=NotInitialized;1=UnknownError;2=PowerUp;3=ModeLow;4=ModeHigh;5=ModeNormal;6=ModeOffNormal;7=ModeCooling;8=ModeOutSideHigh;9=ErrorMinFlow;10=ErrorNoFlow,,

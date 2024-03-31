@@ -28,7 +28,7 @@ r,,FilterMaximumDebiet,FilterNotificationFlow,,,4050,1c,,,UIR,-1000,m³,,min,,UI
 r,,FiltergebruikDagen,TotalFilterDays,,,4050,22,,,UIR,,Days,,min,,UIR,,Days,,max,,UIR,,Days,,step,,UIR,,Days,,default,,UIR,,Days,
 r,,Filtergebruik,TotalFilterFlow,,,4050,23,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 r,,Bedieningstijd,TotalOperatingHours,,,4050,24,,,UIR,-5,Hours,,min,,UIR,-5,Hours,,max,,UIR,-5,Hours,,step,,UIR,-5,Hours,,default,,UIR,-5,Hours,
-r,,TotaalDebiet1000m3,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
+r,,TotaalDebiet,TotalFlow,,,4050,25,,,UIR,-1000,m³,,min,,UIR,-1000,m³,,max,,UIR,-1000,m³,,step,,UIR,-1000,m³,,default,,UIR,-1000,m³,
 
 ## Huidige staat en sensoren ##
 r,,SoftwareVersie,SoftwareVersion,,,4022,00,,,STR:13,,,

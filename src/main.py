@@ -9,9 +9,14 @@ from parse_xaml import file_suffix_dict
 
 # TODO Rework so that first dump is generated, and then output is created from dump - that way dump can be manually edited in future if the brink service tool becomes unavailable, and we can still generate arbitrary output.
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
+# TODO translate the fields names
+# TODO translate the values in enums
 # TODO add conditionals for csv_known_device (output of devices with known slave addresses) for dipswitch value and software version
-# TODO go thorugh AirControlEBusCommands and figure out if flowMode can be set on the wall controller rather than on the unit
 # TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
+
+# Note: AirControlEBusCommands specify the commands of the wall controller, and it should be in thery to control
+#       the wall controller, which would then control the HRU - that would be convenient. unfortunately, my Air Control 
+#       does not reply on its 0x24 slave address and at this point I have no idea what to do it more.
 
 # This script expects BCSServiceTool via JetBrains DotPeak in its child folder
 
