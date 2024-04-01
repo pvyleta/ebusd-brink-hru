@@ -9,6 +9,7 @@ from parse_xaml import file_suffix_dict
 
 # TODO Rework so that first dump is generated, and then output is created from dump - that way dump can be manually edited in future if the brink service tool becomes unavailable, and we can still generate arbitrary output.
 # TODO Simplify output to less files by removing redundancy and extending parameter ranges
+# TODO create common base class for sensors and parameters, so that we can check for dupes etc.
 # TODO translate the fields names
 # TODO translate the values in enums
 # TODO add conditionals for csv_known_device (output of devices with known slave addresses) for dipswitch value and software version
@@ -18,7 +19,7 @@ from parse_xaml import file_suffix_dict
 #       the wall controller, which would then control the HRU - that would be convenient. unfortunately, my Air Control 
 #       does not reply on its 0x24 slave address and at this point I have no idea what to do it more.
 
-# This script expects BCSServiceTool via JetBrains DotPeak in its child folder
+# This script expects BCSServiceTool decompiled via JetBrains DotPeak in its child folder
 
 device_to_name_current_to_name_param_dict = device_to_name_current_to_name_param()
 cmd_dict, cmd_bytes_dict = get_commands_dict()
@@ -127,7 +128,6 @@ write_dump(device_models)
 for language in file_suffix_dict:
     write_unknown_address_devices(device_models, language)
     write_known_devices(device_models, language)
-    if DEBUG:
-        write_output_DEPRECATED(device_models, language)
+    # write_output_DEPRECATED(device_models, language)
 
 print("SUCCESS")

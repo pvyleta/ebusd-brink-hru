@@ -103,9 +103,7 @@ class BrinkConfigEbusMessage(EbusMessage):
             raise RuntimeError()
 
 
-# TODO The list contains some known, yet unimplemented commands. They would need more testing to figure out what they mean and how to use them    
 brink_wtw_commands_list: list[EbusMessage] = [
-    
     # Factory reset is a write to address 40FF with no ID and a string "FactoryReset" in ascii -> "40FF0C466163746F72795265736574"
     # EbusMessage('FactoryReset', 0x40ff, None, 'w', [Field('', 'STR:12', 12, 1.0, '0x466163746F72795265736574=FactoryReset', '')]),
     EbusMessage('FactoryReset', 'diagnosticsViewbtnFactoryReset', 0x40ff, 0x466163746F72795265736574, 'w', []),
@@ -126,8 +124,8 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was not able to decode the meaning.
     # EbusMessage('FanMode', 'parameterDescriptionFanMode',0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Min;1=Low;2=Medium;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
     
-    # TODO this needs a converter
-    BrinkConfigEbusMessage('DeviceType', 'parameterDescriptionDeviceType', 0x00, 'r', False, 1.0, '', ''),
+    # This is readable on Sky300, but it is virtual dpswitch on flair units, and seems to have no use elsewhere - definitely unable to figure out what it could mean...
+    # BrinkConfigEbusMessage('DeviceType', 'parameterDescriptionDeviceType', 0x00, 'r', False, 1.0, '', ''),
 
     # ## Control Commands - No further knowledge of meaning, or list of compatible units
     # w,,ApplianceCascade,ApplianceCascade,,,40A0,,,,HEX:4,,,
