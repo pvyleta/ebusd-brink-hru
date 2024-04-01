@@ -147,4 +147,13 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # Based on https://github.com/dstrigl/ebusd-config-brink-renovent-excellent-300 and my obervation, the multiplier mathches; Contrary to what WTWCommands.cs says, the ID is mixed up between OperatingHours and TotalFlow
     # Note: there is also parameterDescriptionTotalFlowIn1000M3, but that is unnecessary, since we already factored in the 1000 multiplier
     BrinkConfigEbusMessage('TotalFlow', 'parameterDescriptionTotalFlowInM3', 0x25, 'r', False, 1000, '', 'm³'), 
+
+    # Note: Following messages were tested, but are not present on SKY300:
+    # - ActualEBusAddressing = "40220150";
+    # - ActualSerialNumber = "40220151";
+    # - ActualDeviceID = "40220180";
+    # - ActualOperatingTime = "40220183";
+    # - ParameterEBusGroupNumber = "405001D0";
+    # - ParameterEBusSlaveNumber = "405001D1";
+    # - ParameterHeartBeatTimeout = "405001D2";
 ]
