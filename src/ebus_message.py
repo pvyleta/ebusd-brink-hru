@@ -11,6 +11,13 @@ def multiplier_to_divider(multiplier: float) -> str:
         return str(-int(multiplier))
     else:
         return ""
+    
+def pad_hex_string_from_number(number: int):
+    hex_string = f'{number:x}'
+    # Add a leading zero if the length is odd
+    if len(hex_string) % 2 != 0:
+        hex_string = '0' + hex_string
+    return hex_string
 
 class Field:
     def __init__(self, name: str, datatype: str, length: int, multiplier: float, values: str, unit: str, comment: str = ''):
@@ -64,7 +71,7 @@ class EbusMessage:
     
     def dump(self, language: str, circuit: str = '', slave_address: str = '') -> str:
         # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
-        id_str = f'{self.id:02x}' if self.id else ''
+        id_str = pad_hex_string_from_number(self.id) if self.id else ''
         result = f'{self.type},{circuit},{get_name(self.parameter_name, language)}{self.suffix},{self.name},,{slave_address},{self.pbsb:04x},{id_str}'
         for field in self.fields:
             values_str = multiplier_to_divider(field.multiplier) if field.values == '' else field.values 

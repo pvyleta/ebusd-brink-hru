@@ -24,6 +24,7 @@ CSV_HEADER = '# type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field
 SensorDump = namedtuple('SensorDump', ['device_name', 'first_version', 'last_version', 'name', 'display_name_en', 'display_name_de', 'display_name_es', 'display_name_fr', 'display_name_it', 'display_name_nl', 'display_name_pl', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length'])
 ParameterDump = namedtuple('ParameterDump', ['device_name', 'first_version', 'last_version', 'name', 'display_name_en', 'display_name_de', 'display_name_es', 'display_name_fr', 'display_name_it', 'display_name_nl', 'display_name_pl', 'id', 'unit', 'datatype', 'multiplier', 'values', 'length', 'field_current', 'field_min', 'field_max', 'field_step', 'field_default'])
 
+
 def recreate_dir(directory: str, language: str = ''):
     if len(language) > 0:
         joined_directory = os.path.join(directory, language)
@@ -37,6 +38,7 @@ def recreate_dir(directory: str, language: str = ''):
     if os.path.exists(joined_directory):
         shutil.rmtree(joined_directory)
     os.mkdir(joined_directory)
+
 
 def dump_sensor(sensor: Sensor, device_name: str, version_range: VersionRange) -> SensorDump:
     dump_sensor_dict: dict[str, str] = {}
@@ -85,6 +87,7 @@ def dump_param(param: Parameter, device_name: str, version_range: VersionRange) 
     dump_param_dict['field_step'] = str(param.field_step)
     dump_param_dict['field_default'] = str(param.field_default)
     return ParameterDump(**dump_param_dict)
+
 
 def csv_line_sensor(sensor: Sensor, language: str, device_name: str, slave_address: str) -> str:
     # type (r[1-9];w;u),circuit,name,[comment],[QQ],ZZ,PBSB,[ID],field1,part (m/s),datatypes/templates,divider/values,unit,comment
@@ -153,11 +156,13 @@ def device_name_comment(device_name: str, versions: VersionBase) -> str:
 def str_slave_and_circuit_mask(type: str, circuit: str = '', slave_address: str = '') -> str:
     return f'*{type},{circuit},,,,{slave_address},\n'
 
+
 def slave_and_circuit_comment(circuit: str, language: str) -> str:
     comment = translations[language]['COMMENT_SLAVE_AND_CIRCUIT']
     comment += str_slave_and_circuit_mask('r', circuit, '[fill_your_slave_address_here]')
     comment += str_slave_and_circuit_mask('w', circuit, '[fill_your_slave_address_here]')
     return comment
+
 
 def csv_known_device(sensors: list[Sensor], parameters: list[Parameter], device_name: str, language: str, is_plus: bool, slave_address: str = '') -> str:
     file_str = translations[language]['COMMENT_HEADER'] + '\n'+ str_slave_and_circuit_mask('r', device_name, slave_address) + str_slave_and_circuit_mask('w', device_name, slave_address)
@@ -248,7 +253,6 @@ def write_dump(device_models: dict[str, DeviceModel]):
 
     sensors_all: list[SensorDump] = []
     params_all: list[ParameterDump] = []
-
 
     for device_name, device_model in device_models.items():
         for version_range, sensors in device_model.sensors.items():
