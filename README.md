@@ -43,7 +43,7 @@ Currently, the ebusd-configuration for these heat recovery units is present:
  - Viessmann Vitovent300WH32SC400
  - Viessmann Vitovent300WH32SC325
 
- Note, that Brink devices are re-branded as Viessmann, Wolf, VisionAIR, Ubbink and maybe others, os these configuration files are (mostly) applicable for those as well.
+ Note, that Brink devices are re-branded as Viessmann, Wolf, VisionAIR, Ubbink and maybe others, so these configuration files are (mostly) applicable for those as well.
 
 # repo structure
 
@@ -93,7 +93,7 @@ This folder is expected to be filled in with the decompiled binary.
 The version of tool used and tested with the parsing scripts is 'S1_04_11_0002'
 
 ## dump
-Contains dump of the parsed data in fairly re-usable JSON and CSV formats. if you plan to integrate Brink HRUs in other software than ebusd, this is the place to go.
+Contains dump of the parsed data in fairly re-usable JSON and CSV formats. If you plan to integrate Brink HRUs in other software than ebusd, this is the place to go.
 
 # Future work
 - structure config files better with using !include instructions and conditions
