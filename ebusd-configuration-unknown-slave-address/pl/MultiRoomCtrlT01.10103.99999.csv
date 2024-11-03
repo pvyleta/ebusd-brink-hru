@@ -20,7 +20,7 @@
 
 ## WSPÓLNE KOMENDY HRU ## (WTWCommands.cs - Niektóre z nich mogą nie być odpowiednie dla tego urządzenia, używaj z ostrożnością)
 w,,PrzywracanieUstawieńFabrycznych,FactoryReset,,,40ff,466163746f72795265736574
-w,,ResetujPowiadomienia,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
+w,,ResetujPowiadomienia,ResetNotifications,,,4091,,,,UIR,0x0100=Errors;0x0001=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation. ErrorsAndFilter seems not working for me - but is specified.
 r,,HistoriaBłędów,RequestErrorList,,,4090,,,,HEX:18,,,
 
 ## Aktualny stan i czujniki ##

@@ -13,7 +13,7 @@
 
 ## COMANDI HRU COMUNI ## (WTWCommands.cs - Alcuni di essi potrebbero non essere applicabili per questo dispositivo, usare con cautela)
 w,,ResetDiFabbrica,FactoryReset,,,40ff,466163746f72795265736574
-w,,ResettaLeNotifiche,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
+w,,ResettaLeNotifiche,ResetNotifications,,,4091,,,,UIR,0x0100=Errors;0x0001=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation. ErrorsAndFilter seems not working for me - but is specified.
 r,,CronologiaDegliErrori,RequestErrorList,,,4090,,,,HEX:18,,,
 w,,PosizioneVentilatore,FanMode,,,40a1,,,,ULR,0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High,,
 w,,PosizioneVentilatoreAlternative,FanModeAlternative,,,40cb,0101,,,UIR,0=Holiday;1=Reduced;2=Normal;3=High,,

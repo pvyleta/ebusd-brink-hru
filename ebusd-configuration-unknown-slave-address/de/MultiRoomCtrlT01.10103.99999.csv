@@ -18,7 +18,7 @@
 
 ## ALLGEMEINE HRU BEFEHLE ## (WTWCommands.cs - Einige davon sind möglicherweise nicht für dieses Gerät anwendbar, mit Vorsicht verwenden)
 w,,RücksetzenAufWerkseinstellung,FactoryReset,,,40ff,466163746f72795265736574
-w,,Fehlerliste,ResetNotifications,,,4091,,,,UIR,0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.
+w,,Fehlerliste,ResetNotifications,,,4091,,,,UIR,0x0100=Errors;0x0001=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested,,NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation. ErrorsAndFilter seems not working for me - but is specified.
 r,,GespeicherteFehler,RequestErrorList,,,4090,,,,HEX:18,,,
 
 ## Aktueller Zustand und Sensoren ##

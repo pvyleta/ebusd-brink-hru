@@ -120,7 +120,7 @@ brink_wtw_commands_list: list[EbusMessage] = [
     # ru,,ResetFilter,409103FFFFFF,,,4091,3c0100,,,IGN:1,,,,,,UIR,0=ResetNotRequested;1=ResetSuccessful;2=ResetRelayed;3=FilterWarningWasNotSet;4=ResetFailed,,,,,IGN:1,,, 
       
     # Reset notification logic and response codes is based on HandleResetNotificationsResponse function from BCSServiceTool
-    EbusMessage('ResetNotifications', 'ResetNotificationDialogTitle', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0001=Errors;0x0100=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested', '', 'NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation.')]),
+    EbusMessage('ResetNotifications', 'ResetNotificationDialogTitle', 0x4091, 0x00, 'w', [Field('', 'UIR', 2, 1.0, '0x0100=Errors;0x0001=Filter;0x0101=ErrorsAndFilter;0x0000=NoResetRequested', '', 'NoResetRequested is a dummy message doing nothing. It might be useful for integration in MQTT and HA automation. ErrorsAndFilter seems not working for me - but is specified.')]),
     
     EbusMessage('RequestErrorList', 'errorHistoryViewTableTitle', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
 
