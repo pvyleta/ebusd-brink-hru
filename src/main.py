@@ -1,4 +1,4 @@
-from out import write_output_DEPRECATED, write_known_devices, write_dump, write_unknown_address_devices
+from out import write_known_devices, write_dump, write_unknown_address_devices
 from converters import find_converters, device_to_name_current_to_name_param, converters_map
 from sensor import get_dict_devices_sensor
 from parameter import get_device_parameters
@@ -128,6 +128,5 @@ write_dump(device_models)
 for language in file_suffix_dict:
     write_unknown_address_devices(device_models, language)
     write_known_devices(device_models, language)
-    # write_output_DEPRECATED(device_models, language)
 
 print("SUCCESS")
