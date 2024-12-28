@@ -125,10 +125,10 @@ brink_wtw_commands_list: list[EbusMessage] = [
     EbusMessage('RequestErrorList', 'errorHistoryViewTableTitle', 0x4090, 0x00, 'r', [Field('', 'HEX:18', 18, 1.0, '', '')]),
 
     # This one is only temporary and resets after one or two minutes 
-    EbusMessage('FanMode', 'parameterDescriptionFanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '')]),
+    EbusMessage('FanMode', 'parameterDescriptionFanMode', 0x40a1, None, 'w', [Field('', 'ULR', 4, 1.0, '0x0=Holiday;0x00010001=Reduced;0x00020002=Normal;0x00030003=High', '', 'Temporary settings which resets after few minutes')]),
     
     # This one does not reset after one minute, at least in my Sky300 with latest SW; this is the message sent by Brink AirControl wall panel
-    EbusMessage('FanModeAlternative', 'parameterDescriptionFanMode', 0x40cb, 0x0101, 'w', [Field('', 'UIR', 1, 1.0, '0=Holiday;1=Reduced;2=Normal;3=High', '')], 'Alternative'),
+    EbusMessage('FanModeAlternative', 'parameterDescriptionFanMode', 0x40cb, 0x0101, 'w', [Field('', 'UIR', 1, 1.0, '0=Holiday;1=Reduced;2=Normal;3=High', '', 'Does not reset after one minute with Sky300 with latest SW; this message is sent by Brink AirControl wall panel')], 'Alternative'),
     
     # The following message simply does not work. The last IGN bytes clearly can be zeroes only sometimes, in general they need to be filed with some value that I was not able to decode the meaning.
     # EbusMessage('FanMode', 'parameterDescriptionFanMode',0x40a3, 0x01, 'w', [Field('', 'UCH', 1, 1.0, '0=Holiday;1=Reduced;2=Normal;3=High', ''), Field('', 'IGN:2', 2, 1.0, '', '')]),
