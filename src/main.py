@@ -13,7 +13,6 @@ from parse_xaml import file_suffix_dict
 # TODO translate the fields names
 # TODO translate the values in enums
 # TODO add conditionals for csv_known_device (output of devices with known slave addresses) for dipswitch value and software version
-# TODO consider to hack the scanning through scan with different ID. the units might be willing to accept it
 
 # Note: AirControlEBusCommands specify the commands of the wall controller, and it should be in thery to control
 #       the wall controller, which would then control the HRU - that would be convenient. unfortunately, my Air Control 
