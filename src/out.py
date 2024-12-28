@@ -225,29 +225,6 @@ def write_unknown_address_devices(device_models: dict[str, DeviceModel], languag
                             file_str += csv_from_parameters(parameters, language, plus_version)
                     text_file.write(file_str)
 
-
-# This functionality is kept for reference, but in general is deprecated in favor of other output styles
-# Contents of output_dir are always cleaned before writing
-# File format is [device_name].[lowest_sw_version].[highest_sw_version].[sensors|params|params.plus].csv
-def write_output_DEPRECATED(device_models: dict[str, DeviceModel], language: str):
-    recreate_dir(DEPRECATED_DIR, language)
-
-    for device_name, device_model in device_models.items():
-        for version_range, sensors in device_model.sensors.items():
-            with open(os.path.join(DEPRECATED_DIR, language, f'{device_name}.{version_range.first_version}.{version_range.last_version}.sensors.csv'), "w", encoding="utf-8", newline='\n') as text_file:
-                text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
-                text_file.write(csv_from_sensors(sensors, language))
-
-        for version_range, parameters in device_model.parameters.items():
-            with open(os.path.join(DEPRECATED_DIR, language, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.csv'), "w", encoding="utf-8", newline='\n') as text_file:
-                text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
-                text_file.write(csv_from_parameters(parameters, language, False))
-            if device_model.has_plus_variant: 
-                with open(os.path.join(DEPRECATED_DIR, language, f'{device_name}.{version_range.first_version}.{version_range.last_version}.params.plus.csv'), "w", encoding="utf-8", newline='\n') as text_file:
-                    text_file.write(CSV_HEADER + str_slave_and_circuit_mask('r', device_name) + str_slave_and_circuit_mask('w', device_name))
-                    text_file.write(csv_from_parameters(parameters, language, True))
-
-
 def write_dump(device_models: dict[str, DeviceModel]):
     recreate_dir(DUMP_DIR)
 
